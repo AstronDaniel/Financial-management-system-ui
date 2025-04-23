@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - ACCCA Financial Management System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+    <!-- Main Layout -->
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3 class="mb-0">ACCCA</h3>
+                <p class="text-muted mb-0 small">Financial Management System</p>
+            </div>
+
+            <div class="profile-section">
+                <div class="profile-info">
+                    <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&auto=format&fit=crop&w=120&h=120&q=80" alt="User Profile" class="profile-img">
+                    <div>
+                        <h6 class="mb-0" id="userFullName">Administrator</h6>
+                        <span class="text-muted small" id="userRole">Admin</span>
+                    </div>
+                </div>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li class="active">
+                    <a href="dashboard.html">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="#transactionsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-exchange-alt"></i> Transactions
+                    </a>
+                    <ul class="collapse list-unstyled" id="transactionsSubmenu">
+                        <li>
+                            <a href="transactions/all-transactions.html">All Transactions</a>
+                        </li>
+                        <li>
+                            <a href="transactions/add-transaction.html">Add Transaction</a>
+                        </li>
+                        <li>
+                            <a href="transactions/sales.html">Sales</a>
+                        </li>
+                        <li>
+                            <a href="transactions/expenses.html">Expenses</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#bookingsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-calendar-check"></i> Bookings
+                    </a>
+                    <ul class="collapse list-unstyled" id="bookingsSubmenu">
+                        <li>
+                            <a href="bookings/all-bookings.html">All Bookings</a>
+                        </li>
+                        <li>
+                            <a href="bookings/add-booking.html">Add Booking</a>
+                        </li>
+                        <li>
+                            <a href="bookings/calendar.html">Calendar</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#customersSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-users"></i> Customers
+                    </a>
+                    <ul class="collapse list-unstyled" id="customersSubmenu">
+                        <li>
+                            <a href="customers/all-customers.html">All Customers</a>
+                        </li>
+                        <li>
+                            <a href="customers/add-customer.html">Add Customer</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#budgetsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-chart-pie"></i> Budgets
+                    </a>
+                    <ul class="collapse list-unstyled" id="budgetsSubmenu">
+                        <li>
+                            <a href="budgets/all-budgets.html">All Budgets</a>
+                        </li>
+                        <li>
+                            <a href="budgets/add-budget.html">Create Budget</a>
+                        </li>
+                        <li>
+                            <a href="budgets/analysis.html">Budget Analysis</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#reportsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-chart-line"></i> Reports
+                    </a>
+                    <ul class="collapse list-unstyled" id="reportsSubmenu">
+                        <li>
+                            <a href="reports/income-statement.html">Income Statement</a>
+                        </li>
+                        <li>
+                            <a href="reports/cash-flow.html">Cash Flow</a>
+                        </li>
+                        <li>
+                            <a href="reports/revenue-sharing.html">Revenue Sharing</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="settings/settings.html">
+                        <i class="fas fa-cog"></i> Settings
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sync-status">
+                <div class="sync-info">
+                    <span class="badge badge-synced" id="syncStatus">All data synced</span>
+                    <button class="btn btn-sm btn-outline-light" id="syncBtn">
+                        <i class="fas fa-sync-alt"></i> Sync Now
+                    </button>
+                </div>
+                <div class="connection-status">
+                    <i class="fas fa-wifi text-success"></i>
+                    <span id="connectionStatus">Online</span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Page Content -->
+        <div id="content">
+            <!-- Top Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+                <div class="container-fluid">
+                    <button type="button" id="sidebarCollapse" class="btn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    
+                    <div class="ms-auto d-flex align-items-center">
+                        <div class="dropdown notifications me-3">
+                            <button class="btn position-relative" type="button" id="notificationsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-bell"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    3
+                                    <span class="visually-hidden">unread notifications</span>
+                                </span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationsDropdown">
+                                <li><h6 class="dropdown-header">Notifications</h6></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">
+                                    <div class="notification-item">
+                                        <div class="icon bg-primary text-white">
+                                            <i class="fas fa-money-bill-wave"></i>
+                                        </div>
+                                        <div class="content">
+                                            <p class="mb-0">New transaction recorded</p>
+                                            <span class="text-muted small">5 minutes ago</span>
+                                        </div>
+                                    </div>
+                                </a></li>
+                                <li><a class="dropdown-item" href="#">
+                                    <div class="notification-item">
+                                        <div class="icon bg-success text-white">
+                                            <i class="fas fa-calendar-check"></i>
+                                        </div>
+                                        <div class="content">
+                                            <p class="mb-0">New booking confirmed</p>
+                                            <span class="text-muted small">2 hours ago</span>
+                                        </div>
+                                    </div>
+                                </a></li>
+                                <li><a class="dropdown-item" href="#">
+                                    <div class="notification-item">
+                                        <div class="icon bg-warning text-white">
+                                            <i class="fas fa-sync-alt"></i>
+                                        </div>
+                                        <div class="content">
+                                            <p class="mb-0">Data sync completed</p>
+                                            <span class="text-muted small">1 day ago</span>
+                                        </div>
+                                    </div>
+                                </a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-center small" href="#">View all notifications</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle profile-dropdown" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&auto=format&fit=crop&w=80&h=80&q=80" alt="User" class="rounded-circle me-1" width="32" height="32">
+                                <span class="d-none d-md-inline">Administrator</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="settings/profile.html">
+                                    <i class="fas fa-user me-2"></i> Profile
+                                </a></li>
+                                <li><a class="dropdown-item" href="settings/settings.html">
+                                    <i class="fas fa-cog me-2"></i> Settings
+                                </a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#" id="logoutBtn">
+                                    <i class="fas fa-sign-out-alt me-2"></i> Logout
+                                </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Main Content -->
+            <div class="container-fluid p-4">
+                <!-- Dashboard Header -->
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h1 class="page-title h3">Dashboard</h1>
+                        <p class="text-muted">Welcome to ACCCA Financial Management System</p>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="date-filter d-flex justify-content-md-end align-items-center">
+                            <div class="input-group">
+                                <span class="input-group-text bg-white"><i class="fas fa-calendar"></i></span>
+                                <input type="text" class="form-control" id="dateRange" placeholder="Select date range">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="row mb-4">
+                    <div class="col-md-6 col-lg-3 mb-3 mb-lg-0">
+                        <div class="card dashboard-card h-100">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h6 class="card-subtitle text-muted mb-1">Total Revenue</h6>
+                                        <h2 class="card-title mb-2" id="totalRevenue">UGX 12,456,800</h2>
+                                        <p class="card-text"><span class="badge bg-success me-1"><i class="fas fa-arrow-up"></i> 12%</span> from last month</p>
+                                    </div>
+                                    <div class="stat-icon bg-primary text-white">
+                                        <i class="fas fa-money-bill-wave"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-3 mb-3 mb-lg-0">
+                        <div class="card dashboard-card h-100">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h6 class="card-subtitle text-muted mb-1">Total Expenses</h6>
+                                        <h2 class="card-title mb-2" id="totalExpenses">UGX 5,231,700</h2>
+                                        <p class="card-text"><span class="badge bg-danger me-1"><i class="fas fa-arrow-up"></i> 7%</span> from last month</p>
+                                    </div>
+                                    <div class="stat-icon bg-warning text-white">
+                                        <i class="fas fa-chart-pie"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-3 mb-3 mb-md-0">
+                        <div class="card dashboard-card h-100">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h6 class="card-subtitle text-muted mb-1">Net Income</h6>
+                                        <h2 class="card-title mb-2" id="netIncome">UGX 7,225,100</h2>
+                                        <p class="card-text"><span class="badge bg-success me-1"><i class="fas fa-arrow-up"></i> 15%</span> from last month</p>
+                                    </div>
+                                    <div class="stat-icon bg-success text-white">
+                                        <i class="fas fa-hand-holding-usd"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card dashboard-card h-100">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h6 class="card-subtitle text-muted mb-1">Bookings</h6>
+                                        <h2 class="card-title mb-2" id="totalBookings">87</h2>
+                                        <p class="card-text"><span class="badge bg-success me-1"><i class="fas fa-arrow-up"></i> 24%</span> from last month</p>
+                                    </div>
+                                    <div class="stat-icon bg-info text-white">
+                                        <i class="fas fa-calendar-check"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts & Data -->
+                <div class="row mb-4">
+                    <div class="col-lg-8 mb-4 mb-lg-0">
+                        <div class="card h-100">
+                            <div class="card-header bg-white">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h5 class="mb-0">Financial Overview</h5>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary active" data-chart-period="monthly">Monthly</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary" data-chart-period="quarterly">Quarterly</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary" data-chart-period="yearly">Yearly</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="financialChart" height="300"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-4">
+                        <div class="card h-100">
+                            <div class="card-header bg-white">
+                                <h5 class="mb-0">Revenue Distribution</h5>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="revenueDistributionChart" height="300"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-lg-6 mb-4 mb-lg-0">
+                        <div class="card h-100">
+                            <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">Recent Transactions</h5>
+                                <a href="transactions/all-transactions.html" class="btn btn-sm btn-link">View All</a>
+                            </div>
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <table class="table table-hover mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>Description</th>
+                                                <th>Date</th>
+                                                <th>Amount</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="recentTransactionsTable">
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="transaction-icon bg-success-light text-success">
+                                                            <i class="fas fa-arrow-up"></i>
+                                                        </div>
+                                                        <div>
+                                                            <p class="mb-0 fw-medium">Milk Sales</p>
+                                                            <span class="text-muted small">Income</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>Apr 20, 2025</td>
+                                                <td class="fw-medium text-success">+UGX 345,000</td>
+                                                <td><span class="badge badge-synced">Synced</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="transaction-icon bg-danger-light text-danger">
+                                                            <i class="fas fa-arrow-down"></i>
+                                                        </div>
+                                                        <div>
+                                                            <p class="mb-0 fw-medium">Staff Salaries</p>
+                                                            <span class="text-muted small">Expense</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>Apr 18, 2025</td>
+                                                <td class="fw-medium text-danger">-UGX 1,200,000</td>
+                                                <td><span class="badge badge-synced">Synced</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="transaction-icon bg-success-light text-success">
+                                                            <i class="fas fa-arrow-up"></i>
+                                                        </div>
+                                                        <div>
+                                                            <p class="mb-0 fw-medium">Cultural Tour Booking</p>
+                                                            <span class="text-muted small">Income</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>Apr 15, 2025</td>
+                                                <td class="fw-medium text-success">+UGX 780,000</td>
+                                                <td><span class="badge badge-sync">Pending</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="transaction-icon bg-danger-light text-danger">
+                                                            <i class="fas fa-arrow-down"></i>
+                                                        </div>
+                                                        <div>
+                                                            <p class="mb-0 fw-medium">Feed Purchase</p>
+                                                            <span class="text-muted small">Expense</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>Apr 12, 2025</td>
+                                                <td class="fw-medium text-danger">-UGX 450,000</td>
+                                                <td><span class="badge badge-synced">Synced</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="transaction-icon bg-success-light text-success">
+                                                            <i class="fas fa-arrow-up"></i>
+                                                        </div>
+                                                        <div>
+                                                            <p class="mb-0 fw-medium">Cow Sale</p>
+                                                            <span class="text-muted small">Income</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>Apr 10, 2025</td>
+                                                <td class="fw-medium text-success">+UGX 3,500,000</td>
+                                                <td><span class="badge badge-synced">Synced</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-6">
+                        <div class="card h-100">
+                            <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">Upcoming Bookings</h5>
+                                <a href="bookings/all-bookings.html" class="btn btn-sm btn-link">View All</a>
+                            </div>
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <table class="table table-hover mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>Customer</th>
+                                                <th>Activity</th>
+                                                <th>Date</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="upcomingBookingsTable">
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&h=40&q=80" class="rounded-circle me-2" alt="">
+                                                        <div>John Smith</div>
+                                                    </div>
+                                                </td>
+                                                <td>Cultural Experience Tour</td>
+                                                <td>Apr 28, 2025</td>
+                                                <td><span class="badge bg-success">Confirmed</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&h=40&q=80" class="rounded-circle me-2" alt="">
+                                                        <div>Sarah Johnson</div>
+                                                    </div>
+                                                </td>
+                                                <td>Dairy Farm Tour</td>
+                                                <td>Apr 30, 2025</td>
+                                                <td><span class="badge bg-warning">Pending</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&h=40&q=80" class="rounded-circle me-2" alt="">
+                                                        <div>Robert Williams</div>
+                                                    </div>
+                                                </td>
+                                                <td>Traditional Dance Show</td>
+                                                <td>May 2, 2025</td>
+                                                <td><span class="badge bg-success">Confirmed</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <img src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&h=40&q=80" class="rounded-circle me-2" alt="">
+                                                        <div>Emily Brown</div>
+                                                    </div>
+                                                </td>
+                                                <td>Full Day Cultural Experience</td>
+                                                <td>May 5, 2025</td>
+                                                <td><span class="badge bg-info">New</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&h=40&q=80" class="rounded-circle me-2" alt="">
+                                                        <div>Michael Davis</div>
+                                                    </div>
+                                                </td>
+                                                <td>Cow Conservation Tour</td>
+                                                <td>May 8, 2025</td>
+                                                <td><span class="badge bg-success">Confirmed</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Quick Actions -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header bg-white">
+                                <h5 class="mb-0">Quick Actions</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row g-3">
+                                    <div class="col-md-3 col-sm-6">
+                                        <a href="transactions/add-transaction.html" class="action-card">
+                                            <div class="action-icon bg-primary-light text-primary">
+                                                <i class="fas fa-plus"></i>
+                                            </div>
+                                            <h6>Add Transaction</h6>
+                                            <p class="small text-muted mb-0">Record income or expense</p>
+                                        </a>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6">
+                                        <a href="bookings/add-booking.html" class="action-card">
+                                            <div class="action-icon bg-success-light text-success">
+                                                <i class="fas fa-calendar-plus"></i>
+                                            </div>
+                                            <h6>Create Booking</h6>
+                                            <p class="small text-muted mb-0">Add new tour booking</p>
+                                        </a>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6">
+                                        <a href="customers/add-customer.html" class="action-card">
+                                            <div class="action-icon bg-info-light text-info">
+                                                <i class="fas fa-user-plus"></i>
+                                            </div>
+                                            <h6>Add Customer</h6>
+                                            <p class="small text-muted mb-0">Register new customer</p>
+                                        </a>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6">
+                                        <a href="reports/income-statement.html" class="action-card">
+                                            <div class="action-icon bg-warning-light text-warning">
+                                                <i class="fas fa-file-invoice-dollar"></i>
+                                            </div>
+                                            <h6>Generate Report</h6>
+                                            <p class="small text-muted mb-0">Create financial reports</p>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Flatpickr for date picker -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Custom JS -->
+    <script src="../js/utils.js"></script>
+    <script src="../js/db.js"></script>
+    <script src="../js/dashboard.js"></script>
+</body>
+</html>

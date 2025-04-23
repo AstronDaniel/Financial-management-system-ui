@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Income Statement - ACCCA Financial Management System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Flatpickr -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/dashboard.css">
+</head>
+<body>
+    <!-- Main Layout -->
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3 class="mb-0">ACCCA</h3>
+                <p class="text-muted mb-0 small">Financial Management System</p>
+            </div>
+
+            <div class="profile-section">
+                <div class="profile-info">
+                    <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&auto=format&fit=crop&w=120&h=120&q=80" alt="User Profile" class="profile-img">
+                    <div>
+                        <h6 class="mb-0" id="userFullName">Administrator</h6>
+                        <span class="text-muted small" id="userRole">Admin</span>
+                    </div>
+                </div>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li>
+                    <a href="../dashboard.html">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="#transactionsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-exchange-alt"></i> Transactions
+                    </a>
+                    <ul class="collapse list-unstyled" id="transactionsSubmenu">
+                        <li>
+                            <a href="../transactions/all-transactions.html">All Transactions</a>
+                        </li>
+                        <li>
+                            <a href="../transactions/add-transaction.html">Add Transaction</a>
+                        </li>
+                        <li>
+                            <a href="../transactions/sales.html">Sales</a>
+                        </li>
+                        <li>
+                            <a href="../transactions/expenses.html">Expenses</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#bookingsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-calendar-check"></i> Bookings
+                    </a>
+                    <ul class="collapse list-unstyled" id="bookingsSubmenu">
+                        <li>
+                            <a href="../bookings/all-bookings.html">All Bookings</a>
+                        </li>
+                        <li>
+                            <a href="../bookings/add-booking.html">Add Booking</a>
+                        </li>
+                        <li>
+                            <a href="../bookings/calendar.html">Calendar</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#customersSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-users"></i> Customers
+                    </a>
+                    <ul class="collapse list-unstyled" id="customersSubmenu">
+                        <li>
+                            <a href="../customers/all-customers.html">All Customers</a>
+                        </li>
+                        <li>
+                            <a href="../customers/add-customer.html">Add Customer</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#budgetsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-chart-pie"></i> Budgets
+                    </a>
+                    <ul class="collapse list-unstyled" id="budgetsSubmenu">
+                        <li>
+                            <a href="../budgets/all-budgets.html">All Budgets</a>
+                        </li>
+                        <li>
+                            <a href="../budgets/add-budget.html">Create Budget</a>
+                        </li>
+                        <li>
+                            <a href="../budgets/analysis.html">Budget Analysis</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="active">
+                    <a href="#reportsSubmenu" data-bs-toggle="collapse" aria-expanded="true" class="dropdown-toggle">
+                        <i class="fas fa-chart-line"></i> Reports
+                    </a>
+                    <ul class="collapse show list-unstyled" id="reportsSubmenu">
+                        <li class="active">
+                            <a href="income-statement.html">Income Statement</a>
+                        </li>
+                        <li>
+                            <a href="cash-flow.html">Cash Flow</a>
+                        </li>
+                        <li>
+                            <a href="revenue-sharing.html">Revenue Sharing</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="../settings/settings.html">
+                        <i class="fas fa-cog"></i> Settings
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sync-status">
+                <div class="sync-info">
+                    <span class="badge badge-synced" id="syncStatus">All data synced</span>
+                    <button class="btn btn-sm btn-outline-light" id="syncBtn">
+                        <i class="fas fa-sync-alt"></i> Sync Now
+                    </button>
+                </div>
+                <div class="connection-status">
+                    <i class="fas fa-wifi text-success"></i>
+                    <span id="connectionStatus">Online</span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Page Content -->
+        <div id="content">
+            <!-- Top Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+                <div class="container-fluid">
+                    <button type="button" id="sidebarCollapse" class="btn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    
+                    <div class="ms-auto d-flex align-items-center">
+                        <div class="dropdown notifications me-3">
+                            <button class="btn position-relative" type="button" id="notificationsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-bell"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    3
+                                    <span class="visually-hidden">unread notifications</span>
+                                </span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationsDropdown">
+                                <li><h6 class="dropdown-header">Notifications</h6></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">
+                                    <div class="notification-item">
+                                        <div class="icon bg-primary text-white">
+                                            <i class="fas fa-money-bill-wave"></i>
+                                        </div>
+                                        <div class="content">
+                                            <p class="mb-0">New transaction recorded</p>
+                                            <span class="text-muted small">5 minutes ago</span>
+                                        </div>
+                                    </div>
+                                </a></li>
+                                <li><a class="dropdown-item" href="#">
+                                    <div class="notification-item">
+                                        <div class="icon bg-success text-white">
+                                            <i class="fas fa-calendar-check"></i>
+                                        </div>
+                                        <div class="content">
+                                            <p class="mb-0">New booking confirmed</p>
+                                            <span class="text-muted small">2 hours ago</span>
+                                        </div>
+                                    </div>
+                                </a></li>
+                                <li><a class="dropdown-item" href="#">
+                                    <div class="notification-item">
+                                        <div class="icon bg-warning text-white">
+                                            <i class="fas fa-sync-alt"></i>
+                                        </div>
+                                        <div class="content">
+                                            <p class="mb-0">Data sync completed</p>
+                                            <span class="text-muted small">1 day ago</span>
+                                        </div>
+                                    </div>
+                                </a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-center small" href="#">View all notifications</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle profile-dropdown" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&auto=format&fit=crop&w=80&h=80&q=80" alt="User" class="rounded-circle me-1" width="32" height="32">
+                                <span class="d-none d-md-inline">Administrator</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="../settings/profile.html">
+                                    <i class="fas fa-user me-2"></i> Profile
+                                </a></li>
+                                <li><a class="dropdown-item" href="../settings/settings.html">
+                                    <i class="fas fa-cog me-2"></i> Settings
+                                </a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#" id="logoutBtn">
+                                    <i class="fas fa-sign-out-alt me-2"></i> Logout
+                                </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Main Content -->
+            <div class="container-fluid p-4">
+                <!-- Page Header -->
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h1 class="page-title h3">Income Statement</h1>
+                        <p class="text-muted">Financial performance report for selected period</p>
+                    </div>
+                    <div class="col-md-6 d-flex justify-content-md-end align-items-center">
+                        <div class="btn-group me-2">
+                            <button type="button" class="btn btn-outline-secondary" id="exportPdfBtn">
+                                <i class="fas fa-file-pdf me-2"></i> Export PDF
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary" id="exportExcelBtn">
+                                <i class="fas fa-file-excel me-2"></i> Export Excel
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary" id="printReportBtn">
+                                <i class="fas fa-print me-2"></i> Print
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Report Filter Card -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <form id="reportFilterForm">
+                            <div class="row g-3 align-items-end">
+                                <div class="col-md-4">
+                                    <label class="form-label">Report Period</label>
+                                    <select class="form-select" id="periodSelect">
+                                        <option value="custom" selected>Custom Date Range</option>
+                                        <option value="this-month">This Month</option>
+                                        <option value="last-month">Last Month</option>
+                                        <option value="this-quarter">This Quarter</option>
+                                        <option value="last-quarter">Last Quarter</option>
+                                        <option value="this-year">This Financial Year</option>
+                                        <option value="last-year">Last Financial Year</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Start Date</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                        <input type="text" class="form-control" id="startDate" placeholder="Start date">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">End Date</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                        <input type="text" class="form-control" id="endDate" placeholder="End date">
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="button" class="btn btn-primary w-100" id="generateReportBtn">
+                                        <i class="fas fa-sync-alt me-2"></i> Generate
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Report Content -->
+                <div class="card mb-4">
+                    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                        <h5 class="card-title mb-0">Income Statement</h5>
+                        <div>
+                            <span class="badge bg-primary">Period: Apr 1, 2025 - Jun 30, 2025</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="reportContent">
+                            <div class="text-center mb-4">
+                                <h4 class="mb-1">Ankole Cultural Cow Conservation Association</h4>
+                                <p class="mb-0 text-muted">Income Statement</p>
+                                <p class="mb-0 text-muted">For the period: April 1, 2025 - June 30, 2025</p>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <tbody>
+                                        <!-- Revenue Section -->
+                                        <tr class="table-light">
+                                            <th colspan="2">Revenue</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Cow Sales</td>
+                                            <td class="text-end">UGX 15,750,000</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Dairy Products</td>
+                                            <td class="text-end">UGX 4,320,000</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Cultural Tours</td>
+                                            <td class="text-end">UGX 8,640,000</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Artifacts</td>
+                                            <td class="text-end">UGX 2,150,000</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Other Income</td>
+                                            <td class="text-end">UGX 950,000</td>
+                                        </tr>
+                                        <tr class="fw-bold">
+                                            <td>Total Revenue</td>
+                                            <td class="text-end">UGX 31,810,000</td>
+                                        </tr>
+                                        
+                                        <!-- Empty row for spacing -->
+                                        <tr>
+                                            <td colspan="2" class="p-0" style="height: 1rem;"></td>
+                                        </tr>
+                                        
+                                        <!-- Expenses Section -->
+                                        <tr class="table-light">
+                                            <th colspan="2">Expenses</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Salaries</td>
+                                            <td class="text-end">UGX 9,600,000</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Feeds</td>
+                                            <td class="text-end">UGX 5,430,000</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Maintenance</td>
+                                            <td class="text-end">UGX 2,870,000</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Utilities</td>
+                                            <td class="text-end">UGX 1,850,000</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Other Expenses</td>
+                                            <td class="text-end">UGX 1,250,000</td>
+                                        </tr>
+                                        <tr class="fw-bold">
+                                            <td>Total Expenses</td>
+                                            <td class="text-end">UGX 21,000,000</td>
+                                        </tr>
+                                        
+                                        <!-- Empty row for spacing -->
+                                        <tr>
+                                            <td colspan="2" class="p-0" style="height: 1rem;"></td>
+                                        </tr>
+                                        
+                                        <!-- Net Income Section -->
+                                        <tr class="table-success fw-bold">
+                                            <td>Net Income</td>
+                                            <td class="text-end">UGX 10,810,000</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Notes to the Financial Statement -->
+                            <div class="mt-4">
+                                <h6>Notes:</h6>
+                                <ol class="ps-3">
+                                    <li>This income statement was prepared on accrual basis.</li>
+                                    <li>Revenue sharing with UWA is shown as a separate expense item under "Other Expenses".</li>
+                                    <li>Depreciation of capital assets is included in the Maintenance expense line item.</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Income Breakdown Chart -->
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header bg-white">
+                                <h5 class="card-title mb-0">Revenue Breakdown</h5>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="revenueChart" height="300"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header bg-white">
+                                <h5 class="card-title mb-0">Expense Breakdown</h5>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="expenseChart" height="300"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Monthly Comparison -->
+                <div class="card mb-4">
+                    <div class="card-header bg-white">
+                        <h5 class="card-title mb-0">Monthly Comparison</h5>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="monthlyComparisonChart" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Flatpickr -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- jsPDF and html2canvas for PDF export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- SheetJS for Excel export -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Custom JS -->
+    <script src="../../js/utils.js"></script>
+    <script src="../../js/db.js"></script>
+    <script src="../../js/income-statement.js"></script>
+</body>
+</html>

@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Analysis - ACCCA Financial Management System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/dashboard.css">
+</head>
+<body>
+    <!-- Main Layout -->
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3 class="mb-0">ACCCA</h3>
+                <p class="text-muted mb-0 small">Financial Management System</p>
+            </div>
+
+            <div class="profile-section">
+                <div class="profile-info">
+                    <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&auto=format&fit=crop&w=120&h=120&q=80" alt="User Profile" class="profile-img">
+                    <div>
+                        <h6 class="mb-0" id="userFullName">Administrator</h6>
+                        <span class="text-muted small" id="userRole">Admin</span>
+                    </div>
+                </div>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li>
+                    <a href="../dashboard.html">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="#transactionsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-exchange-alt"></i> Transactions
+                    </a>
+                    <ul class="collapse list-unstyled" id="transactionsSubmenu">
+                        <li>
+                            <a href="../transactions/all-transactions.html">All Transactions</a>
+                        </li>
+                        <li>
+                            <a href="../transactions/add-transaction.html">Add Transaction</a>
+                        </li>
+                        <li>
+                            <a href="../transactions/sales.html">Sales</a>
+                        </li>
+                        <li>
+                            <a href="../transactions/expenses.html">Expenses</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#bookingsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-calendar-check"></i> Bookings
+                    </a>
+                    <ul class="collapse list-unstyled" id="bookingsSubmenu">
+                        <li>
+                            <a href="../bookings/all-bookings.html">All Bookings</a>
+                        </li>
+                        <li>
+                            <a href="../bookings/add-booking.html">Add Booking</a>
+                        </li>
+                        <li>
+                            <a href="../bookings/calendar.html">Calendar</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#customersSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-users"></i> Customers
+                    </a>
+                    <ul class="collapse list-unstyled" id="customersSubmenu">
+                        <li>
+                            <a href="../customers/all-customers.html">All Customers</a>
+                        </li>
+                        <li>
+                            <a href="../customers/add-customer.html">Add Customer</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="active">
+                    <a href="#budgetsSubmenu" data-bs-toggle="collapse" aria-expanded="true" class="dropdown-toggle">
+                        <i class="fas fa-chart-pie"></i> Budgets
+                    </a>
+                    <ul class="collapse show list-unstyled" id="budgetsSubmenu">
+                        <li>
+                            <a href="all-budgets.html">All Budgets</a>
+                        </li>
+                        <li>
+                            <a href="add-budget.html">Create Budget</a>
+                        </li>
+                        <li class="active">
+                            <a href="analysis.html">Budget Analysis</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#reportsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-chart-line"></i> Reports
+                    </a>
+                    <ul class="collapse list-unstyled" id="reportsSubmenu">
+                        <li>
+                            <a href="../reports/income-statement.html">Income Statement</a>
+                        </li>
+                        <li>
+                            <a href="../reports/cash-flow.html">Cash Flow</a>
+                        </li>
+                        <li>
+                            <a href="../reports/revenue-sharing.html">Revenue Sharing</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="../settings/settings.html">
+                        <i class="fas fa-cog"></i> Settings
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sync-status">
+                <div class="sync-info">
+                    <span class="badge badge-synced" id="syncStatus">All data synced</span>
+                    <button class="btn btn-sm btn-outline-light" id="syncBtn">
+                        <i class="fas fa-sync-alt"></i> Sync Now
+                    </button>
+                </div>
+                <div class="connection-status">
+                    <i class="fas fa-wifi text-success"></i>
+                    <span id="connectionStatus">Online</span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Page Content -->
+        <div id="content">
+            <!-- Top Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+                <div class="container-fluid">
+                    <button type="button" id="sidebarCollapse" class="btn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    
+                    <div class="ms-auto d-flex align-items-center">
+                        <div class="dropdown notifications me-3">
+                            <button class="btn position-relative" type="button" id="notificationsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-bell"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    3
+                                    <span class="visually-hidden">unread notifications</span>
+                                </span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationsDropdown">
+                                <li><h6 class="dropdown-header">Notifications</h6></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">
+                                    <div class="notification-item">
+                                        <div class="icon bg-primary text-white">
+                                            <i class="fas fa-calendar-alt"></i>
+                                        </div>
+                                        <div class="content">
+                                            <p class="mb-0">New booking received</p>
+                                            <span class="text-muted small">5 minutes ago</span>
+                                        </div>
+                                    </div>
+                                </a></li>
+                                <li><a class="dropdown-item" href="#">
+                                    <div class="notification-item">
+                                        <div class="icon bg-success text-white">
+                                            <i class="fas fa-user-check"></i>
+                                        </div>
+                                        <div class="content">
+                                            <p class="mb-0">Customer verified booking</p>
+                                            <span class="text-muted small">2 hours ago</span>
+                                        </div>
+                                    </div>
+                                </a></li>
+                                <li><a class="dropdown-item" href="#">
+                                    <div class="notification-item">
+                                        <div class="icon bg-warning text-white">
+                                            <i class="fas fa-sync-alt"></i>
+                                        </div>
+                                        <div class="content">
+                                            <p class="mb-0">Data sync completed</p>
+                                            <span class="text-muted small">1 day ago</span>
+                                        </div>
+                                    </div>
+                                </a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-center small" href="#">View all notifications</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle profile-dropdown" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&auto=format&fit=crop&w=80&h=80&q=80" alt="User" class="rounded-circle me-1" width="32" height="32">
+                                <span class="d-none d-md-inline">Administrator</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="../settings/profile.html">
+                                    <i class="fas fa-user me-2"></i> Profile
+                                </a></li>
+                                <li><a class="dropdown-item" href="../settings/settings.html">
+                                    <i class="fas fa-cog me-2"></i> Settings
+                                </a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#" id="logoutBtn">
+                                    <i class="fas fa-sign-out-alt me-2"></i> Logout
+                                </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Main Content -->
+            <div class="container-fluid p-4">
+                <!-- Page Header -->
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h1 class="page-title h3">Budget Analysis</h1>
+                        <p class="text-muted">Analyze and manage budget allocations</p>
+                    </div>
+                </div>
+
+                <!-- Budget Overview -->
+                <div class="card mb-4">
+                    <div class="card-header bg-white">
+                        <h5 class="card-title mb-0">Budget Overview</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <canvas id="budgetVsActualChart" height="225"></canvas>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Budget Utilization</h6>
+                                <div class="progress mb-2" style="height: 25px;">
+                                    <div class="progress-bar bg-primary" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100">95%</div>
+                                </div>
+                                <p class="text-muted">Estimated final spending: UGX 78.4M (95% of budget)</p>
+                                
+                                <div class="mb-4">
+                                    <h6>Potential Savings</h6>
+                                    <div class="progress mb-2" style="height: 25px;">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: 5%" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100">5%</div>
+                                    </div>
+                                    <p class="text-muted">Potential savings: UGX 4.1M (5% of budget)</p>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <h6>Categories at Risk of Overspending</h6>
+                                    <div class="list-group">
+                                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h6 class="mb-1">Supplies & Feed</h6>
+                                                <p class="text-muted small mb-0">Current pace: 115% of allocation</p>
+                                            </div>
+                                            <span class="badge bg-danger rounded-pill">High Risk</span>
+                                        </div>
+                                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h6 class="mb-1">Operations</h6>
+                                                <p class="text-muted small mb-0">Current pace: 103% of allocation</p>
+                                            </div>
+                                            <span class="badge bg-warning rounded-pill">Medium Risk</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="alert alert-info">
+                                    <h6 class="alert-heading">Recommendation</h6>
+                                    <p class="mb-0">Consider reallocating funds from Administrative budget (currently underspending) to Supplies budget to prevent overspending.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Spend Rate and Trend Analysis -->
+                <div class="card mb-4">
+                    <div class="card-header bg-white">
+                        <h5 class="card-title mb-0">Spend Rate & Trend Analysis</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6 class="mb-3">Monthly Budget Usage Rate</h6>
+                                <table class="table table-bordered table-sm">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Month</th>
+                                            <th class="text-end">Budget (UGX)</th>
+                                            <th class="text-end">Actual (UGX)</th>
+                                            <th class="text-end">% Used</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>January</td>
+                                            <td class="text-end">6,875,000</td>
+                                            <td class="text-end">6,200,000</td>
+                                            <td class="text-end">90.2%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>February</td>
+                                            <td class="text-end">6,875,000</td>
+                                            <td class="text-end">5,900,000</td>
+                                            <td class="text-end">85.8%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>March</td>
+                                            <td class="text-end">6,875,000</td>
+                                            <td class="text-end">6,500,000</td>
+                                            <td class="text-end">94.5%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>April</td>
+                                            <td class="text-end">6,875,000</td>
+                                            <td class="text-end">7,100,000</td>
+                                            <td class="text-end text-danger">103.3%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>May</td>
+                                            <td class="text-end">6,875,000</td>
+                                            <td class="text-end">6,800,000</td>
+                                            <td class="text-end">98.9%</td>
+                                        </tr>
+                                        <tr class="table-light">
+                                            <td><strong>Average Rate</strong></td>
+                                            <td class="text-end">6,875,000</td>
+                                            <td class="text-end">6,500,000</td>
+                                            <td class="text-end">94.5%</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="mb-3">Spend Rate Trend</h6>
+                                <canvas id="spendRateChart" height="225"></canvas>
+                                <div class="mt-3">
+                                    <div class="alert alert-warning p-2">
+                                        <small><strong>Note:</strong> April spending rate exceeded 100% of monthly allocation, primarily due to one-time equipment purchases.</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recommendations & Actions -->
+                <div class="card mb-4">
+                    <div class="card-header bg-white">
+                        <h5 class="card-title mb-0">Recommendations & Actions</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="alert alert-warning">
+                                    <h6 class="alert-heading mb-2"><i class="fas fa-exclamation-triangle me-2"></i> Potential Issues</h6>
+                                    <ul class="mb-0">
+                                        <li><strong>Supplies & Feed Budget:</strong> Currently trending at 115% of allocation, risking a UGX 2.1M overspend if continued.</li>
+                                        <li><strong>Operations Budget:</strong> Showing 103% utilization, potential UGX 600K overspend by year end.</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="alert alert-success mt-3">
+                                    <h6 class="alert-heading mb-2"><i class="fas fa-lightbulb me-2"></i> Recommendations</h6>
+                                    <ol class="mb-0">
+                                        <li>Reallocate UGX 1.5M from Administrative to Supplies & Feed budget category.</li>
+                                        <li>Implement cost control measures for operations in Q3 to bring spending in line.</li>
+                                        <li>Review Marketing spending schedule to ensure planned campaigns stay within remaining 70% of budget.</li>
+                                    </ol>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card bg-light h-100">
+                                    <div class="card-body">
+                                        <h6 class="card-title"><i class="fas fa-tasks me-2"></i> Action Items</h6>
+                                        <div class="action-list">
+                                            <div class="form-check mb-2">
+                                                <input class="form-check-input" type="checkbox" id="action1">
+                                                <label class="form-check-label" for="action1">Request budget reallocation approval</label>
+                                            </div>
+                                            <div class="form-check mb-2">
+                                                <input class="form-check-input" type="checkbox" id="action2">
+                                                <label class="form-check-label" for="action2">Schedule supplies cost review meeting</label>
+                                            </div>
+                                            <div class="form-check mb-2">
+                                                <input class="form-check-input" type="checkbox" id="action3">
+                                                <label class="form-check-label" for="action3">Update Q3 operations spending plan</label>
+                                            </div>
+                                            <div class="form-check mb-2">
+                                                <input class="form-check-input" type="checkbox" id="action4">
+                                                <label class="form-check-label" for="action4">Inform department heads of budget status</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="action5">
+                                                <label class="form-check-label" for="action5">Schedule mid-year budget review</label>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3 text-end">
+                                            <button class="btn btn-sm btn-primary">Assign Actions</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Budget Adjustment Modal -->
+    <div class="modal fade" id="budgetAdjustmentModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Adjust Budget Allocation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="budgetAdjustmentForm">
+                        <div class="mb-3">
+                            <label for="adjustmentCategory" class="form-label">Budget Category</label>
+                            <select class="form-select" id="adjustmentCategory" required>
+                                <option value="" selected disabled>Select category</option>
+                                <option value="staff">Staff & Salaries</option>
+                                <option value="operations">Operations</option>
+                                <option value="marketing">Marketing & Promotion</option>
+                                <option value="supplies">Supplies & Feed</option>
+                                <option value="maintenance">Maintenance</option>
+                                <option value="administrative">Administrative</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="adjustmentType" class="form-label">Adjustment Type</label>
+                            <select class="form-select" id="adjustmentType" required>
+                                <option value="increase">Increase Budget</option>
+                                <option value="decrease">Decrease Budget</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="adjustmentAmount" class="form-label">Amount (UGX)</label>
+                            <input type="number" class="form-control" id="adjustmentAmount" min="1" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="adjustmentReason" class="form-label">Reason for Adjustment</label>
+                            <textarea class="form-control" id="adjustmentReason" rows="3" required></textarea>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="requireApproval" checked disabled>
+                            <label class="form-check-label" for="requireApproval">
+                                Requires management approval
+                            </label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="submitAdjustmentBtn">Submit for Approval</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Custom JS -->
+    <script src="../../js/utils.js"></script>
+    <script src="../../js/db.js"></script>
+    <script src="../../js/budget-analysis.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Budget vs Actual Chart
+            var budgetVsActualCtx = document.getElementById('budgetVsActualChart').getContext('2d');
+            var budgetVsActualChart = new Chart(budgetVsActualCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Staff & Salaries', 'Operations', 'Marketing', 'Supplies & Feed', 'Maintenance', 'Administrative'],
+                    datasets: [
+                        {
+                            label: 'Budget (UGX Millions)',
+                            data: [36, 18.5, 8, 12, 5, 3],
+                            backgroundColor: 'rgba(93, 58, 0, 0.7)'
+                        },
+                        {
+                            label: 'Actual (UGX Millions)',
+                            data: [15.2, 8.6, 2.4, 5.8, 2.1, 0.7],
+                            backgroundColor: 'rgba(218, 165, 32, 0.7)'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Amount (UGX Millions)'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Initialize Monthly Performance Chart
+            var monthlyPerformanceCtx = document.getElementById('monthlyPerformanceChart').getContext('2d');
+            var monthlyPerformanceChart = new Chart(monthlyPerformanceCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    datasets: [
+                        {
+                            label: 'Monthly Budget',
+                            data: [6.875, 6.875, 6.875, 6.875, 6.875, 6.875, 6.875, 6.875, 6.875, 6.875, 6.875, 6.875],
+                            borderColor: 'rgba(93, 58, 0, 1)',
+                            backgroundColor: 'rgba(93, 58, 0, 0.1)',
+                            borderWidth: 2,
+                            fill: false,
+                            pointRadius: 3
+                        },
+                        {
+                            label: 'Actual Spending',
+                            data: [6.2, 5.9, 6.5, 7.1, 6.8, 6.3, null, null, null, null, null, null],
+                            borderColor: 'rgba(218, 165, 32, 1)',
+                            backgroundColor: 'rgba(218, 165, 32, 0.1)',
+                            borderWidth: 2,
+                            fill: false,
+                            pointRadius: 3
+                        },
+                        {
+                            label: 'Projected Spending',
+                            data: [6.2, 5.9, 6.5, 7.1, 6.8, 6.3, 6.5, 6.7, 6.8, 7.0, 7.2, 7.4],
+                            borderColor: 'rgba(192, 192, 192, 1)',
+                            borderDash: [5, 5],
+                            backgroundColor: 'transparent',
+                            borderWidth: 2,
+                            fill: false,
+                            pointRadius: 2
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Amount (UGX Millions)'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Initialize Spend Rate Chart
+            var spendRateCtx = document.getElementById('spendRateChart').getContext('2d');
+            var spendRateChart = new Chart(spendRateCtx, {
+                type: 'line',
+                data: {
+                    labels: ['January', 'February', 'March', 'April', 'May', 'Forecasted Average'],
+                    datasets: [
+                        {
+                            label: 'Monthly Spend Rate (%)',
+                            data: [90.2, 85.8, 94.5, 103.3, 98.9, 96.5],
+                            borderColor: 'rgba(46, 204, 113, 1)',
+                            backgroundColor: 'rgba(46, 204, 113, 0.1)',
+                            fill: true,
+                            tension: 0.3
+                        },
+                        {
+                            label: 'Target Rate (100%)',
+                            data: [100, 100, 100, 100, 100, 100],
+                            borderColor: 'rgba(231, 76, 60, 1)',
+                            borderDash: [5, 5],
+                            fill: false,
+                            pointRadius: 0
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            min: 80,
+                            max: 110,
+                            title: {
+                                display: true,
+                                text: 'Spend Rate (%)'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Initialize all tooltips
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+            
+            // Handle budget adjustment
+            document.getElementById('submitAdjustmentBtn').addEventListener('click', function() {
+                var form = document.getElementById('budgetAdjustmentForm');
+                var category = document.getElementById('adjustmentCategory').value;
+                var type = document.getElementById('adjustmentType').value;
+                var amount = document.getElementById('adjustmentAmount').value;
+                var reason = document.getElementById('adjustmentReason').value;
+                
+                if (!category || !amount || !reason) {
+                    Swal.fire({
+                        title: 'Missing Information',
+                        text: 'Please fill in all required fields',
+                        icon: 'error'
+                    });
+                    return;
+                }
+                
+                // Handle the budget adjustment (in real app, this would be sent to server)
+                Swal.fire({
+                    title: 'Adjustment Submitted',
+                    text: 'Your budget adjustment request has been submitted for approval.',
+                    icon: 'success'
+                }).then(() => {
+                    var modal = bootstrap.Modal.getInstance(document.getElementById('budgetAdjustmentModal'));
+                    modal.hide();
+                    form.reset();
+                });
+            });
+        });
+    </script>
+</body>
+</html>

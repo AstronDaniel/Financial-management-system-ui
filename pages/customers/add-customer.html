@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Customer</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <!-- Flatpickr -->
+    <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="../../css/styles.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="mb-4">Add Customer</h1>
+                <div class="card">
+                    <div class="card-body">
+                        <form id="customerForm" class="needs-validation" novalidate>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="firstName" class="form-label">First Name</label>
+                                    <input type="text" class="form-control" id="firstName" placeholder="Enter first name" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="lastName" class="form-label">Last Name</label>
+                                    <input type="text" class="form-control" id="lastName" placeholder="Enter last name" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email" placeholder="Enter email address" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="phone" class="form-label">Phone Number</label>
+                                    <input type="tel" class="form-control" id="phone" placeholder="Enter phone number" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="dateOfBirth" class="form-label">Date of Birth</label>
+                                    <input type="text" class="form-control" id="dateOfBirth" placeholder="Select date of birth">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="address" class="form-label">Address</label>
+                                    <input type="text" class="form-control" id="address" placeholder="Enter address">
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <label for="specialRequests" class="form-label">Special Requests/Preferences</label>
+                                    <textarea class="form-control" id="specialRequests" rows="3" placeholder="Any special requests or preferences"></textarea>
+                                </div>
+                                
+                                <div class="col-12 mb-3">
+                                    <label class="form-label">Communication Preferences</label>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="checkbox" id="emailOptIn" checked>
+                                        <label class="form-check-label" for="emailOptIn">
+                                            Email communications (promotions, newsletters)
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="smsOptIn" checked>
+                                        <label class="form-check-label" for="smsOptIn">
+                                            SMS notifications (booking reminders, updates)
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Form Navigation Buttons -->
+                            <div class="d-flex justify-content-between mt-4">
+                                <div>
+                                    <button type="button" class="btn btn-outline-secondary" id="prevBtn" disabled>
+                                        <i class="fas fa-arrow-left me-1"></i> Previous
+                                    </button>
+                                    <button type="button" class="btn btn-outline-primary" id="nextBtn">
+                                        Next <i class="fas fa-arrow-right ms-1"></i>
+                                    </button>
+                                </div>
+                                <div>
+                                    <button type="button" class="btn btn-outline-secondary me-2" id="cancelBtn">Cancel</button>
+                                    <button type="submit" class="btn btn-primary" id="saveCustomerBtn">
+                                        <i class="fas fa-save me-1"></i> Save Customer
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <!-- Customer Preview -->
+                <div class="card" id="customerPreview" style="display: none;">
+                    <div class="card-header bg-white">
+                        <h5 class="card-title mb-0">Customer Preview</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4 text-center mb-3">
+                                <div class="preview-image-container mb-2">
+                                    <img src="https://via.placeholder.com/200" alt="Customer Preview" class="rounded-circle img-thumbnail" id="previewImage" width="150" height="150">
+                                </div>
+                                <h5 id="previewName">Customer Name</h5>
+                                <p class="badge bg-success" id="previewStatus">Active</p>
+                                <p class="text-muted" id="previewType">Individual</p>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <h6 class="fw-bold">Contact Information</h6>
+                                        <p class="mb-1" id="previewEmail">email@example.com</p>
+                                        <p class="mb-1" id="previewPhone">+256 000 000000</p>
+                                        <p class="mb-0" id="previewAddress">City, Country</p>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <h6 class="fw-bold">Preferences</h6>
+                                        <p class="mb-1" id="previewPreferences">No preferences set</p>
+                                        <p class="mb-0" id="previewDietary">No dietary restrictions</p>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-12">
+                                        <h6 class="fw-bold">Notes</h6>
+                                        <p class="mb-0" id="previewNotes">No notes provided</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Flatpickr -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Custom JS -->
+    <script src="../../js/utils.js"></script>
+    <script src="../../js/db.js"></script>
+    <script src="../../js/add-customer.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+            // Initialize flatpickr for date fields
+            flatpickr("#dateOfBirth", {
+                dateFormat: "Y-m-d",
+                maxDate: "today"
+            });
+
+            // Handle customer type change
+            $('#customerType').on('change', function() {
+                let type = $(this).val();
+                
+                if (type === 'individual') {
+                    $('.individual-field').removeClass('d-none');
+                    $('.business-field').addClass('d-none');
+                    $('#organizationName').prop('required', false);
+                    $('#firstName, #lastName').prop('required', true);
+                } else if (type === 'business' || type === 'tour-group') {
+                    $('.individual-field').addClass('d-none');
+                    $('.business-field').removeClass('d-none');
+                    $('#organizationName').prop('required', true);
+                    $('#firstName, #lastName').prop('required', false);
+                }
+            });
+
+            // Handle profile image preview
+            $('#customerImage').on('change', function(e) {
+                if (e.target.files.length > 0) {
+                    let file = e.target.files[0];
+                    let reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        $('#previewImage').attr('src', e.target.result);
+                    }
+                    
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Handle form navigation
+            let currentTab = 0;
+            const tabs = ['basic-tab', 'contact-tab', 'additional-tab', 'preferences-tab'];
+            
+            $('#nextBtn').on('click', function() {
+                if (currentTab < tabs.length - 1) {
+                    currentTab++;
+                    $(`#${tabs[currentTab]}`).tab('show');
+                    $('#prevBtn').prop('disabled', false);
+                    
+                    if (currentTab === tabs.length - 1) {
+                        $(this).prop('disabled', true);
+                    }
+                }
+            });
+            
+            $('#prevBtn').on('click', function() {
+                if (currentTab > 0) {
+                    currentTab--;
+                    $(`#${tabs[currentTab]}`).tab('show');
+                    $('#nextBtn').prop('disabled', false);
+                    
+                    if (currentTab === 0) {
+                        $(this).prop('disabled', true);
+                    }
+                }
+            });
+            
+            // Reset navigation when clicking directly on tabs
+            $('.nav-link').on('click', function() {
+                currentTab = tabs.indexOf($(this).attr('id'));
+                $('#prevBtn').prop('disabled', currentTab === 0);
+                $('#nextBtn').prop('disabled', currentTab === tabs.length - 1);
+            });
+
+            // Form submission
+            $('#customerForm').on('submit', function(e) {
+                e.preventDefault();
+                
+                // Check form validity
+                if (!this.checkValidity()) {
+                    e.stopPropagation();
+                    $(this).addClass('was-validated');
+                    
+                    // Find which tab has errors and switch to it
+                    for (let i = 0; i < tabs.length; i++) {
+                        let tabContent = $(`#${tabs[i]}`).attr('data-bs-target');
+                        if ($(tabContent).find('.form-control:invalid, .form-select:invalid').length > 0) {
+                            $(`#${tabs[i]}`).tab('show');
+                            currentTab = i;
+                            $('#prevBtn').prop('disabled', currentTab === 0);
+                            $('#nextBtn').prop('disabled', currentTab === tabs.length - 1);
+                            break;
+                        }
+                    }
+                    
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Validation Error',
+                        text: 'Please fill in all required fields correctly.'
+                    });
+                    
+                    return;
+                }
+                
+                // Generate customer data object
+                let customerData = {
+                    id: 'CUST-' + Math.floor(1000 + Math.random() * 9000),
+                    type: $('#customerType').val(),
+                    status: $('#status').val(),
+                    email: $('#email').val(),
+                    phone: $('#phone').val(),
+                    createdAt: new Date().toISOString(),
+                    updatedAt: new Date().toISOString()
+                };
+                
+                if ($('#customerType').val() === 'individual') {
+                    customerData.firstName = $('#firstName').val();
+                    customerData.lastName = $('#lastName').val();
+                    customerData.fullName = $('#firstName').val() + ' ' + $('#lastName').val();
+                } else {
+                    customerData.organizationName = $('#organizationName').val();
+                    customerData.contactPerson = $('#contactPerson').val();
+                    customerData.position = $('#position').val();
+                    customerData.fullName = $('#organizationName').val();
+                }
+                
+                // Add additional fields
+                customerData.alternatePhone = $('#alternatePhone').val();
+                customerData.country = $('#country').val();
+                customerData.city = $('#city').val();
+                customerData.state = $('#state').val();
+                customerData.address = $('#address').val();
+                customerData.postalCode = $('#postalCode').val();
+                customerData.website = $('#website').val();
+                customerData.referralSource = $('#referralSource').val();
+                customerData.dateOfBirth = $('#dateOfBirth').val();
+                customerData.idType = $('#idType').val();
+                customerData.idNumber = $('#idNumber').val();
+                customerData.notes = $('#notes').val();
+                customerData.isVip = $('#vip').is(':checked');
+                customerData.preferredLanguage = $('#preferredLanguage').val();
+                customerData.dietaryRestrictions = $('#dietaryRestrictions').val();
+                customerData.accessibilityNeeds = $('#accessibilityNeeds').val();
+                customerData.specialRequests = $('#specialRequests').val();
+                customerData.emailOptIn = $('#emailOptIn').is(':checked');
+                customerData.smsOptIn = $('#smsOptIn').is(':checked');
+                
+                // Preferred activities
+                customerData.preferredActivities = [];
+                if ($('#prefCulturalTour').is(':checked')) customerData.preferredActivities.push('Cultural Tours');
+                if ($('#prefCowExperience').is(':checked')) customerData.preferredActivities.push('Cow Experience');
+                if ($('#prefTraditionalDance').is(':checked')) customerData.preferredActivities.push('Traditional Dance');
+                if ($('#prefArtifactWorkshop').is(':checked')) customerData.preferredActivities.push('Artifact Workshop');
+                
+                // In a real app, this would save to IndexedDB and sync to server
+                // For this demo, we'll show a success message
+
+                // Update preview fields
+                $('#previewName').text(customerData.fullName);
+                $('#previewType').text(customerData.type.charAt(0).toUpperCase() + customerData.type.slice(1));
+                $('#previewStatus').text(customerData.status.charAt(0).toUpperCase() + customerData.status.slice(1));
+                $('#previewEmail').text(customerData.email);
+                $('#previewPhone').text(customerData.phone);
+                
+                let addressStr = customerData.address;
+                if (customerData.city) addressStr += (addressStr ? ', ' : '') + customerData.city;
+                if (customerData.state) addressStr += (addressStr ? ', ' : '') + customerData.state;
+                if (customerData.country) addressStr += (addressStr ? ', ' : '') + customerData.country;
+                $('#previewAddress').text(addressStr || 'No address provided');
+                
+                let preferencesStr = customerData.preferredActivities.join(', ');
+                $('#previewPreferences').text(preferencesStr || 'No preferences set');
+                $('#previewDietary').text(customerData.dietaryRestrictions || 'No dietary restrictions');
+                $('#previewNotes').text(customerData.notes || 'No notes provided');
+                
+                // Show preview
+                $('#customerForm').hide();
+                $('#customerPreview').show();
+                
+                // Show success message
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Customer Added',
+                    text: 'Customer information has been saved successfully!',
+                    confirmButtonText: 'View Customer'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Redirect to customer details page
+                        window.location.href = `customer-details.html?id=${customerData.id}`;
+                    } else {
+                        // Reset form
+                        $('#customerForm')[0].reset();
+                        $(this).removeClass('was-validated');
+                        $('#previewImage').attr('src', 'https://via.placeholder.com/200');
+                        currentTab = 0;
+                        $(`#${tabs[currentTab]}`).tab('show');
+                        $('#prevBtn').prop('disabled', true);
+                        $('#nextBtn').prop('disabled', false);
+                    }
+                });
+            });
+            
+            // Handle cancel button
+            $('#cancelBtn').on('click', function() {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: 'Any unsaved changes will be lost.',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, cancel',
+                    cancelButtonText: 'No, continue editing'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = 'all-customers.html';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

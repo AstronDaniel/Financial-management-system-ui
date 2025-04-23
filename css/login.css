@@ -1,0 +1,94 @@
+/* Login Page Specific Styles */
+.login-card {
+    overflow: hidden;
+    border-radius: 1rem;
+}
+
+.login-image {
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(93, 58, 0, 0.7), rgba(218, 165, 32, 0.6));
+}
+
+.brand-text {
+    color: var(--primary-color);
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.login-btn {
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.forgot-link {
+    color: var(--secondary-color);
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: color 0.3s ease;
+}
+
+.forgot-link:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
+.input-group-text {
+    background-color: #fff;
+    border-right: none;
+}
+
+.form-control {
+    border-left: none;
+}
+
+.toggle-password {
+    cursor: pointer;
+}
+
+.form-control:focus, .form-control:focus + .input-group-text,
+.input-group-text + .form-control:focus {
+    border-color: var(--secondary-color);
+    box-shadow: none;
+}
+
+/* Network status indicator */
+.network-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+/* Animation for login form */
+@keyframes slideInFromRight {
+    0% {
+        transform: translateX(50px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.card-body {
+    animation: slideInFromRight 0.5s ease-out;
+}

@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Budgets - ACCCA Financial Management System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap5.min.css">
+    <!-- Flatpickr -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/dashboard.css">
+</head>
+<body>
+    <!-- Main Layout -->
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3 class="mb-0">ACCCA</h3>
+                <p class="text-muted mb-0 small">Financial Management System</p>
+            </div>
+
+            <div class="profile-section">
+                <div class="profile-info">
+                    <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&auto=format&fit=crop&w=120&h=120&q=80" alt="User Profile" class="profile-img">
+                    <div>
+                        <h6 class="mb-0" id="userFullName">Administrator</h6>
+                        <span class="text-muted small" id="userRole">Admin</span>
+                    </div>
+                </div>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li>
+                    <a href="../dashboard.html">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="#transactionsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-exchange-alt"></i> Transactions
+                    </a>
+                    <ul class="collapse list-unstyled" id="transactionsSubmenu">
+                        <li>
+                            <a href="../transactions/all-transactions.html">All Transactions</a>
+                        </li>
+                        <li>
+                            <a href="../transactions/add-transaction.html">Add Transaction</a>
+                        </li>
+                        <li>
+                            <a href="../transactions/sales.html">Sales</a>
+                        </li>
+                        <li>
+                            <a href="../transactions/expenses.html">Expenses</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#bookingsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-calendar-check"></i> Bookings
+                    </a>
+                    <ul class="collapse list-unstyled" id="bookingsSubmenu">
+                        <li>
+                            <a href="../bookings/all-bookings.html">All Bookings</a>
+                        </li>
+                        <li>
+                            <a href="../bookings/add-booking.html">Add Booking</a>
+                        </li>
+                        <li>
+                            <a href="../bookings/calendar.html">Calendar</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#customersSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-users"></i> Customers
+                    </a>
+                    <ul class="collapse list-unstyled" id="customersSubmenu">
+                        <li>
+                            <a href="../customers/all-customers.html">All Customers</a>
+                        </li>
+                        <li>
+                            <a href="../customers/add-customer.html">Add Customer</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="active">
+                    <a href="#budgetsSubmenu" data-bs-toggle="collapse" aria-expanded="true" class="dropdown-toggle">
+                        <i class="fas fa-chart-pie"></i> Budgets
+                    </a>
+                    <ul class="collapse show list-unstyled" id="budgetsSubmenu">
+                        <li class="active">
+                            <a href="all-budgets.html">All Budgets</a>
+                        </li>
+                        <li>
+                            <a href="add-budget.html">Create Budget</a>
+                        </li>
+                        <li>
+                            <a href="analysis.html">Budget Analysis</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#reportsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-chart-line"></i> Reports
+                    </a>
+                    <ul class="collapse list-unstyled" id="reportsSubmenu">
+                        <li>
+                            <a href="../reports/income-statement.html">Income Statement</a>
+                        </li>
+                        <li>
+                            <a href="../reports/cash-flow.html">Cash Flow</a>
+                        </li>
+                        <li>
+                            <a href="../reports/revenue-sharing.html">Revenue Sharing</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="../settings/settings.html">
+                        <i class="fas fa-cog"></i> Settings
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sync-status">
+                <div class="sync-info">
+                    <span class="badge badge-synced" id="syncStatus">All data synced</span>
+                    <button class="btn btn-sm btn-outline-light" id="syncBtn">
+                        <i class="fas fa-sync-alt"></i> Sync Now
+                    </button>
+                </div>
+                <div class="connection-status">
+                    <i class="fas fa-wifi text-success"></i>
+                    <span id="connectionStatus">Online</span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Page Content -->
+        <div id="content">
+            <!-- Top Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+                <div class="container-fluid">
+                    <button type="button" id="sidebarCollapse" class="btn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    
+                    <div class="ms-auto d-flex align-items-center">
+                        <div class="dropdown notifications me-3">
+                            <button class="btn position-relative" type="button" id="notificationsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-bell"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    3
+                                    <span class="visually-hidden">unread notifications</span>
+                                </span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationsDropdown">
+                                <li><h6 class="dropdown-header">Notifications</h6></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">
+                                    <div class="notification-item">
+                                        <div class="icon bg-primary text-white">
+                                            <i class="fas fa-money-bill-wave"></i>
+                                        </div>
+                                        <div class="content">
+                                            <p class="mb-0">New transaction recorded</p>
+                                            <span class="text-muted small">5 minutes ago</span>
+                                        </div>
+                                    </div>
+                                </a></li>
+                                <li><a class="dropdown-item" href="#">
+                                    <div class="notification-item">
+                                        <div class="icon bg-success text-white">
+                                            <i class="fas fa-calendar-check"></i>
+                                        </div>
+                                        <div class="content">
+                                            <p class="mb-0">New booking confirmed</p>
+                                            <span class="text-muted small">2 hours ago</span>
+                                        </div>
+                                    </div>
+                                </a></li>
+                                <li><a class="dropdown-item" href="#">
+                                    <div class="notification-item">
+                                        <div class="icon bg-warning text-white">
+                                            <i class="fas fa-sync-alt"></i>
+                                        </div>
+                                        <div class="content">
+                                            <p class="mb-0">Data sync completed</p>
+                                            <span class="text-muted small">1 day ago</span>
+                                        </div>
+                                    </div>
+                                </a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-center small" href="#">View all notifications</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle profile-dropdown" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&auto=format&fit=crop&w=80&h=80&q=80" alt="User" class="rounded-circle me-1" width="32" height="32">
+                                <span class="d-none d-md-inline">Administrator</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="../settings/profile.html">
+                                    <i class="fas fa-user me-2"></i> Profile
+                                </a></li>
+                                <li><a class="dropdown-item" href="../settings/settings.html">
+                                    <i class="fas fa-cog me-2"></i> Settings
+                                </a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#" id="logoutBtn">
+                                    <i class="fas fa-sign-out-alt me-2"></i> Logout
+                                </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Main Content -->
+            <div class="container-fluid p-4">
+                <!-- Page Header -->
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h1 class="page-title h3">Budget Management</h1>
+                        <p class="text-muted">Manage and track all budgets</p>
+                    </div>
+                    <div class="col-md-6 d-flex justify-content-md-end">
+                        <div class="btn-group me-2">
+                            <button class="btn btn-outline-secondary" id="exportBtn">
+                                <i class="fas fa-file-export me-2"></i> Export
+                            </button>
+                            <button class="btn btn-outline-secondary">
+                                <i class="fas fa-print me-2"></i> Print
+                            </button>
+                        </div>
+                        <a href="add-budget.html" class="btn btn-primary">
+                            <i class="fas fa-plus me-2"></i> Create Budget
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Budget Stats Card -->
+                <div class="row mb-4">
+                    <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                        <div class="card dashboard-card h-100">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h6 class="card-subtitle text-muted mb-1">Annual Budget (2025)</h6>
+                                        <h2 class="card-title mb-2">UGX 82.5M</h2>
+                                        <p class="card-text"><span class="badge bg-success me-1"><i class="fas fa-arrow-up"></i> 10%</span> from last year</p>
+                                    </div>
+                                    <div class="stat-icon bg-primary text-white">
+                                        <i class="fas fa-chart-pie"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                        <div class="card dashboard-card h-100">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h6 class="card-subtitle text-muted mb-1">Used Budget (YTD)</h6>
+                                        <h2 class="card-title mb-2">UGX 32.6M</h2>
+                                        <p class="card-text"><span class="badge bg-secondary me-1">39.5%</span> of annual budget</p>
+                                    </div>
+                                    <div class="stat-icon bg-success text-white">
+                                        <i class="fas fa-money-bill-wave"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                        <div class="card dashboard-card h-100">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h6 class="card-subtitle text-muted mb-1">Remaining (YTD)</h6>
+                                        <h2 class="card-title mb-2">UGX 49.9M</h2>
+                                        <p class="card-text"><span class="badge bg-info me-1">60.5%</span> of annual budget</p>
+                                    </div>
+                                    <div class="stat-icon bg-info text-white">
+                                        <i class="fas fa-wallet"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card dashboard-card h-100">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h6 class="card-subtitle text-muted mb-1">Spending Rate</h6>
+                                        <h2 class="card-title mb-2">99%</h2>
+                                        <p class="card-text"><span class="badge bg-success me-1">On Track</span> with projections</p>
+                                    </div>
+                                    <div class="stat-icon bg-warning text-white">
+                                        <i class="fas fa-tachometer-alt"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Filter Card -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="row g-3 align-items-end">
+                            <div class="col-md-3">
+                                <label for="yearFilter" class="form-label">Year</label>
+                                <select class="form-select" id="yearFilter">
+                                    <option value="2025" selected>2025</option>
+                                    <option value="2024">2024</option>
+                                    <option value="2023">2023</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="categoryFilter" class="form-label">Department/Category</label>
+                                <select class="form-select" id="categoryFilter">
+                                    <option value="all" selected>All Categories</option>
+                                    <option value="operations">Operations</option>
+                                    <option value="staff">Staff & Salaries</option>
+                                    <option value="marketing">Marketing</option>
+                                    <option value="maintenance">Maintenance</option>
+                                    <option value="supplies">Supplies & Feed</option>
+                                    <option value="admin">Administrative</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="statusFilter" class="form-label">Status</label>
+                                <select class="form-select" id="statusFilter">
+                                    <option value="all" selected>All Status</option>
+                                    <option value="active">Active</option>
+                                    <option value="draft">Draft</option>
+                                    <option value="archived">Archived</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 d-flex">
+                                <button type="button" class="btn btn-primary me-2 flex-grow-1" id="applyFilters">
+                                    <i class="fas fa-filter me-2"></i> Apply Filters
+                                </button>
+                                <button type="button" class="btn btn-outline-secondary" id="resetFilters">
+                                    <i class="fas fa-undo"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Budget Table Card -->
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="budgetsTable" class="table table-hover display responsive nowrap w-100">
+                                <thead>
+                                    <tr>
+                                        <th>Budget ID</th>
+                                        <th>Name/Title</th>
+                                        <th>Period</th>
+                                        <th>Category</th>
+                                        <th>Amount (UGX)</th>
+                                        <th>Spent</th>
+                                        <th>Remaining</th>
+                                        <th>Progress</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>BDG-0001</td>
+                                        <td>Annual Operating Budget</td>
+                                        <td>Jan 1 - Dec 31, 2025</td>
+                                        <td>All Categories</td>
+                                        <td>82,500,000</td>
+                                        <td>32,600,000</td>
+                                        <td>49,900,000</td>
+                                        <td>
+                                            <div class="progress" style="height: 5px;">
+                                                <div class="progress-bar bg-success" role="progressbar" style="width: 39.5%" aria-valuenow="39.5" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <small class="text-muted">39.5%</small>
+                                        </td>
+                                        <td><span class="badge bg-success">Active</span></td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-sm btn-outline-secondary view-budget" data-bs-toggle="tooltip" title="View Details">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-outline-primary edit-budget" data-bs-toggle="tooltip" title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="tooltip" title="View Analysis">
+                                                    <i class="fas fa-chart-bar"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>BDG-0002</td>
+                                        <td>Staff & Salaries</td>
+                                        <td>Jan 1 - Dec 31, 2025</td>
+                                        <td>Staff</td>
+                                        <td>25,600,000</td>
+                                        <td>10,670,000</td>
+                                        <td>14,930,000</td>
+                                        <td>
+                                            <div class="progress" style="height: 5px;">
+                                                <div class="progress-bar bg-success" role="progressbar" style="width: 41.7%" aria-valuenow="41.7" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <small class="text-muted">41.7%</small>
+                                        </td>
+                                        <td><span class="badge bg-success">Active</span></td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-sm btn-outline-secondary view-budget" data-bs-toggle="tooltip" title="View Details">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-outline-primary edit-budget" data-bs-toggle="tooltip" title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="tooltip" title="View Analysis">
+                                                    <i class="fas fa-chart-bar"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>BDG-0003</td>
+                                        <td>Operations Budget</td>
+                                        <td>Jan 1 - Dec 31, 2025</td>
+                                        <td>Operations</td>
+                                        <td>18,450,000</td>
+                                        <td>7,325,000</td>
+                                        <td>11,125,000</td>
+                                        <td>
+                                            <div class="progress" style="height: 5px;">
+                                                <div class="progress-bar bg-success" role="progressbar" style="width: 39.7%" aria-valuenow="39.7" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <small class="text-muted">39.7%</small>
+                                        </td>
+                                        <td><span class="badge bg-success">Active</span></td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-sm btn-outline-secondary view-budget" data-bs-toggle="tooltip" title="View Details">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-outline-primary edit-budget" data-bs-toggle="tooltip" title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="tooltip" title="View Analysis">
+                                                    <i class="fas fa-chart-bar"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>BDG-0004</td>
+                                        <td>Marketing & Promotion</td>
+                                        <td>Jan 1 - Dec 31, 2025</td>
+                                        <td>Marketing</td>
+                                        <td>12,300,000</td>
+                                        <td>4,250,000</td>
+                                        <td>8,050,000</td>
+                                        <td>
+                                            <div class="progress" style="height: 5px;">
+                                                <div class="progress-bar bg-success" role="progressbar" style="width: 34.6%" aria-valuenow="34.6" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <small class="text-muted">34.6%</small>
+                                        </td>
+                                        <td><span class="badge bg-success">Active</span></td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-sm btn-outline-secondary view-budget" data-bs-toggle="tooltip" title="View Details">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-outline-primary edit-budget" data-bs-toggle="tooltip" title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="tooltip" title="View Analysis">
+                                                    <i class="fas fa-chart-bar"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>BDG-0005</td>
+                                        <td>Supplies & Feed</td>
+                                        <td>Jan 1 - Dec 31, 2025</td>
+                                        <td>Supplies</td>
+                                        <td>15,750,000</td>
+                                        <td>6,850,000</td>
+                                        <td>8,900,000</td>
+                                        <td>
+                                            <div class="progress" style="height: 5px;">
+                                                <div class="progress-bar bg-warning" role="progressbar" style="width: 43.5%" aria-valuenow="43.5" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <small class="text-muted">43.5%</small>
+                                        </td>
+                                        <td><span class="badge bg-success">Active</span></td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-sm btn-outline-secondary view-budget" data-bs-toggle="tooltip" title="View Details">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-outline-primary edit-budget" data-bs-toggle="tooltip" title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="tooltip" title="View Analysis">
+                                                    <i class="fas fa-chart-bar"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>BDG-0006</td>
+                                        <td>Maintenance & Repairs</td>
+                                        <td>Jan 1 - Dec 31, 2025</td>
+                                        <td>Maintenance</td>
+                                        <td>10,400,000</td>
+                                        <td>3,505,000</td>
+                                        <td>6,895,000</td>
+                                        <td>
+                                            <div class="progress" style="height: 5px;">
+                                                <div class="progress-bar bg-success" role="progressbar" style="width: 33.7%" aria-valuenow="33.7" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <small class="text-muted">33.7%</small>
+                                        </td>
+                                        <td><span class="badge bg-success">Active</span></td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-sm btn-outline-secondary view-budget" data-bs-toggle="tooltip" title="View Details">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-outline-primary edit-budget" data-bs-toggle="tooltip" title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="tooltip" title="View Analysis">
+                                                    <i class="fas fa-chart-bar"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>BDG-0007</td>
+                                        <td>Administrative Expenses</td>
+                                        <td>Jan 1 - Dec 31, 2025</td>
+                                        <td>Admin</td>
+                                        <td>8,350,000</td>
+                                        <td>2,780,000</td>
+                                        <td>5,570,000</td>
+                                        <td>
+                                            <div class="progress" style="height: 5px;">
+                                                <div class="progress-bar bg-success" role="progressbar" style="width: 33.3%" aria-valuenow="33.3" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <small class="text-muted">33.3%</small>
+                                        </td>
+                                        <td><span class="badge bg-success">Active</span></td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-sm btn-outline-secondary view-budget" data-bs-toggle="tooltip" title="View Details">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-outline-primary edit-budget" data-bs-toggle="tooltip" title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="tooltip" title="View Analysis">
+                                                    <i class="fas fa-chart-bar"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>BDG-0008</td>
+                                        <td>Q2 2024 Marketing Campaign</td>
+                                        <td>Apr 1 - Jun 30, 2024</td>
+                                        <td>Marketing</td>
+                                        <td>3,500,000</td>
+                                        <td>3,500,000</td>
+                                        <td>0</td>
+                                        <td>
+                                            <div class="progress" style="height: 5px;">
+                                                <div class="progress-bar bg-info" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <small class="text-muted">100%</small>
+                                        </td>
+                                        <td><span class="badge bg-secondary">Archived</span></td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-sm btn-outline-secondary view-budget" data-bs-toggle="tooltip" title="View Details">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="tooltip" title="View Analysis">
+                                                    <i class="fas fa-chart-bar"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Budget Details Modal -->
+    <div class="modal fade" id="budgetDetailsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Budget Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-4">
+                        <div class="col-md-8">
+                            <h4 id="modalBudgetTitle">Operations Budget</h4>
+                            <p class="text-muted" id="modalBudgetPeriod">January 1 - December 31, 2025</p>
+                            <p><span class="badge bg-success" id="modalBudgetStatus">Active</span></p>
+                        </div>
+                        <div class="col-md-4 text-md-end">
+                            <h5 class="text-primary" id="modalBudgetAmount">UGX 18,450,000</h5>
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <h5 class="mb-3">Budget Information</h5>
+                            <p class="mb-2"><strong>Budget ID:</strong> <span id="modalBudgetId">BDG-0003</span></p>
+                            <p class="mb-2"><strong>Department/Category:</strong> <span id="modalBudgetCategory">Operations</span></p>
+                            <p class="mb-2"><strong>Created By:</strong> <span id="modalBudgetCreator">Administrator</span></p>
+                            <p class="mb-0"><strong>Last Updated:</strong> <span id="modalBudgetUpdated">May 5, 2025</span></p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="mb-3">Current Status</h5>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Amount Spent:</span>
+                                <strong id="modalBudgetSpent">UGX 7,325,000</strong>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Remaining:</span>
+                                <strong id="modalBudgetRemaining">UGX 11,125,000</strong>
+                            </div>
+                            <div class="mb-2">
+                                <div class="progress" style="height: 8px;">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 39.7%" aria-valuenow="39.7" aria-valuemin="0" aria-valuemax="100" id="modalBudgetProgressBar"></div>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <small class="text-muted">Progress</small>
+                                    <small class="text-muted" id="modalBudgetProgressPercent">39.7% used</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h5 class="mb-3">Budget Description</h5>
+                    <p class="mb-4" id="modalBudgetDescription">This budget covers all operational expenses for the ACCCA facility including daily running costs, utilities, transportation, and general operational needs. This does not include staff salaries or maintenance costs which are covered under separate budget categories.</p>
+                    
+                    <h5 class="mb-3">Monthly Allocation</h5>
+                    <div class="table-responsive mb-4">
+                        <table class="table table-bordered table-sm">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Month</th>
+                                    <th class="text-end">Allocation (UGX)</th>
+                                    <th class="text-end">Actual (UGX)</th>
+                                    <th class="text-end">Variance</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>January</td>
+                                    <td class="text-end">1,537,500</td>
+                                    <td class="text-end">1,520,000</td>
+                                    <td class="text-end text-success">17,500</td>
+                                </tr>
+                                <tr>
+                                    <td>February</td>
+                                    <td class="text-end">1,537,500</td>
+                                    <td class="text-end">1,485,000</td>
+                                    <td class="text-end text-success">52,500</td>
+                                </tr>
+                                <tr>
+                                    <td>March</td>
+                                    <td class="text-end">1,537,500</td>
+                                    <td class="text-end">1,620,000</td>
+                                    <td class="text-end text-danger">(82,500)</td>
+                                </tr>
+                                <tr>
+                                    <td>April</td>
+                                    <td class="text-end">1,537,500</td>
+                                    <td class="text-end">1,350,000</td>
+                                    <td class="text-end text-success">187,500</td>
+                                </tr>
+                                <tr>
+                                    <td>May</td>
+                                    <td class="text-end">1,537,500</td>
+                                    <td class="text-end">1,350,000</td>
+                                    <td class="text-end text-success">187,500</td>
+                                </tr>
+                                <tr>
+                                    <td>June - December</td>
+                                    <td class="text-end">10,762,500</td>
+                                    <td class="text-end">0</td>
+                                    <td class="text-end">-</td>
+                                </tr>
+                                <tr class="table-light fw-bold">
+                                    <td>Total</td>
+                                    <td class="text-end">18,450,000</td>
+                                    <td class="text-end">7,325,000</td>
+                                    <td class="text-end text-success">11,125,000</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <h5 class="mb-3">Notes & Adjustments</h5>
+                    <div class="list-group">
+                        <div class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">Budget Adjustment: March Overspend</h6>
+                                <small>Mar 31, 2025</small>
+                            </div>
+                            <p class="mb-1">Additional expenses due to unexpected fuel price increase. Approved by management.</p>
+                            <small class="text-muted">Added by: Administrator</small>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">Budget Creation</h6>
+                                <small>Dec 15, 2024</small>
+                            </div>
+                            <p class="mb-1">Initial budget approval for 2025 fiscal year.</p>
+                            <small class="text-muted">Added by: Administrator</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a href="add-budget.html?id=BDG-0003" class="btn btn-primary">
+                        <i class="fas fa-edit me-1"></i> Edit Budget
+                    </a>
+                    <a href="analysis.html?budget=BDG-0003" class="btn btn-info">
+                        <i class="fas fa-chart-bar me-1"></i> View Analysis
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- DataTables -->
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.4.1/js/responsive.bootstrap5.min.js"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Custom JS -->
+    <script src="../../js/utils.js"></script>
+    <script src="../../js/db.js"></script>
+    <script src="../../js/budgets.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+            // Initialize DataTable
+            var table = $('#budgetsTable').DataTable({
+                responsive: true,
+                ordering: true,
+                searching: true,
+                paging: true,
+                lengthMenu: [10, 25, 50, 100],
+                language: {
+                    search: "",
+                    searchPlaceholder: "Search budgets..."
+                }
+            });
+            
+            // Initialize tooltips
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+            
+            // View Budget Details
+            $('.view-budget').on('click', function() {
+                var budgetDetailsModal = new bootstrap.Modal(document.getElementById('budgetDetailsModal'));
+                budgetDetailsModal.show();
+            });
+            
+            // Apply Filters
+            $('#applyFilters').on('click', function() {
+                // In a real app, this would filter data from the database
+                // For this demo, just show success message
+                Swal.fire({
+                    title: 'Filters Applied',
+                    text: 'The budget data has been filtered.',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+            });
+            
+            // Reset Filters
+            $('#resetFilters').on('click', function() {
+                // Clear all filter inputs
+                $('#yearFilter').val('2025');
+                $('#categoryFilter').val('all');
+                $('#statusFilter').val('all');
+                
+                // In a real app, would reset the data table
+                Swal.fire({
+                    title: 'Filters Reset',
+                    text: 'All filters have been cleared.',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+            });
+            
+            // Export Data
+            $('#exportBtn').on('click', function() {
+                // Options dropdown for export format
+                Swal.fire({
+                    title: 'Export Format',
+                    text: 'Choose a format to export budget data',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Excel',
+                    cancelButtonText: 'PDF',
+                    showDenyButton: true,
+                    denyButtonText: 'CSV'
+                }).then((result) => {
+                    let format = 'Excel';
+                    if (result.isDenied) format = 'CSV';
+                    if (result.isDismissed && result.dismiss === Swal.DismissReason.cancel) format = 'PDF';
+                    
+                    if (result.isConfirmed || result.isDenied || (result.isDismissed && result.dismiss === Swal.DismissReason.cancel)) {
+                        Swal.fire({
+                            title: 'Export Started',
+                            text: `Your ${format} file is being generated...`,
+                            timer: 2000,
+                            timerProgressBar: true,
+                            didOpen: () => {
+                                Swal.showLoading();
+                            }
+                        }).then(() => {
+                            Swal.fire({
+                                title: 'Export Complete',
+                                text: `Your budget data has been exported to ${format}.`,
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+                            });
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

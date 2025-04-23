@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction Details - ACCCA Financial Management System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/dashboard.css">
+</head>
+<body>
+    <!-- Main Layout -->
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3 class="mb-0">ACCCA</h3>
+                <p class="text-muted mb-0 small">Financial Management System</p>
+            </div>
+
+            <div class="profile-section">
+                <div class="profile-info">
+                    <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&auto=format&fit=crop&w=120&h=120&q=80" alt="User Profile" class="profile-img">
+                    <div>
+                        <h6 class="mb-0" id="userFullName">Administrator</h6>
+                        <span class="text-muted small" id="userRole">Admin</span>
+                    </div>
+                </div>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li>
+                    <a href="../dashboard.html">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="#transactionsSubmenu" data-bs-toggle="collapse" aria-expanded="true" class="dropdown-toggle">
+                        <i class="fas fa-exchange-alt"></i> Transactions
+                    </a>
+                    <ul class="collapse show list-unstyled" id="transactionsSubmenu">
+                        <li class="active">
+                            <a href="all-transactions.html">All Transactions</a>
+                        </li>
+                        <li>
+                            <a href="add-transaction.html">Add Transaction</a>
+                        </li>
+                        <li>
+                            <a href="sales.html">Sales</a>
+                        </li>
+                        <li>
+                            <a href="expenses.html">Expenses</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#bookingsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-calendar-check"></i> Bookings
+                    </a>
+                    <ul class="collapse list-unstyled" id="bookingsSubmenu">
+                        <li>
+                            <a href="../bookings/all-bookings.html">All Bookings</a>
+                        </li>
+                        <li>
+                            <a href="../bookings/add-booking.html">Add Booking</a>
+                        </li>
+                        <li>
+                            <a href="../bookings/calendar.html">Calendar</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#customersSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-users"></i> Customers
+                    </a>
+                    <ul class="collapse list-unstyled" id="customersSubmenu">
+                        <li>
+                            <a href="../customers/all-customers.html">All Customers</a>
+                        </li>
+                        <li>
+                            <a href="../customers/add-customer.html">Add Customer</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#budgetsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-chart-pie"></i> Budgets
+                    </a>
+                    <ul class="collapse list-unstyled" id="budgetsSubmenu">
+                        <li>
+                            <a href="../budgets/all-budgets.html">All Budgets</a>
+                        </li>
+                        <li>
+                            <a href="../budgets/add-budget.html">Create Budget</a>
+                        </li>
+                        <li>
+                            <a href="../budgets/analysis.html">Budget Analysis</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#reportsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-chart-line"></i> Reports
+                    </a>
+                    <ul class="collapse list-unstyled" id="reportsSubmenu">
+                        <li>
+                            <a href="../reports/income-statement.html">Income Statement</a>
+                        </li>
+                        <li>
+                            <a href="../reports/cash-flow.html">Cash Flow</a>
+                        </li>
+                        <li>
+                            <a href="../reports/revenue-sharing.html">Revenue Sharing</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="../settings/settings.html">
+                        <i class="fas fa-cog"></i> Settings
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sync-status">
+                <div class="sync-info">
+                    <span class="badge badge-synced" id="syncStatus">All data synced</span>
+                    <button class="btn btn-sm btn-outline-light" id="syncBtn">
+                        <i class="fas fa-sync-alt"></i> Sync Now
+                    </button>
+                </div>
+                <div class="connection-status">
+                    <i class="fas fa-wifi text-success"></i>
+                    <span id="connectionStatus">Online</span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Page Content -->
+        <div id="content">
+            <!-- Top Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+                <div class="container-fluid">
+                    <button type="button" id="sidebarCollapse" class="btn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    
+                    <div class="ms-auto d-flex align-items-center">
+                        <div class="dropdown notifications me-3">
+                            <button class="btn position-relative" type="button" id="notificationsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-bell"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    3
+                                    <span class="visually-hidden">unread notifications</span>
+                                </span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationsDropdown">
+                                <li><h6 class="dropdown-header">Notifications</h6></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">
+                                    <div class="notification-item">
+                                        <div class="icon bg-primary text-white">
+                                            <i class="fas fa-money-bill-wave"></i>
+                                        </div>
+                                        <div class="content">
+                                            <p class="mb-0">New transaction recorded</p>
+                                            <span class="text-muted small">5 minutes ago</span>
+                                        </div>
+                                    </div>
+                                </a></li>
+                                <li><a class="dropdown-item" href="#">
+                                    <div class="notification-item">
+                                        <div class="icon bg-success text-white">
+                                            <i class="fas fa-calendar-check"></i>
+                                        </div>
+                                        <div class="content">
+                                            <p class="mb-0">New booking confirmed</p>
+                                            <span class="text-muted small">2 hours ago</span>
+                                        </div>
+                                    </div>
+                                </a></li>
+                                <li><a class="dropdown-item" href="#">
+                                    <div class="notification-item">
+                                        <div class="icon bg-warning text-white">
+                                            <i class="fas fa-sync-alt"></i>
+                                        </div>
+                                        <div class="content">
+                                            <p class="mb-0">Data sync completed</p>
+                                            <span class="text-muted small">1 day ago</span>
+                                        </div>
+                                    </div>
+                                </a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-center small" href="#">View all notifications</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle profile-dropdown" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&auto=format&fit=crop&w=80&h=80&q=80" alt="User" class="rounded-circle me-1" width="32" height="32">
+                                <span class="d-none d-md-inline">Administrator</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="../settings/profile.html">
+                                    <i class="fas fa-user me-2"></i> Profile
+                                </a></li>
+                                <li><a class="dropdown-item" href="../settings/settings.html">
+                                    <i class="fas fa-cog me-2"></i> Settings
+                                </a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#" id="logoutBtn">
+                                    <i class="fas fa-sign-out-alt me-2"></i> Logout
+                                </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Main Content -->
+            <div class="container-fluid p-4">
+                <!-- Page Header -->
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h1 class="page-title h3">Transaction Details</h1>
+                        <p class="text-muted">View and manage transaction information</p>
+                    </div>
+                    <div class="col-md-6 d-flex justify-content-md-end">
+                        <a href="all-transactions.html" class="btn btn-outline-secondary me-2">
+                            <i class="fas fa-arrow-left me-2"></i> Back to All Transactions
+                        </a>
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button" id="transactionActions" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-cog me-1"></i> Actions
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="transactionActions">
+                                <li><a class="dropdown-item" href="#" id="editTransactionBtn">
+                                    <i class="fas fa-edit me-2"></i> Edit Transaction
+                                </a></li>
+                                <li><a class="dropdown-item" href="#" id="printTransactionBtn">
+                                    <i class="fas fa-print me-2"></i> Print Details
+                                </a></li>
+                                <li><a class="dropdown-item" href="#" id="exportPdfBtn">
+                                    <i class="fas fa-file-pdf me-2"></i> Export as PDF
+                                </a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-danger" href="#" id="deleteTransactionBtn">
+                                    <i class="fas fa-trash-alt me-2"></i> Delete Transaction
+                                </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Transaction Details -->
+                <div class="row">
+                    <!-- Main Transaction Info -->
+                    <div class="col-md-8">
+                        <div class="card mb-4">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5 class="card-title mb-0">Transaction Information</h5>
+                                <div id="transactionStatusBadge" class="badge bg-success">Completed</div>
+                            </div>
+                            <div class="card-body">
+                                <div class="transaction-header mb-4">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <div id="transactionTypeIcon" class="transaction-icon income">
+                                                <i class="fas fa-arrow-down"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <h3 class="transaction-title mb-0" id="transactionDescription">Loading...</h3>
+                                            <div class="transaction-meta text-muted">
+                                                <span id="transactionDate">--/--/----</span> • 
+                                                <span id="transactionCategory">--</span> • 
+                                                <span class="text-nowrap">Ref: <span id="transactionReference">--</span></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-auto mt-3 mt-md-0">
+                                            <h3 class="transaction-amount text-end mb-0" id="transactionAmount">UGX --</h3>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <div class="detail-item">
+                                            <div class="detail-label text-muted">Transaction ID</div>
+                                            <div class="detail-value" id="transactionId">--</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="detail-item">
+                                            <div class="detail-label text-muted">Payment Method</div>
+                                            <div class="detail-value" id="paymentMethod">--</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="detail-item">
+                                            <div class="detail-label text-muted">Created At</div>
+                                            <div class="detail-value" id="createdAt">--</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="detail-item">
+                                            <div class="detail-label text-muted">Last Updated</div>
+                                            <div class="detail-value" id="updatedAt">--</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12" id="customerSection">
+                                        <div class="detail-item">
+                                            <div class="detail-label text-muted">Customer</div>
+                                            <div class="detail-value" id="customerName">
+                                                <span>--</span>
+                                                <a href="#" id="viewCustomerLink" class="btn btn-sm btn-link d-none">View Customer</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="detail-item">
+                                            <div class="detail-label text-muted">Notes</div>
+                                            <div class="detail-value" id="transactionNotes">--</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Transaction Attachments -->
+                        <div class="card mb-4" id="attachmentsCard">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Attachments</h5>
+                            </div>
+                            <div class="card-body">
+                                <div id="attachmentsList" class="list-group">
+                                    <!-- Attachments will be dynamically loaded here -->
+                                    <div class="text-center py-4 text-muted" id="noAttachmentsMessage">
+                                        <i class="fas fa-file-upload fa-2x mb-2"></i>
+                                        <p>No attachments found for this transaction</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sidebar Info -->
+                    <div class="col-md-4">
+                        <!-- Sync Status -->
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Sync Status</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="sync-indicator d-flex align-items-center">
+                                    <div id="syncIcon" class="me-3">
+                                        <i class="fas fa-check-circle text-success fa-2x"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-0" id="syncStatusText">Synced with server</h6>
+                                        <p class="text-muted small mb-0" id="syncTimeText">Last synced on April 22, 2025</p>
+                                    </div>
+                                </div>
+                                <button class="btn btn-outline-primary w-100 mt-3" id="syncTransactionBtn">
+                                    <i class="fas fa-sync-alt me-2"></i> Sync Now
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Related Transactions -->
+                        <div class="card mb-4" id="relatedTransactionsCard">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Related Transactions</h5>
+                            </div>
+                            <div class="card-body">
+                                <div id="relatedTransactionsList">
+                                    <!-- Related transactions will be loaded here -->
+                                    <div class="text-center py-4 text-muted" id="noRelatedTransactionsMessage">
+                                        <p>No related transactions found</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Activity Log -->
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Activity Log</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="timeline" id="activityTimeline">
+                                    <!-- Activity log items will be loaded here -->
+                                    <div class="timeline-item">
+                                        <div class="timeline-icon bg-primary">
+                                            <i class="fas fa-plus"></i>
+                                        </div>
+                                        <div class="timeline-content">
+                                            <div class="timeline-time text-muted">April 22, 2025 • 10:23 AM</div>
+                                            <p class="mb-0">Transaction created by Administrator</p>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-icon bg-success">
+                                            <i class="fas fa-sync-alt"></i>
+                                        </div>
+                                        <div class="timeline-content">
+                                            <div class="timeline-time text-muted">April 22, 2025 • 10:24 AM</div>
+                                            <p class="mb-0">Transaction synced with server</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Receipt Modal -->
+    <div class="modal fade" id="receiptModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Transaction Receipt</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="receipt-container">
+                        <div class="text-center mb-4">
+                            <h4 class="mb-1">Ankole Cultural Cow Conservation Association</h4>
+                            <p class="mb-0 text-muted">P.O. Box 1234, Kampala, Uganda</p>
+                            <p class="mb-0 text-muted">Tel: +256-123-456789 | Email: info@accca.org</p>
+                        </div>
+                        
+                        <div class="receipt-header d-flex justify-content-between mb-4">
+                            <div>
+                                <h5 class="mb-1">Receipt</h5>
+                                <p class="mb-0">Receipt #: <span id="receiptNumber">--</span></p>
+                                <p class="mb-0">Date: <span id="receiptDate">--</span></p>
+                            </div>
+                            <div class="text-end">
+                                <p class="mb-0">Customer: <span id="receiptCustomerName">--</span></p>
+                                <p class="mb-0" id="receiptCustomerContact">--</p>
+                            </div>
+                        </div>
+
+                        <table class="table table-bordered">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Description</th>
+                                    <th class="text-end">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td id="receiptDescription">--</td>
+                                    <td class="text-end" id="receiptAmount">UGX --</td>
+                                </tr>
+                                <tr class="table-light">
+                                    <th>Total</th>
+                                    <th class="text-end" id="receiptTotal">UGX --</th>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="row mt-4">
+                            <div class="col-md-8">
+                                <div class="mb-3">
+                                    <strong>Payment Method:</strong> <span id="receiptPaymentMethod">--</span>
+                                </div>
+                                <div>
+                                    <strong>Notes:</strong>
+                                    <p id="receiptNotes">--</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <div class="mt-4 pt-2 border-top">
+                                    <p>Authorized Signature</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-4 pt-3 border-top">
+                            <p class="mb-0 small">Thank you for your business!</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="printReceiptBtn">
+                        <i class="fas fa-print me-1"></i> Print Receipt
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm Delete</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center mb-3">
+                        <i class="fas fa-exclamation-triangle text-warning fa-3x"></i>
+                    </div>
+                    <p>Are you sure you want to delete this transaction? This action cannot be undone.</p>
+                    <div class="alert alert-warning">
+                        <i class="fas fa-info-circle me-2"></i> 
+                        Deleting a transaction will permanently remove it from the system and may affect financial reports.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteBtn">
+                        <i class="fas fa-trash-alt me-1"></i> Delete Transaction
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- html2canvas and jsPDF for PDF export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- Custom JS -->
+    <script src="../../js/utils.js"></script>
+    <script src="../../js/db.js"></script>
+    <script src="../../js/transaction-details.js"></script>
+</body>
+</html>

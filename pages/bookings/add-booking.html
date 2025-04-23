@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Booking - ACCCA Financial Management System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Flatpickr -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <!-- Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/dashboard.css">
+</head>
+<body>
+    <!-- Main Layout -->
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3 class="mb-0">ACCCA</h3>
+                <p class="text-muted mb-0 small">Financial Management System</p>
+            </div>
+
+            <div class="profile-section">
+                <div class="profile-info">
+                    <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&auto=format&fit=crop&w=120&h=120&q=80" alt="User Profile" class="profile-img">
+                    <div>
+                        <h6 class="mb-0" id="userFullName">Administrator</h6>
+                        <span class="text-muted small" id="userRole">Admin</span>
+                    </div>
+                </div>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li>
+                    <a href="../dashboard.html">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="#transactionsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-exchange-alt"></i> Transactions
+                    </a>
+                    <ul class="collapse list-unstyled" id="transactionsSubmenu">
+                        <li>
+                            <a href="../transactions/all-transactions.html">All Transactions</a>
+                        </li>
+                        <li>
+                            <a href="../transactions/add-transaction.html">Add Transaction</a>
+                        </li>
+                        <li>
+                            <a href="../transactions/sales.html">Sales</a>
+                        </li>
+                        <li>
+                            <a href="../transactions/expenses.html">Expenses</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="active">
+                    <a href="#bookingsSubmenu" data-bs-toggle="collapse" aria-expanded="true" class="dropdown-toggle">
+                        <i class="fas fa-calendar-check"></i> Bookings
+                    </a>
+                    <ul class="collapse show list-unstyled" id="bookingsSubmenu">
+                        <li>
+                            <a href="all-bookings.html">All Bookings</a>
+                        </li>
+                        <li class="active">
+                            <a href="add-booking.html">Add Booking</a>
+                        </li>
+                        <li>
+                            <a href="calendar.html">Calendar</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#customersSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-users"></i> Customers
+                    </a>
+                    <ul class="collapse list-unstyled" id="customersSubmenu">
+                        <li>
+                            <a href="../customers/all-customers.html">All Customers</a>
+                        </li>
+                        <li>
+                            <a href="../customers/add-customer.html">Add Customer</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#budgetsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-chart-pie"></i> Budgets
+                    </a>
+                    <ul class="collapse list-unstyled" id="budgetsSubmenu">
+                        <li>
+                            <a href="../budgets/all-budgets.html">All Budgets</a>
+                        </li>
+                        <li>
+                            <a href="../budgets/add-budget.html">Create Budget</a>
+                        </li>
+                        <li>
+                            <a href="../budgets/analysis.html">Budget Analysis</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#reportsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-chart-line"></i> Reports
+                    </a>
+                    <ul class="collapse list-unstyled" id="reportsSubmenu">
+                        <li>
+                            <a href="../reports/income-statement.html">Income Statement</a>
+                        </li>
+                        <li>
+                            <a href="../reports/cash-flow.html">Cash Flow</a>
+                        </li>
+                        <li>
+                            <a href="../reports/revenue-sharing.html">Revenue Sharing</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="../settings/settings.html">
+                        <i class="fas fa-cog"></i> Settings
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sync-status">
+                <div class="sync-info">
+                    <span class="badge badge-synced" id="syncStatus">All data synced</span>
+                    <button class="btn btn-sm btn-outline-light" id="syncBtn">
+                        <i class="fas fa-sync-alt"></i> Sync Now
+                    </button>
+                </div>
+                <div class="connection-status">
+                    <i class="fas fa-wifi text-success"></i>
+                    <span id="connectionStatus">Online</span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Page Content -->
+        <div id="content">
+            <!-- Top Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+                <div class="container-fluid">
+                    <button type="button" id="sidebarCollapse" class="btn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    
+                    <div class="ms-auto d-flex align-items-center">
+                        <div class="dropdown notifications me-3">
+                            <button class="btn position-relative" type="button" id="notificationsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-bell"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    3
+                                    <span class="visually-hidden">unread notifications</span>
+                                </span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationsDropdown">
+                                <li><h6 class="dropdown-header">Notifications</h6></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">
+                                    <div class="notification-item">
+                                        <div class="icon bg-primary text-white">
+                                            <i class="fas fa-calendar-alt"></i>
+                                        </div>
+                                        <div class="content">
+                                            <p class="mb-0">New booking received</p>
+                                            <span class="text-muted small">5 minutes ago</span>
+                                        </div>
+                                    </div>
+                                </a></li>
+                                <li><a class="dropdown-item" href="#">
+                                    <div class="notification-item">
+                                        <div class="icon bg-success text-white">
+                                            <i class="fas fa-user-check"></i>
+                                        </div>
+                                        <div class="content">
+                                            <p class="mb-0">Customer verified booking</p>
+                                            <span class="text-muted small">2 hours ago</span>
+                                        </div>
+                                    </div>
+                                </a></li>
+                                <li><a class="dropdown-item" href="#">
+                                    <div class="notification-item">
+                                        <div class="icon bg-warning text-white">
+                                            <i class="fas fa-sync-alt"></i>
+                                        </div>
+                                        <div class="content">
+                                            <p class="mb-0">Data sync completed</p>
+                                            <span class="text-muted small">1 day ago</span>
+                                        </div>
+                                    </div>
+                                </a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-center small" href="#">View all notifications</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle profile-dropdown" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&auto=format&fit=crop&w=80&h=80&q=80" alt="User" class="rounded-circle me-1" width="32" height="32">
+                                <span class="d-none d-md-inline">Administrator</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="../settings/profile.html">
+                                    <i class="fas fa-user me-2"></i> Profile
+                                </a></li>
+                                <li><a class="dropdown-item" href="../settings/settings.html">
+                                    <i class="fas fa-cog me-2"></i> Settings
+                                </a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#" id="logoutBtn">
+                                    <i class="fas fa-sign-out-alt me-2"></i> Logout
+                                </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Main Content -->
+            <div class="container-fluid p-4">
+                <!-- Page Header -->
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h1 class="page-title h3">Add Booking</h1>
+                        <p class="text-muted">Create a new cultural tour booking</p>
+                    </div>
+                    <div class="col-md-6 d-flex justify-content-md-end">
+                        <a href="all-bookings.html" class="btn btn-outline-secondary d-flex align-items-center">
+                            <i class="fas fa-arrow-left me-2"></i> Back to All Bookings
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Add Booking Form -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <form id="bookingForm" class="needs-validation" novalidate>
+                            <div class="row g-3">
+                                <!-- Activity Details Section -->
+                                <div class="col-12">
+                                    <h5 class="card-title">Activity Details</h5>
+                                    <hr>
+                                </div>
+                                
+                                <!-- Activity Type -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="activityType" class="form-label">Activity Type<span class="text-danger">*</span></label>
+                                    <select class="form-select" id="activityType" required>
+                                        <option value="" selected disabled>Select activity type</option>
+                                        <option value="cultural-tour">Cultural Tour</option>
+                                        <option value="cow-experience">Cow Experience</option>
+                                        <option value="traditional-dance">Traditional Dance Show</option>
+                                        <option value="artifact-workshop">Artifact Workshop</option>
+                                        <option value="full-day">Full Day Experience</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please select an activity type.
+                                    </div>
+                                </div>
+                                
+                                <!-- Date -->
+                                <div class="col-md-3 mb-3">
+                                    <label for="bookingDate" class="form-label">Date<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                        <input type="text" class="form-control" id="bookingDate" placeholder="Select date" required>
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Please select a date.
+                                    </div>
+                                </div>
+                                
+                                <!-- Time -->
+                                <div class="col-md-3 mb-3">
+                                    <label for="bookingTime" class="form-label">Time<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-clock"></i></span>
+                                        <input type="text" class="form-control" id="bookingTime" placeholder="Select time" required>
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Please select a time.
+                                    </div>
+                                </div>
+                                
+                                <!-- Number of Participants -->
+                                <div class="col-md-4 mb-3">
+                                    <label for="participants" class="form-label">Number of Participants<span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control" id="participants" min="1" value="1" required>
+                                    <div class="invalid-feedback">
+                                        Please enter the number of participants.
+                                    </div>
+                                </div>
+                                
+                                <!-- Duration -->
+                                <div class="col-md-4 mb-3">
+                                    <label for="duration" class="form-label">Duration (hours)<span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control" id="duration" min="0.5" step="0.5" value="2" required>
+                                    <div class="invalid-feedback">
+                                        Please enter the duration.
+                                    </div>
+                                </div>
+                                
+                                <!-- Price -->
+                                <div class="col-md-4 mb-3">
+                                    <label for="price" class="form-label">Price (UGX)<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">UGX</span>
+                                        <input type="number" class="form-control" id="price" required>
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Please enter the price.
+                                    </div>
+                                </div>
+                                
+                                <!-- Customer Information Section -->
+                                <div class="col-12 mt-4">
+                                    <h5 class="card-title">Customer Information</h5>
+                                    <hr>
+                                </div>
+                                
+                                <!-- Customer Selection -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="customer" class="form-label">Customer<span class="text-danger">*</span></label>
+                                    <select class="form-select select2" id="customer" required>
+                                        <option value="" selected disabled>Select customer</option>
+                                        <option value="new">+ Add New Customer</option>
+                                        <option value="1">John Smith</option>
+                                        <option value="2">Sarah Johnson</option>
+                                        <option value="3">Adventure Tours Ltd</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please select a customer.
+                                    </div>
+                                </div>
+                                
+                                <!-- Email -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="email" class="form-label">Email<span class="text-danger">*</span></label>
+                                    <input type="email" class="form-control" id="email" placeholder="Enter email" required>
+                                    <div class="invalid-feedback">
+                                        Please enter a valid email.
+                                    </div>
+                                </div>
+                                
+                                <!-- Phone -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="phone" class="form-label">Phone<span class="text-danger">*</span></label>
+                                    <input type="tel" class="form-control" id="phone" placeholder="Enter phone number" required>
+                                    <div class="invalid-feedback">
+                                        Please enter a phone number.
+                                    </div>
+                                </div>
+                                
+                                <!-- Country -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="country" class="form-label">Country</label>
+                                    <select class="form-select" id="country">
+                                        <option value="Uganda">Uganda</option>
+                                        <option value="Kenya">Kenya</option>
+                                        <option value="Tanzania">Tanzania</option>
+                                        <option value="USA">United States</option>
+                                        <option value="UK">United Kingdom</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                
+                                <!-- Additional Information Section -->
+                                <div class="col-12 mt-4">
+                                    <h5 class="card-title">Additional Information</h5>
+                                    <hr>
+                                </div>
+                                
+                                <!-- Payment Method -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="paymentMethod" class="form-label">Payment Method<span class="text-danger">*</span></label>
+                                    <select class="form-select" id="paymentMethod" required>
+                                        <option value="" selected disabled>Select payment method</option>
+                                        <option value="cash">Cash</option>
+                                        <option value="mobile-money">Mobile Money</option>
+                                        <option value="bank-transfer">Bank Transfer</option>
+                                        <option value="credit-card">Credit Card</option>
+                                        <option value="on-site">Pay on Site</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please select a payment method.
+                                    </div>
+                                </div>
+                                
+                                <!-- Payment Status -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="paymentStatus" class="form-label">Payment Status<span class="text-danger">*</span></label>
+                                    <select class="form-select" id="paymentStatus" required>
+                                        <option value="pending">Pending</option>
+                                        <option value="paid">Paid</option>
+                                        <option value="partial">Partially Paid</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please select a payment status.
+                                    </div>
+                                </div>
+                                
+                                <!-- Special Requests -->
+                                <div class="col-12 mb-3">
+                                    <label for="specialRequests" class="form-label">Special Requests</label>
+                                    <textarea class="form-control" id="specialRequests" rows="3" placeholder="Enter any special requests or accommodations needed"></textarea>
+                                </div>
+                                
+                                <!-- Notes -->
+                                <div class="col-12 mb-3">
+                                    <label for="notes" class="form-label">Internal Notes</label>
+                                    <textarea class="form-control" id="notes" rows="2" placeholder="Enter any internal notes about this booking"></textarea>
+                                </div>
+                                
+                                <!-- Submit Buttons -->
+                                <div class="col-12 d-flex justify-content-end">
+                                    <button type="button" class="btn btn-outline-secondary me-2" id="cancelBtn">Cancel</button>
+                                    <button type="submit" class="btn btn-primary d-flex align-items-center" id="saveBookingBtn">
+                                        <span class="spinner-border spinner-border-sm me-2 d-none" role="status" aria-hidden="true"></span>
+                                        Save Booking
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add New Customer Modal -->
+    <div class="modal fade" id="addCustomerModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New Customer</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="customerForm">
+                        <div class="mb-3">
+                            <label for="customerName" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="customerName">
+                        </div>
+                        <div class="mb-3">
+                            <label for="customerEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="customerEmail">
+                        </div>
+                        <div class="mb-3">
+                            <label for="customerPhone" class="form-label">Phone</label>
+                            <input type="tel" class="form-control" id="customerPhone">
+                        </div>
+                        <div class="mb-3">
+                            <label for="customerType" class="form-label">Customer Type</label>
+                            <select class="form-select" id="customerType">
+                                <option value="individual" selected>Individual</option>
+                                <option value="business">Business/Organization</option>
+                                <option value="tour-group">Tour Group</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="customerCountry" class="form-label">Country</label>
+                            <select class="form-select" id="customerCountry">
+                                <option value="Uganda">Uganda</option>
+                                <option value="Kenya">Kenya</option>
+                                <option value="Tanzania">Tanzania</option>
+                                <option value="USA">United States</option>
+                                <option value="UK">United Kingdom</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="saveCustomerBtn">Save Customer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery (required for Select2) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Flatpickr -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- Select2 -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Custom JS -->
+    <script src="../../js/utils.js"></script>
+    <script src="../../js/db.js"></script>
+    <script src="../../js/add-booking.js"></script>
+</body>
+</html>

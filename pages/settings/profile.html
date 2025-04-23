@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - ACCCA Financial Management System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Flatpickr -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/dashboard.css">
+    <style>
+        .profile-header {
+            background-color: rgba(93, 58, 0, 0.05);
+            border-radius: 0.5rem;
+            padding: 2rem;
+        }
+        .profile-avatar {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto;
+        }
+        .profile-avatar img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 5px solid white;
+        }
+        .avatar-upload {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background-color: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .activity-timeline {
+            position: relative;
+            padding-left: 3rem;
+        }
+        .activity-timeline:before {
+            content: '';
+            position: absolute;
+            left: 0.85rem;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background-color: #e9ecef;
+        }
+        .activity-item {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+        .activity-item:last-child {
+            margin-bottom: 0;
+        }
+        .activity-badge {
+            position: absolute;
+            left: -3rem;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            border: 2px solid #e9ecef;
+            z-index: 1;
+        }
+        .activity-content {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Layout -->
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3 class="mb-0">ACCCA</h3>
+                <p class="text-muted mb-0 small">Financial Management System</p>
+            </div>
+
+            <div class="profile-section">
+                <div class="profile-info">
+                    <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&auto=format&fit=crop&w=120&h=120&q=80" alt="User Profile" class="profile-img">
+                    <div>
+                        <h6 class="mb-0" id="userFullName">Administrator</h6>
+                        <span class="text-muted small" id="userRole">Admin</span>
+                    </div>
+                </div>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li>
+                    <a href="../dashboard.html">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="#transactionsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-exchange-alt"></i> Transactions
+                    </a>
+                    <ul class="collapse list-unstyled" id="transactionsSubmenu">
+                        <li>
+                            <a href="../transactions/all-transactions.html">All Transactions</a>
+                        </li>
+                        <li>
+                            <a href="../transactions/add-transaction.html">Add Transaction</a>
+                        </li>
+                        <li>
+                            <a href="../transactions/sales.html">Sales</a>
+                        </li>
+                        <li>
+                            <a href="../transactions/expenses.html">Expenses</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#bookingsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-calendar-check"></i> Bookings
+                    </a>
+                    <ul class="collapse list-unstyled" id="bookingsSubmenu">
+                        <li>
+                            <a href="../bookings/all-bookings.html">All Bookings</a>
+                        </li>
+                        <li>
+                            <a href="../bookings/add-booking.html">Add Booking</a>
+                        </li>
+                        <li>
+                            <a href="../bookings/calendar.html">Calendar</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#customersSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-users"></i> Customers
+                    </a>
+                    <ul class="collapse list-unstyled" id="customersSubmenu">
+                        <li>
+                            <a href="../customers/all-customers.html">All Customers</a>
+                        </li>
+                        <li>
+                            <a href="../customers/add-customer.html">Add Customer</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#budgetsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-chart-pie"></i> Budgets
+                    </a>
+                    <ul class="collapse list-unstyled" id="budgetsSubmenu">
+                        <li>
+                            <a href="../budgets/all-budgets.html">All Budgets</a>
+                        </li>
+                        <li>
+                            <a href="../budgets/add-budget.html">Create Budget</a>
+                        </li>
+                        <li>
+                            <a href="../budgets/analysis.html">Budget Analysis</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#reportsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-chart-line"></i> Reports
+                    </a>
+                    <ul class="collapse list-unstyled" id="reportsSubmenu">
+                        <li>
+                            <a href="../reports/income-statement.html">Income Statement</a>
+                        </li>
+                        <li>
+                            <a href="../reports/cash-flow.html">Cash Flow</a>
+                        </li>
+                        <li>
+                            <a href="../reports/revenue-sharing.html">Revenue Sharing</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="active">
+                    <a href="settings.html">
+                        <i class="fas fa-cog"></i> Settings
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sync-status">
+                <div class="sync-info">
+                    <span class="badge badge-synced" id="syncStatus">All data synced</span>
+                    <button class="btn btn-sm btn-outline-light" id="syncBtn">
+                        <i class="fas fa-sync-alt"></i> Sync Now
+                    </button>
+                </div>
+                <div class="connection-status">
+                    <i class="fas fa-wifi text-success"></i>
+                    <span id="connectionStatus">Online</span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Page Content -->
+        <div id="content">
+            <!-- Top Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+                <div class="container-fluid">
+                    <button type="button" id="sidebarCollapse" class="btn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    
+                    <div class="ms-auto d-flex align-items-center">
+                        <div class="dropdown notifications me-3">
+                            <button class="btn position-relative" type="button" id="notificationsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-bell"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    3
+                                    <span class="visually-hidden">unread notifications</span>
+                                </span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationsDropdown">
+                                <li><h6 class="dropdown-header">Notifications</h6></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">
+                                    <div class="notification-item">
+                                        <div class="icon bg-primary text-white">
+                                            <i class="fas fa-money-bill-wave"></i>
+                                        </div>
+                                        <div class="content">
+                                            <p class="mb-0">New transaction recorded</p>
+                                            <span class="text-muted small">5 minutes ago</span>
+                                        </div>
+                                    </div>
+                                </a></li>
+                                <li><a class="dropdown-item" href="#">
+                                    <div class="notification-item">
+                                        <div class="icon bg-success text-white">
+                                            <i class="fas fa-calendar-check"></i>
+                                        </div>
+                                        <div class="content">
+                                            <p class="mb-0">New booking confirmed</p>
+                                            <span class="text-muted small">2 hours ago</span>
+                                        </div>
+                                    </div>
+                                </a></li>
+                                <li><a class="dropdown-item" href="#">
+                                    <div class="notification-item">
+                                        <div class="icon bg-warning text-white">
+                                            <i class="fas fa-sync-alt"></i>
+                                        </div>
+                                        <div class="content">
+                                            <p class="mb-0">Data sync completed</p>
+                                            <span class="text-muted small">1 day ago</span>
+                                        </div>
+                                    </div>
+                                </a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-center small" href="#">View all notifications</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle profile-dropdown" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&auto=format&fit=crop&w=80&h=80&q=80" alt="User" class="rounded-circle me-1" width="32" height="32">
+                                <span class="d-none d-md-inline">Administrator</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="profile.html">
+                                    <i class="fas fa-user me-2"></i> Profile
+                                </a></li>
+                                <li><a class="dropdown-item" href="settings.html">
+                                    <i class="fas fa-cog me-2"></i> Settings
+                                </a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#" id="logoutBtn">
+                                    <i class="fas fa-sign-out-alt me-2"></i> Logout
+                                </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Main Content -->
+            <div class="container-fluid p-4">
+                <!-- Page Header -->
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h1 class="page-title h3">User Profile</h1>
+                        <p class="text-muted">View and edit your personal information</p>
+                    </div>
+                    <div class="col-md-6 d-flex justify-content-md-end">
+                        <a href="settings.html" class="btn btn-outline-secondary me-2">
+                            <i class="fas fa-cog me-1"></i> System Settings
+                        </a>
+                        <a href="users.html" class="btn btn-outline-primary">
+                            <i class="fas fa-users-cog me-1"></i> User Management
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Profile Header -->
+                <div class="profile-header mb-4">
+                    <div class="row">
+                        <div class="col-md-3 text-center mb-4 mb-md-0">
+                            <div class="profile-avatar">
+                                <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400&q=80" alt="Profile Picture" id="profileImage">
+                                <label for="avatarUpload" class="avatar-upload">
+                                    <input type="file" id="avatarUpload" accept="image/*" style="display: none;">
+                                    <i class="fas fa-camera"></i>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h3 class="mb-0">Administrator</h3>
+                                <button class="btn btn-outline-primary">
+                                    <i class="fas fa-edit me-1"></i> Edit Profile
+                                </button>
+                            </div>
+                            <p class="text-muted mb-4">System Administrator with full access privileges</p>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-envelope text-muted me-2"></i>
+                                        <span>admin@accca.org</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-phone text-muted me-2"></i>
+                                        <span>+256 701 234567</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-user-shield text-muted me-2"></i>
+                                        <span>Admin Role</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-calendar-alt text-muted me-2"></i>
+                                        <span>Member since Jan 1, 2024</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex mt-2">
+                                <span class="badge bg-success me-2">Active</span>
+                                <span class="badge bg-primary">Administrator</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Profile Tabs -->
+                <ul class="nav nav-tabs mb-4" id="profileTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="personal-tab" data-bs-toggle="tab" data-bs-target="#personal-info" type="button" role="tab" aria-controls="personal-info" aria-selected="true">
+                            <i class="fas fa-user me-2"></i> Personal Information
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="security-tab" data-bs-toggle="tab" data-bs-target="#security-info" type="button" role="tab" aria-controls="security-info" aria-selected="false">
+                            <i class="fas fa-lock me-2"></i> Security
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="activity-tab" data-bs-toggle="tab" data-bs-target="#activity-log" type="button" role="tab" aria-controls="activity-log" aria-selected="false">
+                            <i class="fas fa-history me-2"></i> Activity Log
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="preferences-tab" data-bs-toggle="tab" data-bs-target="#preferences" type="button" role="tab" aria-controls="preferences" aria-selected="false">
+                            <i class="fas fa-sliders-h me-2"></i> Preferences
+                        </button>
+                    </li>
+                </ul>
+                
+                <!-- Tab Content -->
+                <div class="tab-content" id="profileTabContent">
+                    <!-- Personal Information Tab -->
+                    <div class="tab-pane fade show active" id="personal-info" role="tabpanel" aria-labelledby="personal-tab">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title mb-4">Personal Information</h5>
+                                
+                                <form id="personalInfoForm">
+                                    <div class="row mb-3">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="firstName" class="form-label">First Name</label>
+                                            <input type="text" class="form-control" id="firstName" value="Admin">
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="lastName" class="form-label">Last Name</label>
+                                            <input type="text" class="form-control" id="lastName" value="User">
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="displayName" class="form-label">Display Name</label>
+                                            <input type="text" class="form-control" id="displayName" value="Administrator">
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="jobTitle" class="form-label">Job Title</label>
+                                            <input type="text" class="form-control" id="jobTitle" value="System Administrator">
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="department" class="form-label">Department</label>
+                                            <select class="form-select" id="department">
+                                                <option value="it" selected>IT Department</option>
+                                                <option value="finance">Finance</option>
+                                                <option value="operations">Operations</option>
+                                                <option value="management">Management</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="location" class="form-label">Location</label>
+                                            <input type="text" class="form-control" id="location" value="Kampala, Uganda">
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="email" class="form-label">Email Address</label>
+                                            <input type="email" class="form-control" id="email" value="admin@accca.org">
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="phone" class="form-label">Phone Number</label>
+                                            <input type="tel" class="form-control" id="phone" value="+256 701 234567">
+                                        </div>
+                                        <div class="col-12 mb-3">
+                                            <label for="bio" class="form-label">Bio</label>
+                                            <textarea class="form-control" id="bio" rows="3">System Administrator responsible for managing the ACCCA Financial Management System and ensuring all operations run smoothly.</textarea>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="d-flex justify-content-end">
+                                        <button type="button" class="btn btn-outline-secondary me-2">Cancel</button>
+                                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Security Tab -->
+                    <div class="tab-pane fade" id="security-info" role="tabpanel" aria-labelledby="security-tab">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title mb-4">Security Settings</h5>
+                                
+                                <div class="mb-4">
+                                    <h6 class="fw-bold">Change Password</h6>
+                                    <form id="passwordForm">
+                                        <div class="mb-3">
+                                            <label for="currentPassword" class="form-label">Current Password</label>
+                                            <input type="password" class="form-control" id="currentPassword" placeholder="Enter current password">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="newPassword" class="form-label">New Password</label>
+                                            <input type="password" class="form-control" id="newPassword" placeholder="Enter new password">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="confirmPassword" class="form-label">Confirm New Password</label>
+                                            <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm new password">
+                                        </div>
+                                        <div class="d-flex justify-content-end">
+                                            <button type="submit" class="btn btn-primary">Change Password</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                
+                                <hr>
+                                
+                                <div class="mb-4">
+                                    <h6 class="fw-bold">Two-Factor Authentication</h6>
+                                    <p class="text-muted">Add an extra layer of security to your account.</p>
+                                    
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input" type="checkbox" id="enableTwoFactor">
+                                        <label class="form-check-label" for="enableTwoFactor">
+                                            Enable Two-Factor Authentication
+                                        </label>
+                                    </div>
+                                    
+                                    <button type="button" class="btn btn-outline-primary" disabled id="setupTwoFactorBtn">
+                                        <i class="fas fa-shield-alt me-1"></i> Setup Two-Factor
+                                    </button>
+                                </div>
+                                
+                                <hr>
+                                
+                                <div>
+                                    <h6 class="fw-bold">Account Sessions</h6>
+                                    <p class="text-muted">Manage active sessions on your account.</p>
+                                    
+                                    <div class="list-group">
+                                        <div class="list-group-item">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <h6 class="mb-1">Current Session (Chrome on Windows)</h6>
+                                                    <p class="text-muted small mb-0">IP: 192.168.1.1 - Active now</p>
+                                                </div>
+                                                <span class="badge bg-success">Active</span>
+                                            </div>
+                                        </div>
+                                        <div class="list-group-item">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <h6 class="mb-1">Safari on iPhone</h6>
+                                                    <p class="text-muted small mb-0">IP: 10.0.0.15 - Last active: 2 days ago</p>
+                                                </div>
+                                                <button class="btn btn-sm btn-outline-danger">
+                                                    <i class="fas fa-sign-out-alt me-1"></i> Sign Out
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="d-flex justify-content-end mt-3">
+                                        <button type="button" class="btn btn-danger">
+                                            <i class="fas fa-sign-out-alt me-1"></i> Sign Out All Other Sessions
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Activity Log Tab -->
+                    <div class="tab-pane fade" id="activity-log" role="tabpanel" aria-labelledby="activity-tab">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <h5 class="card-title mb-0">Activity Log</h5>
+                                    <div>
+                                        <button type="button" class="btn btn-outline-secondary btn-sm">
+                                            <i class="fas fa-download me-1"></i> Export Log
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="activity-timeline">
+                                    <div class="activity-item">
+                                        <div class="activity-badge bg-success text-white">
+                                            <i class="fas fa-sign-in-alt"></i>
+                                        </div>
+                                        <div class="activity-content">
+                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                                <h6 class="mb-0">System Login</h6>
+                                                <span class="text-muted small">Today, 9:30 AM</span>
+                                            </div>
+                                            <p class="mb-0">Logged in from Chrome on Windows (IP: 192.168.1.1)</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="activity-item">
+                                        <div class="activity-badge bg-info text-white">
+                                            <i class="fas fa-edit"></i>
+                                        </div>
+                                        <div class="activity-content">
+                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                                <h6 class="mb-0">Transaction Created</h6>
+                                                <span class="text-muted small">Yesterday, 3:15 PM</span>
+                                            </div>
+                                            <p class="mb-0">Created a new sales transaction for UGX 250,000</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="activity-item">
+                                        <div class="activity-badge bg-primary text-white">
+                                            <i class="fas fa-calendar-check"></i>
+                                        </div>
+                                        <div class="activity-content">
+                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                                <h6 class="mb-0">Booking Confirmation</h6>
+                                                <span class="text-muted small">Jun 15, 2025, 11:45 AM</span>
+                                            </div>
+                                            <p class="mb-0">Confirmed booking #BK-0003 for Adventure Tours Ltd</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="activity-item">
+                                        <div class="activity-badge bg-warning text-white">
+                                            <i class="fas fa-sync-alt"></i>
+                                        </div>
+                                        <div class="activity-content">
+                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                                <h6 class="mb-0">Data Synchronization</h6>
+                                                <span class="text-muted small">Jun 14, 2025, 5:20 PM</span>
+                                            </div>
+                                            <p class="mb-0">Manually triggered data synchronization</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="activity-item">
+                                        <div class="activity-badge bg-secondary text-white">
+                                            <i class="fas fa-user-edit"></i>
+                                        </div>
+                                        <div class="activity-content">
+                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                                <h6 class="mb-0">Profile Updated</h6>
+                                                <span class="text-muted small">Jun 10, 2025, 2:30 PM</span>
+                                            </div>
+                                            <p class="mb-0">Updated personal information and profile picture</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="d-flex justify-content-center mt-4">
+                                    <button type="button" class="btn btn-outline-secondary">
+                                        <i class="fas fa-history me-1"></i> Load More
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Preferences Tab -->
+                    <div class="tab-pane fade" id="preferences" role="tabpanel" aria-labelledby="preferences-tab">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title mb-4">User Preferences</h5>
+                                
+                                <div class="mb-4">
+                                    <h6 class="fw-bold">Interface Settings</h6>
+                                    
+                                    <div class="mb-3">
+                                        <label for="language" class="form-label">Language</label>
+                                        <select class="form-select" id="language">
+                                            <option value="en" selected>English</option>
+                                            <option value="sw">Swahili</option>
+                                            <option value="lg">Luganda</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="dateFormat" class="form-label">Date Format</label>
+                                        <select class="form-select" id="dateFormat">
+                                            <option value="dd/mm/yyyy" selected>DD/MM/YYYY</option>
+                                            <option value="mm/dd/yyyy">MM/DD/YYYY</option>
+                                            <option value="yyyy-mm-dd">YYYY-MM-DD</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="timeFormat" class="form-label">Time Format</label>
+                                        <select class="form-select" id="timeFormat">
+                                            <option value="12h" selected>12 Hour (AM/PM)</option>
+                                            <option value="24h">24 Hour</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input" type="checkbox" id="enableDarkMode">
+                                        <label class="form-check-label" for="enableDarkMode">Dark Mode (Coming Soon)</label>
+                                    </div>
+                                </div>
+                                
+                                <hr>
+                                
+                                <div class="mb-4">
+                                    <h6 class="fw-bold">Notification Settings</h6>
+                                    
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input" type="checkbox" id="emailNotifications" checked>
+                                        <label class="form-check-label" for="emailNotifications">Email Notifications</label>
+                                    </div>
+                                    
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input" type="checkbox" id="browserNotifications" checked>
+                                        <label class="form-check-label" for="browserNotifications">Browser Notifications</label>
+                                    </div>
+                                    
+                                    <div class="mt-3">
+                                        <p class="mb-2">Notification Preferences</p>
+                                        
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" id="notifyNewBooking" checked>
+                                            <label class="form-check-label" for="notifyNewBooking">New Bookings</label>
+                                        </div>
+                                        
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" id="notifyNewTransaction" checked>
+                                            <label class="form-check-label" for="notifyNewTransaction">New Transactions</label>
+                                        </div>
+                                        
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" id="notifySync" checked>
+                                            <label class="form-check-label" for="notifySync">Sync Status</label>
+                                        </div>
+                                        
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="notifySystem">
+                                            <label class="form-check-label" for="notifySystem">System Updates</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <hr>
+                                
+                                <div>
+                                    <h6 class="fw-bold">Default View Settings</h6>
+                                    
+                                    <div class="mb-3">
+                                        <label for="defaultPage" class="form-label">Default Landing Page</label>
+                                        <select class="form-select" id="defaultPage">
+                                            <option value="dashboard" selected>Dashboard</option>
+                                            <option value="transactions">Transactions</option>
+                                            <option value="bookings">Bookings</option>
+                                            <option value="reports">Reports</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="recordsPerPage" class="form-label">Records Per Page</label>
+                                        <select class="form-select" id="recordsPerPage">
+                                            <option value="10">10</option>
+                                            <option value="25" selected>25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="d-flex justify-content-end mt-4">
+                                    <button type="button" class="btn btn-outline-secondary me-2">Reset to Defaults</button>
+                                    <button type="button" class="btn btn-primary">Save Preferences</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Flatpickr -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Custom JS -->
+    <script src="../../js/utils.js"></script>
+    <script src="../../js/db.js"></script>
+    <script src="../../js/profile.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+            // Handle profile image upload
+            $('#avatarUpload').change(function(e) {
+                if (e.target.files.length > 0) {
+                    var file = e.target.files[0];
+                    var reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        $('#profileImage').attr('src', e.target.result);
+                    }
+                    
+                    reader.readAsDataURL(file);
+                    
+                    // In a real app, you would upload this to a server
+                    Swal.fire({
+                        title: 'Profile Picture Updated',
+                        text: 'Your profile picture has been updated successfully.',
+                        icon: 'success',
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                }
+            });
+            
+            // Handle personal info form submission
+            $('#personalInfoForm').submit(function(e) {
+                e.preventDefault();
+                
+                // In a real app, you would save this data to a server
+                Swal.fire({
+                    title: 'Profile Updated',
+                    text: 'Your profile information has been updated successfully.',
+                    icon: 'success',
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+            });
+            
+            // Handle password change form submission
+            $('#passwordForm').submit(function(e) {
+                e.preventDefault();
+                
+                var currentPassword = $('#currentPassword').val();
+                var newPassword = $('#newPassword').val();
+                var confirmPassword = $('#confirmPassword').val();
+                
+                if (!currentPassword || !newPassword || !confirmPassword) {
+                    Swal.fire({
+                        title: 'Missing Information',
+                        text: 'Please fill in all password fields.',
+                        icon: 'error'
+                    });
+                    return;
+                }
+                
+                if (newPassword !== confirmPassword) {
+                    Swal.fire({
+                        title: 'Password Mismatch',
+                        text: 'New password and confirmation do not match.',
+                        icon: 'error'
+                    });
+                    return;
+                }
+                
+                // In a real app, you would verify the current password and set the new one
+                Swal.fire({
+                    title: 'Password Changed',
+                    text: 'Your password has been updated successfully.',
+                    icon: 'success'
+                });
+                
+                // Clear form
+                this.reset();
+            });
+            
+            // Handle two-factor authentication toggle
+            $('#enableTwoFactor').change(function() {
+                $('#setupTwoFactorBtn').prop('disabled', !this.checked);
+                
+                if (this.checked) {
+                    Swal.fire({
+                        title: 'Two-Factor Authentication',
+                        text: 'You are about to enable two-factor authentication. This will add an extra layer of security to your account. Click "Setup" to continue.',
+                        icon: 'info',
+                        showCancelButton: true,
+                        confirmButtonText: 'Setup',
+                        cancelButtonText: 'Later'
+                    }).then((result) => {
+                        if (!result.isConfirmed) {
+                            $('#enableTwoFactor').prop('checked', false);
+                            $('#setupTwoFactorBtn').prop('disabled', true);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

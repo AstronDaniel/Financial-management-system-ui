@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Transactions - ACCCA Financial Management System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap5.min.css">
+    <!-- Flatpickr -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/dashboard.css">
+</head>
+<body>
+    <!-- Main Layout -->
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3 class="mb-0">ACCCA</h3>
+                <p class="text-muted mb-0 small">Financial Management System</p>
+            </div>
+
+            <div class="profile-section">
+                <div class="profile-info">
+                    <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&auto=format&fit=crop&w=120&h=120&q=80" alt="User Profile" class="profile-img">
+                    <div>
+                        <h6 class="mb-0" id="userFullName">Administrator</h6>
+                        <span class="text-muted small" id="userRole">Admin</span>
+                    </div>
+                </div>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li>
+                    <a href="../dashboard.html">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="#transactionsSubmenu" data-bs-toggle="collapse" aria-expanded="true" class="dropdown-toggle">
+                        <i class="fas fa-exchange-alt"></i> Transactions
+                    </a>
+                    <ul class="collapse show list-unstyled" id="transactionsSubmenu">
+                        <li>
+                            <a href="all-transactions.html">All Transactions</a>
+                        </li>
+                        <li>
+                            <a href="add-transaction.html">Add Transaction</a>
+                        </li>
+                        <li class="active">
+                            <a href="sales.html">Sales</a>
+                        </li>
+                        <li>
+                            <a href="expenses.html">Expenses</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#bookingsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-calendar-check"></i> Bookings
+                    </a>
+                    <ul class="collapse list-unstyled" id="bookingsSubmenu">
+                        <li>
+                            <a href="../bookings/all-bookings.html">All Bookings</a>
+                        </li>
+                        <li>
+                            <a href="../bookings/add-booking.html">Add Booking</a>
+                        </li>
+                        <li>
+                            <a href="../bookings/calendar.html">Calendar</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#customersSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-users"></i> Customers
+                    </a>
+                    <ul class="collapse list-unstyled" id="customersSubmenu">
+                        <li>
+                            <a href="../customers/all-customers.html">All Customers</a>
+                        </li>
+                        <li>
+                            <a href="../customers/add-customer.html">Add Customer</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#budgetsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-chart-pie"></i> Budgets
+                    </a>
+                    <ul class="collapse list-unstyled" id="budgetsSubmenu">
+                        <li>
+                            <a href="../budgets/all-budgets.html">All Budgets</a>
+                        </li>
+                        <li>
+                            <a href="../budgets/add-budget.html">Create Budget</a>
+                        </li>
+                        <li>
+                            <a href="../budgets/analysis.html">Budget Analysis</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#reportsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-chart-line"></i> Reports
+                    </a>
+                    <ul class="collapse list-unstyled" id="reportsSubmenu">
+                        <li>
+                            <a href="../reports/income-statement.html">Income Statement</a>
+                        </li>
+                        <li>
+                            <a href="../reports/cash-flow.html">Cash Flow</a>
+                        </li>
+                        <li>
+                            <a href="../reports/revenue-sharing.html">Revenue Sharing</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="../settings/settings.html">
+                        <i class="fas fa-cog"></i> Settings
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sync-status">
+                <div class="sync-info">
+                    <span class="badge badge-synced" id="syncStatus">All data synced</span>
+                    <button class="btn btn-sm btn-outline-light" id="syncBtn">
+                        <i class="fas fa-sync-alt"></i> Sync Now
+                    </button>
+                </div>
+                <div class="connection-status">
+                    <i class="fas fa-wifi text-success"></i>
+                    <span id="connectionStatus">Online</span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Page Content -->
+        <div id="content">
+            <!-- Top Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+                <div class="container-fluid">
+                    <button type="button" id="sidebarCollapse" class="btn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    
+                    <div class="ms-auto d-flex align-items-center">
+                        <div class="dropdown notifications me-3">
+                            <button class="btn position-relative" type="button" id="notificationsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-bell"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    3
+                                    <span class="visually-hidden">unread notifications</span>
+                                </span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationsDropdown">
+                                <li><h6 class="dropdown-header">Notifications</h6></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">
+                                    <div class="notification-item">
+                                        <div class="icon bg-primary text-white">
+                                            <i class="fas fa-money-bill-wave"></i>
+                                        </div>
+                                        <div class="content">
+                                            <p class="mb-0">New transaction recorded</p>
+                                            <span class="text-muted small">5 minutes ago</span>
+                                        </div>
+                                    </div>
+                                </a></li>
+                                <li><a class="dropdown-item" href="#">
+                                    <div class="notification-item">
+                                        <div class="icon bg-success text-white">
+                                            <i class="fas fa-calendar-check"></i>
+                                        </div>
+                                        <div class="content">
+                                            <p class="mb-0">New booking confirmed</p>
+                                            <span class="text-muted small">2 hours ago</span>
+                                        </div>
+                                    </div>
+                                </a></li>
+                                <li><a class="dropdown-item" href="#">
+                                    <div class="notification-item">
+                                        <div class="icon bg-warning text-white">
+                                            <i class="fas fa-sync-alt"></i>
+                                        </div>
+                                        <div class="content">
+                                            <p class="mb-0">Data sync completed</p>
+                                            <span class="text-muted small">1 day ago</span>
+                                        </div>
+                                    </div>
+                                </a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-center small" href="#">View all notifications</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle profile-dropdown" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&auto=format&fit=crop&w=80&h=80&q=80" alt="User" class="rounded-circle me-1" width="32" height="32">
+                                <span class="d-none d-md-inline">Administrator</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="../settings/profile.html">
+                                    <i class="fas fa-user me-2"></i> Profile
+                                </a></li>
+                                <li><a class="dropdown-item" href="../settings/settings.html">
+                                    <i class="fas fa-cog me-2"></i> Settings
+                                </a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#" id="logoutBtn">
+                                    <i class="fas fa-sign-out-alt me-2"></i> Logout
+                                </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Main Content -->
+            <div class="container-fluid p-4">
+                <!-- Page Header -->
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h1 class="page-title h3">Sales Transactions</h1>
+                        <p class="text-muted">Manage and analyze all income transactions</p>
+                    </div>
+                    <div class="col-md-6 d-flex justify-content-md-end">
+                        <div class="btn-group me-2">
+                            <button type="button" class="btn btn-outline-secondary" id="exportExcelBtn">
+                                <i class="fas fa-file-excel me-2"></i> Export
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary" id="printBtn">
+                                <i class="fas fa-print me-2"></i> Print
+                            </button>
+                        </div>
+                        <a href="add-transaction.html?type=income" class="btn btn-primary">
+                            <i class="fas fa-plus me-2"></i> Add Sale
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Sales Stats Cards -->
+                <div class="row mb-4">
+                    <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                        <div class="card dashboard-card h-100">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h6 class="card-subtitle text-muted mb-1">Total Sales (This Month)</h6>
+                                        <h2 class="card-title mb-2">UGX 8.64M</h2>
+                                        <p class="card-text"><span class="badge bg-success me-1"><i class="fas fa-arrow-up"></i> 12%</span> from last month</p>
+                                    </div>
+                                    <div class="stat-icon bg-success text-white">
+                                        <i class="fas fa-money-bill-wave"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                        <div class="card dashboard-card h-100">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h6 class="card-subtitle text-muted mb-1">Cultural Tours</h6>
+                                        <h2 class="card-title mb-2">UGX 3.75M</h2>
+                                        <p class="card-text"><span class="badge bg-success me-1"><i class="fas fa-arrow-up"></i> 20%</span> of total sales</p>
+                                    </div>
+                                    <div class="stat-icon bg-primary text-white">
+                                        <i class="fas fa-map-marked-alt"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                        <div class="card dashboard-card h-100">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h6 class="card-subtitle text-muted mb-1">Cow & Dairy Products</h6>
+                                        <h2 class="card-title mb-2">UGX 3.24M</h2>
+                                        <p class="card-text"><span class="badge bg-danger me-1"><i class="fas fa-arrow-down"></i> 5%</span> from last month</p>
+                                    </div>
+                                    <div class="stat-icon bg-warning text-white">
+                                        <i class="fas fa-cow"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card dashboard-card h-100">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h6 class="card-subtitle text-muted mb-1">Artifacts & Crafts</h6>
+                                        <h2 class="card-title mb-2">UGX 1.65M</h2>
+                                        <p class="card-text"><span class="badge bg-success me-1"><i class="fas fa-arrow-up"></i> 18%</span> from last month</p>
+                                    </div>
+                                    <div class="stat-icon bg-info text-white">
+                                        <i class="fas fa-paint-brush"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filter Card -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-md-3">
+                                <label for="dateRangeFilter" class="form-label">Date Range</label>
+                                <input type="text" class="form-control" id="dateRangeFilter" placeholder="Select date range">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="categoryFilter" class="form-label">Sales Category</label>
+                                <select class="form-select" id="categoryFilter">
+                                    <option value="all" selected>All Categories</option>
+                                    <option value="tour">Cultural Tours</option>
+                                    <option value="cow">Cow Sales</option>
+                                    <option value="dairy">Dairy Products</option>
+                                    <option value="artifacts">Artifacts & Crafts</option>
+                                    <option value="others">Other Products</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="paymentMethodFilter" class="form-label">Payment Method</label>
+                                <select class="form-select" id="paymentMethodFilter">
+                                    <option value="all" selected>All Methods</option>
+                                    <option value="cash">Cash</option>
+                                    <option value="mobile-money">Mobile Money</option>
+                                    <option value="bank-transfer">Bank Transfer</option>
+                                    <option value="credit-card">Credit Card</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="syncStatusFilter" class="form-label">Sync Status</label>
+                                <select class="form-select" id="syncStatusFilter">
+                                    <option value="all" selected>All Status</option>
+                                    <option value="synced">Synced</option>
+                                    <option value="pending">Pending Sync</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="amountFilter" class="form-label">Amount Range</label>
+                                <div class="d-flex">
+                                    <input type="number" class="form-control" id="minAmount" placeholder="Min">
+                                    <span class="mx-2 align-self-center">-</span>
+                                    <input type="number" class="form-control" id="maxAmount" placeholder="Max">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="customerFilter" class="form-label">Customer</label>
+                                <input type="text" class="form-control" id="customerFilter" placeholder="Search customer">
+                            </div>
+                            <div class="col-md-6 d-flex align-items-end">
+                                <button type="button" class="btn btn-primary me-2" id="applyFilters">
+                                    <i class="fas fa-filter me-2"></i> Apply Filters
+                                </button>
+                                <button type="button" class="btn btn-outline-secondary" id="resetFilters">
+                                    <i class="fas fa-undo me-2"></i> Reset
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sales Transactions Table -->
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="salesTable" class="table table-hover display responsive nowrap w-100">
+                                <thead>
+                                    <tr>
+                                        <th>Transaction ID</th>
+                                        <th>Date</th>
+                                        <th>Category</th>
+                                        <th>Description</th>
+                                        <th>Customer</th>
+                                        <th>Payment Method</th>
+                                        <th>Amount (UGX)</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>TXN-0023</td>
+                                        <td>May 15, 2025</td>
+                                        <td>Cultural Tours</td>
+                                        <td>Group Tour Booking - 8 participants</td>
+                                        <td>Adventure Tours Ltd</td>
+                                        <td>Bank Transfer</td>
+                                        <td>850,000</td>
+                                        <td><span class="badge badge-synced">Synced</span></td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-sm btn-outline-secondary view-transaction" data-bs-toggle="tooltip" title="View Details">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-outline-primary edit-transaction" data-bs-toggle="tooltip" title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-outline-danger delete-transaction" data-bs-toggle="tooltip" title="Delete">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>TXN-0022</td>
+                                        <td>May 14, 2025</td>
+                                        <td>Cow Sales</td>
+                                        <td>Ankole Cow - Female (3 years)</td>
+                                        <td>John Mwesigye</td>
+                                        <td>Cash</td>
+                                        <td>2,500,000</td>
+                                        <td><span class="badge badge-synced">Synced</span></td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-sm btn-outline-secondary view-transaction" data-bs-toggle="tooltip" title="View Details">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-outline-primary edit-transaction" data-bs-toggle="tooltip" title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-outline-danger delete-transaction" data-bs-toggle="tooltip" title="Delete">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>TXN-0021</td>
+                                        <td>May 12, 2025</td>
+                                        <td>Dairy Products</td>
+                                        <td>Wholesale Ghee - 10 liters</td>
+                                        <td>Kampala Supermarket</td>
+                                        <td>Bank Transfer</td>
+                                        <td>450,000</td>
+                                        <td><span class="badge badge-synced">Synced</span></td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-sm btn-outline-secondary view-transaction" data-bs-toggle="tooltip" title="View Details">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-outline-primary edit-transaction" data-bs-toggle="tooltip" title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-outline-danger delete-transaction" data-bs-toggle="tooltip" title="Delete">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>TXN-0020</td>
+                                        <td>May 11, 2025</td>
+                                        <td>Artifacts & Crafts</td>
+                                        <td>Traditional Handcrafted Bowls (5 pieces)</td>
+                                        <td>Sarah Johnson</td>
+                                        <td>Credit Card</td>
+                                        <td>320,000</td>
+                                        <td><span class="badge badge-synced">Synced</span></td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-sm btn-outline-secondary view-transaction" data-bs-toggle="tooltip" title="View Details">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-outline-primary edit-transaction" data-bs-toggle="tooltip" title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-outline-danger delete-transaction" data-bs-toggle="tooltip" title="Delete">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>TXN-0019</td>
+                                        <td>May 10, 2025</td>
+                                        <td>Cultural Tours</td>
+                                        <td>Traditional Dance Experience - 2 participants</td>
+                                        <td>Michael Chen</td>
+                                        <td>Mobile Money</td>
+                                        <td>180,000</td>
+                                        <td><span class="badge badge-synced">Synced</span></td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-sm btn-outline-secondary view-transaction" data-bs-toggle="tooltip" title="View Details">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-outline-primary edit-transaction" data-bs-toggle="tooltip" title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-outline-danger delete-transaction" data-bs-toggle="tooltip" title="Delete">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>TXN-0018</td>
+                                        <td>May 08, 2025</td>
+                                        <td>Dairy Products</td>
+                                        <td>Artisanal Cheese Collection (5 varieties)</td>
+                                        <td>Entebbe Resort</td>
+                                        <td>Bank Transfer</td>
+                                        <td>260,000</td>
+                                        <td><span class="badge badge-synced">Synced</span></td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-sm btn-outline-secondary view-transaction" data-bs-toggle="tooltip" title="View Details">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-outline-primary edit-transaction" data-bs-toggle="tooltip" title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-outline-danger delete-transaction" data-bs-toggle="tooltip" title="Delete">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>TXN-0017</td>
+                                        <td>May 05, 2025</td>
+                                        <td>Artifacts & Crafts</td>
+                                        <td>Traditional Woven Basket (Large)</td>
+                                        <td>James Wilson</td>
+                                        <td>Credit Card</td>
+                                        <td>95,000</td>
+                                        <td><span class="badge badge-pending">Pending</span></td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-sm btn-outline-secondary view-transaction" data-bs-toggle="tooltip" title="View Details">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-outline-primary edit-transaction" data-bs-toggle="tooltip" title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-outline-danger delete-transaction" data-bs-toggle="tooltip" title="Delete">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Transaction Details Modal -->
+    <div class="modal fade" id="transactionDetailsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Transaction Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="transaction-status mb-3">
+                        <span class="badge bg-success" id="modalTransactionType">Income</span>
+                        <span class="badge badge-synced" id="modalSyncStatus">Synced</span>
+                    </div>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <h6 class="fw-bold mb-2">Transaction Information</h6>
+                            <p class="mb-1"><strong>Transaction ID:</strong> <span id="modalTransactionId">TXN-0021</span></p>
+                            <p class="mb-1"><strong>Date:</strong> <span id="modalDate">May 12, 2025</span></p>
+                            <p class="mb-1"><strong>Category:</strong> <span id="modalCategory">Dairy Products</span></p>
+                            <p class="mb-0"><strong>Description:</strong> <span id="modalDescription">Wholesale Ghee - 10 liters</span></p>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="fw-bold mb-2">Financial Details</h6>
+                            <p class="mb-1"><strong>Amount:</strong> <span id="modalAmount">UGX 450,000</span></p>
+                            <p class="mb-1"><strong>Payment Method:</strong> <span id="modalPaymentMethod">Bank Transfer</span></p>
+                            <p class="mb-1"><strong>Reference:</strong> <span id="modalReference">INV-2025-051</span></p>
+                            <p class="mb-0"><strong>Notes:</strong> <span id="modalNotes">Monthly supply agreement</span></p>
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <h6 class="fw-bold mb-2">Customer Information</h6>
+                            <p class="mb-1"><strong>Customer:</strong> <span id="modalCustomer">Kampala Supermarket</span></p>
+                            <p class="mb-1"><strong>Contact:</strong> <span id="modalContact">+256 702 345678</span></p>
+                            <p class="mb-0"><strong>Email:</strong> <span id="modalEmail">orders@kampalasupermarket.co.ug</span></p>
+                        </div>
+                    </div>
+                    
+                    <h6 class="fw-bold mb-3">Attachments</h6>
+                    <div class="list-group mb-3">
+                        <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                            <div>
+                                <i class="fas fa-file-pdf me-2 text-danger"></i> Invoice-2025-051.pdf
+                            </div>
+                            <i class="fas fa-download"></i>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                            <div>
+                                <i class="fas fa-file-image me-2 text-primary"></i> Receipt-Photo.jpg
+                            </div>
+                            <i class="fas fa-download"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between text-muted small">
+                        <span id="modalCreatedBy">Created by: Administrator on May 12, 2025</span>
+                        <span id="modalLastUpdated">Last updated: May 12, 2025</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a href="add-transaction.html?id=TXN-0021" class="btn btn-primary">
+                        <i class="fas fa-edit me-1"></i> Edit
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm Delete</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this transaction? This action cannot be undone.</p>
+                    <p class="mb-0 fw-bold">Transaction: <span id="deleteTransactionId">TXN-0021</span></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteBtn">
+                        <i class="fas fa-trash me-1"></i> Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- DataTables -->
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.4.1/js/responsive.bootstrap5.min.js"></script>
+    <!-- Flatpickr -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Custom JS -->
+    <script src="../../js/utils.js"></script>
+    <script src="../../js/db.js"></script>
+    <script src="../../js/sales.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+            // Initialize DataTable
+            var table = $('#salesTable').DataTable({
+                responsive: true,
+                ordering: true,
+                searching: true,
+                paging: true,
+                lengthMenu: [10, 25, 50, 100],
+                language: {
+                    search: "",
+                    searchPlaceholder: "Search sales..."
+                }
+            });
+            
+            // Initialize flatpickr for date range picker
+            flatpickr("#dateRangeFilter", {
+                mode: "range",
+                dateFormat: "Y-m-d",
+                placeholder: "Select date range"
+            });
+            
+            // Initialize tooltips
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            });
+            
+            // View Transaction
+            $('.view-transaction').on('click', function() {
+                // Normally would fetch data for the specific transaction based on ID
+                // For this demo, just show the modal with sample data
+                var transactionDetailsModal = new bootstrap.Modal(document.getElementById('transactionDetailsModal'));
+                transactionDetailsModal.show();
+            });
+            
+            // Delete Transaction
+            $('.delete-transaction').on('click', function() {
+                // Get transaction ID from the row (in real app)
+                var deleteConfirmModal = new bootstrap.Modal(document.getElementById('deleteConfirmModal'));
+                deleteConfirmModal.show();
+            });
+            
+            // Confirm Delete
+            $('#confirmDeleteBtn').on('click', function() {
+                // In a real app, we would delete the transaction from the database
+                Swal.fire({
+                    title: 'Deleted!',
+                    text: 'The transaction has been deleted.',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    // Close the modal
+                    var deleteConfirmModal = bootstrap.Modal.getInstance(document.getElementById('deleteConfirmModal'));
+                    deleteConfirmModal.hide();
+                    
+                    // Remove the row from the table (in a real app, would refresh the data)
+                    table.row($(this).parents('tr')).remove().draw();
+                });
+            });
+            
+            // Apply Filters
+            $('#applyFilters').on('click', function() {
+                // In a real app, this would filter data from the database
+                // For this demo, just show success message
+                Swal.fire({
+                    title: 'Filters Applied',
+                    text: 'The sales data has been filtered.',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+            });
+            
+            // Reset Filters
+            $('#resetFilters').on('click', function() {
+                // Clear all filter inputs
+                $('#dateRangeFilter').val('');
+                $('#categoryFilter').val('all');
+                $('#paymentMethodFilter').val('all');
+                $('#syncStatusFilter').val('all');
+                $('#minAmount').val('');
+                $('#maxAmount').val('');
+                $('#customerFilter').val('');
+                
+                // In a real app, would reset the data table
+                Swal.fire({
+                    title: 'Filters Reset',
+                    text: 'All filters have been cleared.',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+            });
+            
+            // Export to Excel
+            $('#exportExcelBtn').on('click', function() {
+                Swal.fire({
+                    title: 'Export Started',
+                    text: 'Your Excel file is being generated...',
+                    timer: 2000,
+                    timerProgressBar: true,
+                    didOpen: () => {
+                        Swal.showLoading()
+                    }
+                }).then(() => {
+                    Swal.fire({
+                        title: 'Export Complete',
+                        text: 'Your sales data has been exported to Excel.',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
+                });
+            });
+            
+            // Print
+            $('#printBtn').on('click', function() {
+                Swal.fire({
+                    title: 'Print Initiated',
+                    text: 'Preparing sales data for printing...',
+                    timer: 1500,
+                    timerProgressBar: true,
+                    didOpen: () => {
+                        Swal.showLoading()
+                    }
+                }).then(() => {
+                    window.print();
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Calendar - ACCCA Financial Management System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- FullCalendar CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet">
+    <!-- Flatpickr -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/dashboard.css">
+    <style>
+        .calendar-container {
+            height: calc(100vh - 230px);
+            min-height: 600px;
+        }
+        
+        .fc-event {
+            cursor: pointer;
+            border-radius: 6px;
+            border: none !important;
+            padding: 4px 8px;
+            font-size: 0.8rem;
+        }
+        
+        .fc-daygrid-event {
+            white-space: normal !important;
+            overflow: hidden;
+        }
+        
+        .fc .fc-toolbar-title {
+            font-size: 1.5rem;
+            color: #5d3a00;
+        }
+        
+        .fc .fc-button-primary {
+            background-color: #5d3a00;
+            border-color: #5d3a00;
+        }
+        
+        .fc .fc-button-primary:not(:disabled):active,
+        .fc .fc-button-primary:not(:disabled).fc-button-active,
+        .fc .fc-button-primary:hover {
+            background-color: #3a2503;
+            border-color: #3a2503;
+        }
+        
+        .fc .fc-col-header-cell-cushion {
+            padding: 10px;
+            color: #5d3a00;
+            font-weight: 600;
+        }
+        
+        .fc .fc-daygrid-day-number {
+            padding: 8px;
+            color: #3a2503;
+        }
+        
+        .fc-day-today {
+            background-color: rgba(218, 165, 32, 0.1) !important;
+        }
+        
+        .fc-theme-standard .fc-scrollgrid {
+            border-color: #e9ecef;
+        }
+        
+        .calendar-sidebar {
+            border-left: 1px solid #e9ecef;
+            height: 100%;
+        }
+        
+        .event-cultural-tour {
+            background-color: #4285f4 !important;
+            color: white;
+            border-left: 4px solid #0b5cdb !important;
+        }
+        
+        .event-cow-experience {
+            background-color: #0f9d58 !important;
+            color: white;
+            border-left: 4px solid #0b7542 !important;
+        }
+        
+        .event-traditional-dance {
+            background-color: #db4437 !important;
+            color: white;
+            border-left: 4px solid #b23326 !important;
+        }
+        
+        .event-artifact-workshop {
+            background-color: #f4b400 !important;
+            color: white;
+            border-left: 4px solid #cf9700 !important;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+            margin-right: 8px;
+        }
+        
+        .upcoming-event {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            border-left: 4px solid transparent;
+            background-color: #f8f9fa;
+            transition: all 0.2s ease;
+        }
+        
+        .upcoming-event:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .upcoming-event.cultural-tour {
+            border-left-color: #4285f4;
+        }
+        
+        .upcoming-event.cow-experience {
+            border-left-color: #0f9d58;
+        }
+        
+        .upcoming-event.traditional-dance {
+            border-left-color: #db4437;
+        }
+        
+        .upcoming-event.artifact-workshop {
+            border-left-color: #f4b400;
+        }
+        
+        .status-badge {
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+        
+        .event-icon {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            color: white;
+            margin-right: 12px;
+        }
+        
+        .search-booking {
+            position: relative;
+        }
+        
+        .search-booking input {
+            border-radius: 20px;
+            padding-left: 40px;
+        }
+        
+        .search-booking i {
+            position: absolute;
+            left: 16px;
+            top: 11px;
+            color: #6c757d;
+        }
+        
+        .filter-section {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .event-details h6 {
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Layout -->
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3 class="mb-0">ACCCA</h3>
+                <p class="text-muted mb-0 small">Financial Management System</p>
+            </div>
+
+            <div class="profile-section">
+                <div class="profile-info">
+                    <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&auto=format&fit=crop&w=120&h=120&q=80" alt="User Profile" class="profile-img">
+                    <div>
+                        <h6 class="mb-0" id="userFullName">Administrator</h6>
+                        <span class="text-muted small" id="userRole">Admin</span>
+                    </div>
+                </div>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li>
+                    <a href="../dashboard.html">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="#transactionsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-exchange-alt"></i> Transactions
+                    </a>
+                    <ul class="collapse list-unstyled" id="transactionsSubmenu">
+                        <li>
+                            <a href="../transactions/all-transactions.html">All Transactions</a>
+                        </li>
+                        <li>
+                            <a href="../transactions/add-transaction.html">Add Transaction</a>
+                        </li>
+                        <li>
+                            <a href="../transactions/sales.html">Sales</a>
+                        </li>
+                        <li>
+                            <a href="../transactions/expenses.html">Expenses</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="active">
+                    <a href="#bookingsSubmenu" data-bs-toggle="collapse" aria-expanded="true" class="dropdown-toggle">
+                        <i class="fas fa-calendar-check"></i> Bookings
+                    </a>
+                    <ul class="collapse show list-unstyled" id="bookingsSubmenu">
+                        <li>
+                            <a href="all-bookings.html">All Bookings</a>
+                        </li>
+                        <li>
+                            <a href="add-booking.html">Add Booking</a>
+                        </li>
+                        <li class="active">
+                            <a href="calendar.html">Calendar</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#customersSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-users"></i> Customers
+                    </a>
+                    <ul class="collapse list-unstyled" id="customersSubmenu">
+                        <li>
+                            <a href="../customers/all-customers.html">All Customers</a>
+                        </li>
+                        <li>
+                            <a href="../customers/add-customer.html">Add Customer</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#budgetsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-chart-pie"></i> Budgets
+                    </a>
+                    <ul class="collapse list-unstyled" id="budgetsSubmenu">
+                        <li>
+                            <a href="../budgets/all-budgets.html">All Budgets</a>
+                        </li>
+                        <li>
+                            <a href="../budgets/add-budget.html">Create Budget</a>
+                        </li>
+                        <li>
+                            <a href="../budgets/analysis.html">Budget Analysis</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#reportsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-chart-line"></i> Reports
+                    </a>
+                    <ul class="collapse list-unstyled" id="reportsSubmenu">
+                        <li>
+                            <a href="../reports/income-statement.html">Income Statement</a>
+                        </li>
+                        <li>
+                            <a href="../reports/cash-flow.html">Cash Flow</a>
+                        </li>
+                        <li>
+                            <a href="../reports/revenue-sharing.html">Revenue Sharing</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="../settings/settings.html">
+                        <i class="fas fa-cog"></i> Settings
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sync-status">
+                <div class="sync-info">
+                    <span class="badge badge-synced" id="syncStatus">All data synced</span>
+                    <button class="btn btn-sm btn-outline-light" id="syncBtn">
+                        <i class="fas fa-sync-alt"></i> Sync Now
+                    </button>
+                </div>
+                <div class="connection-status">
+                    <i class="fas fa-wifi text-success"></i>
+                    <span id="connectionStatus">Online</span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Page Content -->
+        <div id="content">
+            <!-- Top Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+                <div class="container-fluid">
+                    <button type="button" id="sidebarCollapse" class="btn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    
+                    <div class="ms-auto d-flex align-items-center">
+                        <div class="dropdown notifications me-3">
+                            <button class="btn position-relative" type="button" id="notificationsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-bell"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    3
+                                    <span class="visually-hidden">unread notifications</span>
+                                </span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationsDropdown">
+                                <li><h6 class="dropdown-header">Notifications</h6></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">
+                                    <div class="notification-item">
+                                        <div class="icon bg-primary text-white">
+                                            <i class="fas fa-calendar-alt"></i>
+                                        </div>
+                                        <div class="content">
+                                            <p class="mb-0">New booking received</p>
+                                            <span class="text-muted small">5 minutes ago</span>
+                                        </div>
+                                    </div>
+                                </a></li>
+                                <li><a class="dropdown-item" href="#">
+                                    <div class="notification-item">
+                                        <div class="icon bg-success text-white">
+                                            <i class="fas fa-user-check"></i>
+                                        </div>
+                                        <div class="content">
+                                            <p class="mb-0">Customer verified booking</p>
+                                            <span class="text-muted small">2 hours ago</span>
+                                        </div>
+                                    </div>
+                                </a></li>
+                                <li><a class="dropdown-item" href="#">
+                                    <div class="notification-item">
+                                        <div class="icon bg-warning text-white">
+                                            <i class="fas fa-sync-alt"></i>
+                                        </div>
+                                        <div class="content">
+                                            <p class="mb-0">Data sync completed</p>
+                                            <span class="text-muted small">1 day ago</span>
+                                        </div>
+                                    </div>
+                                </a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-center small" href="#">View all notifications</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle profile-dropdown" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&auto=format&fit=crop&w=80&h=80&q=80" alt="User" class="rounded-circle me-1" width="32" height="32">
+                                <span class="d-none d-md-inline">Administrator</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="../settings/profile.html">
+                                    <i class="fas fa-user me-2"></i> Profile
+                                </a></li>
+                                <li><a class="dropdown-item" href="../settings/settings.html">
+                                    <i class="fas fa-cog me-2"></i> Settings
+                                </a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#" id="logoutBtn">
+                                    <i class="fas fa-sign-out-alt me-2"></i> Logout
+                                </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Main Content -->
+            <div class="container-fluid p-4">
+                <!-- Page Header -->
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h1 class="page-title h3">Booking Calendar</h1>
+                        <p class="text-muted">View and manage all scheduled bookings</p>
+                    </div>
+                    <div class="col-md-6 d-flex justify-content-md-end">
+                        <div class="btn-group me-2">
+                            <button class="btn btn-outline-secondary" id="printBtn">
+                                <i class="fas fa-print me-2"></i> Print
+                            </button>
+                            <button class="btn btn-outline-secondary" id="exportBtn">
+                                <i class="fas fa-file-export me-2"></i> Export
+                            </button>
+                        </div>
+                        <a href="add-booking.html" class="btn btn-primary">
+                            <i class="fas fa-plus me-2"></i> Add Booking
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Calendar & Sidebar Section -->
+                <div class="row">
+                    <!-- Calendar Display -->
+                    <div class="col-lg-9">
+                        <div class="card">
+                            <div class="card-body calendar-container p-3">
+                                <div class="filter-section mb-3">
+                                    <div class="row g-2">
+                                        <div class="col-md-5">
+                                            <div class="search-booking">
+                                                <i class="fas fa-search"></i>
+                                                <input type="text" class="form-control" id="searchBooking" placeholder="Search bookings...">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <select class="form-select" id="activityFilter">
+                                                <option value="all" selected>All Activities</option>
+                                                <option value="cultural-tour">Cultural Tours</option>
+                                                <option value="cow-experience">Cow Experience</option>
+                                                <option value="traditional-dance">Traditional Dance</option>
+                                                <option value="artifact-workshop">Artifact Workshop</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <select class="form-select" id="statusFilter">
+                                                <option value="all" selected>All Status</option>
+                                                <option value="confirmed">Confirmed</option>
+                                                <option value="pending">Pending</option>
+                                                <option value="cancelled">Cancelled</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="calendar"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Calendar Sidebar -->
+                    <div class="col-lg-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <!-- Activity Legend -->
+                                <h6 class="fw-bold mb-3">Activity Types</h6>
+                                <div class="mb-4">
+                                    <div class="legend-item">
+                                        <div class="legend-color" style="background-color: #4285f4;"></div>
+                                        <span>Cultural Tours</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color" style="background-color: #0f9d58;"></div>
+                                        <span>Cow Experience</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color" style="background-color: #db4437;"></div>
+                                        <span>Traditional Dance</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color" style="background-color: #f4b400;"></div>
+                                        <span>Artifact Workshop</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Today's Schedule -->
+                                <h6 class="fw-bold mb-3">Today's Schedule</h6>
+                                <div class="mb-4" id="todayEvents">
+                                    <div class="upcoming-event cultural-tour">
+                                        <div class="d-flex align-items-center mb-2">
+                                            <div class="event-icon" style="background-color: #4285f4;">
+                                                <i class="fas fa-map-marked-alt"></i>
+                                            </div>
+                                            <div>
+                                                <h6 class="mb-0">Cultural Tour</h6>
+                                                <small class="text-muted">10:00 AM - 2:00 PM</small>
+                                            </div>
+                                        </div>
+                                        <p class="mb-1 small">John Smith (4 participants)</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="status-badge bg-success">Confirmed</span>
+                                            <a href="booking-details.html" class="btn btn-sm btn-link p-0">View</a>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="upcoming-event traditional-dance">
+                                        <div class="d-flex align-items-center mb-2">
+                                            <div class="event-icon" style="background-color: #db4437;">
+                                                <i class="fas fa-music"></i>
+                                            </div>
+                                            <div>
+                                                <h6 class="mb-0">Traditional Dance</h6>
+                                                <small class="text-muted">4:00 PM - 6:00 PM</small>
+                                            </div>
+                                        </div>
+                                        <p class="mb-1 small">Adventure Tours (15 participants)</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="status-badge bg-success">Confirmed</span>
+                                            <a href="booking-details.html" class="btn btn-sm btn-link p-0">View</a>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="text-center text-muted small" id="noTodayEvents" style="display: none;">
+                                        <i class="fas fa-calendar-day mb-2" style="font-size: 24px;"></i>
+                                        <p>No bookings scheduled for today</p>
+                                    </div>
+                                </div>
+                                
+                                <!-- Upcoming Events -->
+                                <h6 class="fw-bold mb-3">Upcoming Bookings</h6>
+                                <div id="upcomingEvents">
+                                    <div class="upcoming-event cow-experience">
+                                        <div class="d-flex align-items-center mb-2">
+                                            <div class="event-icon" style="background-color: #0f9d58;">
+                                                <i class="fas fa-cow"></i>
+                                            </div>
+                                            <div>
+                                                <h6 class="mb-0">Cow Experience</h6>
+                                                <small class="text-muted">Tomorrow, 11:00 AM</small>
+                                            </div>
+                                        </div>
+                                        <p class="mb-1 small">Sarah Johnson (2 participants)</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="status-badge bg-warning">Pending</span>
+                                            <a href="booking-details.html" class="btn btn-sm btn-link p-0">View</a>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="upcoming-event artifact-workshop">
+                                        <div class="d-flex align-items-center mb-2">
+                                            <div class="event-icon" style="background-color: #f4b400;">
+                                                <i class="fas fa-paint-brush"></i>
+                                            </div>
+                                            <div>
+                                                <h6 class="mb-0">Artifact Workshop</h6>
+                                                <small class="text-muted">May 10, 1:00 PM</small>
+                                            </div>
+                                        </div>
+                                        <p class="mb-1 small">Michael Chen Family (6 participants)</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="status-badge bg-success">Confirmed</span>
+                                            <a href="booking-details.html" class="btn btn-sm btn-link p-0">View</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Quick Actions -->
+                                <h6 class="fw-bold mb-3 mt-4">Quick Actions</h6>
+                                <div class="d-grid gap-2">
+                                    <button class="btn btn-outline-primary btn-sm" id="quickAddBtn">
+                                        <i class="fas fa-plus me-2"></i> Quick Add Booking
+                                    </button>
+                                    <button class="btn btn-outline-secondary btn-sm">
+                                        <i class="fas fa-calendar-week me-2"></i> View Weekly Schedule
+                                    </button>
+                                    <button class="btn btn-outline-secondary btn-sm">
+                                        <i class="fas fa-bell me-2"></i> Send Reminders
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Booking Modal -->
+    <div class="modal fade" id="viewEventModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Booking Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h4 id="modalEventTitle">Cultural Tour - 4 Participants</h4>
+                            <div class="d-flex align-items-center mt-2 mb-3">
+                                <div class="event-icon" id="modalEventIcon" style="background-color: #4285f4;">
+                                    <i class="fas fa-map-marked-alt"></i>
+                                </div>
+                                <div>
+                                    <p class="mb-1" id="modalEventTime"><i class="far fa-clock me-2"></i> Apr 28, 2025, 10:00 AM - 2:00 PM</p>
+                                    <div>
+                                        <span class="badge bg-success me-1" id="modalBookingStatus">Confirmed</span>
+                                        <span class="badge bg-secondary" id="modalPaymentStatus">Paid</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <div class="event-details">
+                                        <h6><i class="fas fa-user me-2"></i> Customer</h6>
+                                        <p class="mb-1" id="modalCustomer">John Smith</p>
+                                        <p class="mb-0 text-muted small" id="modalContact">+256 701 234567</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="event-details">
+                                        <h6><i class="fas fa-users me-2"></i> Participants</h6>
+                                        <p class="mb-1" id="modalParticipants">4 persons</p>
+                                        <p class="mb-0 text-muted small" id="modalPrice">UGX 450,000</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="event-details mb-3">
+                                <h6><i class="fas fa-comment-alt me-2"></i> Special Requests</h6>
+                                <p class="mb-0" id="modalRequests">Vegetarian food options required, one participant has mobility issues.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h6 class="fw-bold mb-3">Quick Actions</h6>
+                                    <div class="d-grid gap-2">
+                                        <a href="#" class="btn btn-outline-primary btn-sm" id="editEventBtn">
+                                            <i class="fas fa-edit me-2"></i> Edit Booking
+                                        </a>
+                                        <button class="btn btn-outline-secondary btn-sm">
+                                            <i class="fas fa-envelope me-2"></i> Send Confirmation
+                                        </button>
+                                        <button class="btn btn-outline-secondary btn-sm">
+                                            <i class="fas fa-receipt me-2"></i> Generate Invoice
+                                        </button>
+                                        <button class="btn btn-outline-danger btn-sm">
+                                            <i class="fas fa-times me-2"></i> Cancel Booking
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a href="booking-details.html" class="btn btn-primary">
+                        <i class="fas fa-eye me-1"></i> View Full Details
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Add Booking Modal -->
+    <div class="modal fade" id="addEventModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Quick Add Booking</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="quickAddForm">
+                        <div class="mb-3">
+                            <label for="quickTitle" class="form-label">Activity Title</label>
+                            <input type="text" class="form-control" id="quickTitle" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="quickActivity" class="form-label">Activity Type</label>
+                            <select class="form-select" id="quickActivity" required>
+                                <option value="cultural-tour">Cultural Tour</option>
+                                <option value="cow-experience">Cow Experience</option>
+                                <option value="traditional-dance">Traditional Dance</option>
+                                <option value="artifact-workshop">Artifact Workshop</option>
+                            </select>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="quickStart" class="form-label">Start Time</label>
+                                <input type="text" class="form-control" id="quickStart" required>
+                            </div>
+                            <div class="col">
+                                <label for="quickEnd" class="form-label">End Time</label>
+                                <input type="text" class="form-control" id="quickEnd" required>
+                            </div>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="quickFullDay">
+                            <label class="form-check-label" for="quickFullDay">
+                                Full day event
+                            </label>
+                        </div>
+                        <div class="mb-3">
+                            <label for="quickCustomer" class="form-label">Customer</label>
+                            <input type="text" class="form-control" id="quickCustomer">
+                        </div>
+                        <div class="mb-3">
+                            <label for="quickParticipants" class="form-label">Number of Participants</label>
+                            <input type="number" class="form-control" id="quickParticipants" min="1" value="1">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="saveQuickEvent">
+                        <i class="fas fa-save me-1"></i> Save Booking
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Moment.js -->
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+    <!-- FullCalendar -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+    <!-- Flatpickr -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Custom JS -->
+    <script src="../../js/utils.js"></script>
+    <script src="../../js/db.js"></script>
+    <script src="../../js/calendar.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize FullCalendar
+            const calendarEl = document.getElementById('calendar');
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+                },
+                navLinks: true,
+                editable: true,
+                selectable: true,
+                selectMirror: true,
+                dayMaxEvents: true,
+                businessHours: {
+                    daysOfWeek: [ 1, 2, 3, 4, 5, 6, 0 ],
+                    startTime: '08:00',
+                    endTime: '18:00',
+                },
+                events: [
+                    {
+                        id: 'BK-0001',
+                        title: 'Cultural Tour - John Smith (4)',
+                        start: '2025-04-28T10:00:00',
+                        end: '2025-04-28T14:00:00',
+                        className: 'event-cultural-tour',
+                        extendedProps: {
+                            status: 'confirmed',
+                            paymentStatus: 'paid',
+                            customer: 'John Smith',
+                            contact: '+256 701 234567',
+                            participants: 4,
+                            price: 'UGX 450,000',
+                            requests: 'Vegetarian food options required, one participant has mobility issues.'
+                        }
+                    },
+                    {
+                        id: 'BK-0002',
+                        title: 'Cow Experience - Sarah Johnson (2)',
+                        start: '2025-04-30T09:00:00',
+                        end: '2025-04-30T11:30:00',
+                        className: 'event-cow-experience',
+                        extendedProps: {
+                            status: 'pending',
+                            paymentStatus: 'pending',
+                            customer: 'Sarah Johnson',
+                            contact: '+256 702 345678',
+                            participants: 2,
+                            price: 'UGX 225,000',
+                            requests: ''
+                        }
+                    },
+                    {
+                        id: 'BK-0003',
+                        title: 'Traditional Dance Show - Tour Group (15)',
+                        start: '2025-05-05T16:00:00',
+                        end: '2025-05-05T18:00:00',
+                        className: 'event-traditional-dance',
+                        extendedProps: {
+                            status: 'confirmed',
+                            paymentStatus: 'paid',
+                            customer: 'Adventure Tours Ltd',
+                            contact: '+256 703 456789',
+                            participants: 15,
+                            price: 'UGX 750,000',
+                            requests: 'Transportation needed from Kampala city center'
+                        }
+                    },
+                    {
+                        id: 'BK-0004',
+                        title: 'Artifact Workshop - Family Group (6)',
+                        start: '2025-05-10T13:00:00',
+                        end: '2025-05-10T16:00:00',
+                        className: 'event-artifact-workshop',
+                        extendedProps: {
+                            status: 'confirmed',
+                            paymentStatus: 'partial',
+                            customer: 'Michael Chen',
+                            contact: '+1 323 555 7890',
+                            participants: 6,
+                            price: 'UGX 480,000',
+                            requests: 'Child-friendly activities requested, ages 7-12'
+                        }
+                    },
+                    {
+                        id: 'BK-0005',
+                        title: 'Full Day Experience - James & Rebecca (2)',
+                        start: '2025-05-15',
+                        end: '2025-05-15',
+                        allDay: true,
+                        className: 'event-cultural-tour',
+                        extendedProps: {
+                            status: 'confirmed',
+                            paymentStatus: 'paid',
+                            customer: 'James Wilson',
+                            contact: '+44 20 1234 5678',
+                            participants: 2,
+                            price: 'UGX 650,000',
+                            requests: 'Special interest in Ankole Cattle history and breeding practices'
+                        }
+                    }
+                ],
+                eventClick: function(info) {
+                    // Set modal content based on event data
+                    document.getElementById('modalEventTitle').textContent = info.event.title;
+                    
+                    // Set event icon and color based on activity type
+                    const eventIcon = document.getElementById('modalEventIcon');
+                    let iconClass = 'fas fa-map-marked-alt';
+                    let bgColor = '#4285f4';
+                    
+                    if (info.event.classNames.includes('event-cow-experience')) {
+                        iconClass = 'fas fa-cow';
+                        bgColor = '#0f9d58';
+                    } else if (info.event.classNames.includes('event-traditional-dance')) {
+                        iconClass = 'fas fa-music';
+                        bgColor = '#db4437';
+                    } else if (info.event.classNames.includes('event-artifact-workshop')) {
+                        iconClass = 'fas fa-paint-brush';
+                        bgColor = '#f4b400';
+                    }
+                    
+                    eventIcon.style.backgroundColor = bgColor;
+                    eventIcon.innerHTML = `<i class="${iconClass}"></i>`;
+                    
+                    // Set event time
+                    const eventStart = moment(info.event.start).format('MMM D, YYYY, h:mm A');
+                    const eventEnd = info.event.end ? moment(info.event.end).format('h:mm A') : 'Ongoing';
+                    document.getElementById('modalEventTime').innerHTML = `<i class="far fa-clock me-2"></i> ${eventStart} - ${eventEnd}`;
+                    
+                    // Set customer and participant details
+                    document.getElementById('modalCustomer').textContent = info.event.extendedProps.customer;
+                    document.getElementById('modalContact').textContent = info.event.extendedProps.contact;
+                    document.getElementById('modalParticipants').textContent = `${info.event.extendedProps.participants} persons`;
+                    document.getElementById('modalPrice').textContent = info.event.extendedProps.price;
+                    document.getElementById('modalRequests').textContent = info.event.extendedProps.requests || 'No special requests';
+                    
+                    // Set status badges
+                    document.getElementById('modalBookingStatus').textContent = info.event.extendedProps.status.charAt(0).toUpperCase() + info.event.extendedProps.status.slice(1);
+                    document.getElementById('modalBookingStatus').className = `badge ${info.event.extendedProps.status === 'confirmed' ? 'bg-success' : info.event.extendedProps.status === 'pending' ? 'bg-warning' : 'bg-danger'} me-1`;
+                    
+                    document.getElementById('modalPaymentStatus').textContent = info.event.extendedProps.paymentStatus.charAt(0).toUpperCase() + info.event.extendedProps.paymentStatus.slice(1);
+                    document.getElementById('modalPaymentStatus').className = `badge ${info.event.extendedProps.paymentStatus === 'paid' ? 'bg-secondary' : info.event.extendedProps.paymentStatus === 'partial' ? 'bg-info' : 'bg-light text-dark'}`;
+                    
+                    // Set edit link
+                    document.getElementById('editEventBtn').href = `add-booking.html?id=${info.event.id}`;
+                    
+                    // Show modal
+                    var viewEventModal = new bootstrap.Modal(document.getElementById('viewEventModal'));
+                    viewEventModal.show();
+                },
+                dateClick: function(info) {
+                    // Clear the form
+                    document.getElementById('quickAddForm').reset();
+                    
+                    // Set default start and end times based on clicked date
+                    document.getElementById('quickStart').value = moment(info.dateStr).format('YYYY-MM-DD 10:00');
+                    document.getElementById('quickEnd').value = moment(info.dateStr).format('YYYY-MM-DD 12:00');
+                    
+                    // Show modal
+                    var addEventModal = new bootstrap.Modal(document.getElementById('addEventModal'));
+                    addEventModal.show();
+                }
+            });
+            
+            calendar.render();
+            
+            // Initialize flatpickr for date-time pickers
+            flatpickr("#quickStart", {
+                enableTime: true,
+                dateFormat: "Y-m-d H:i",
+            });
+            
+            flatpickr("#quickEnd", {
+                enableTime: true,
+                dateFormat: "Y-m-d H:i",
+            });
+            
+            // Save quick event
+            document.getElementById('saveQuickEvent').addEventListener('click', function() {
+                var title = document.getElementById('quickTitle').value;
+                var activityType = document.getElementById('quickActivity').value;
+                var start = document.getElementById('quickStart').value;
+                var end = document.getElementById('quickEnd').value;
+                var customer = document.getElementById('quickCustomer').value;
+                var participants = document.getElementById('quickParticipants').value;
+                var isFullDay = document.getElementById('quickFullDay').checked;
+                
+                if (!title || !activityType || !start || !end) {
+                    Swal.fire({
+                        title: 'Missing Information',
+                        text: 'Please fill in all required fields',
+                        icon: 'error'
+                    });
+                    return;
+                }
+                
+                // Generate a unique booking ID
+                var bookingId = 'BK-' + Math.floor(1000 + Math.random() * 9000);
+                
+                // Add new event to calendar
+                calendar.addEvent({
+                    id: bookingId,
+                    title: title + (customer ? ' - ' + customer : '') + (participants ? ' (' + participants + ')' : ''),
+                    start: start,
+                    end: end,
+                    allDay: isFullDay,
+                    className: 'event-' + activityType,
+                    extendedProps: {
+                        status: 'pending',
+                        paymentStatus: 'pending',
+                        customer: customer || 'Not specified',
+                        participants: participants || 1,
+                        price: 'UGX 0',
+                        requests: ''
+                    }
+                });
+                
+                // Close modal
+                var addEventModal = bootstrap.Modal.getInstance(document.getElementById('addEventModal'));
+                addEventModal.hide();
+                
+                // Show success message
+                Swal.fire({
+                    title: 'Booking Added',
+                    text: 'New booking has been added successfully',
+                    icon: 'success',
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+            });
+            
+            // Quick Add button click
+            document.getElementById('quickAddBtn').addEventListener('click', function() {
+                document.getElementById('quickAddForm').reset();
+                var today = moment().format('YYYY-MM-DD');
+                document.getElementById('quickStart').value = today + ' 10:00';
+                document.getElementById('quickEnd').value = today + ' 12:00';
+                
+                var addEventModal = new bootstrap.Modal(document.getElementById('addEventModal'));
+                addEventModal.show();
+            });
+            
+            // Filter events
+            document.getElementById('activityFilter').addEventListener('change', function() {
+                var activityType = this.value;
+                calendar.getEvents().forEach(function(event) {
+                    if (activityType === 'all' || event.classNames.includes('event-' + activityType)) {
+                        event.setProp('display', 'auto');
+                    } else {
+                        event.setProp('display', 'none');
+                    }
+                });
+            });
+            
+            document.getElementById('statusFilter').addEventListener('change', function() {
+                var statusType = this.value;
+                calendar.getEvents().forEach(function(event) {
+                    if (statusType === 'all' || event.extendedProps.status === statusType) {
+                        event.setProp('display', 'auto');
+                    } else {
+                        event.setProp('display', 'none');
+                    }
+                });
+            });
+            
+            // Search functionality
+            document.getElementById('searchBooking').addEventListener('input', function() {
+                var searchText = this.value.toLowerCase();
+                calendar.getEvents().forEach(function(event) {
+                    const eventTitle = event.title.toLowerCase();
+                    const customer = event.extendedProps.customer.toLowerCase();
+                    
+                    if (searchText === '' || eventTitle.includes(searchText) || customer.includes(searchText)) {
+                        event.setProp('display', 'auto');
+                    } else {
+                        event.setProp('display', 'none');
+                    }
+                });
+            });
+            
+            // Export button
+            document.getElementById('exportBtn').addEventListener('click', function() {
+                Swal.fire({
+                    title: 'Export Calendar',
+                    text: 'Choose export format',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'PDF',
+                    cancelButtonText: 'Cancel',
+                    showDenyButton: true,
+                    denyButtonText: 'Excel'
+                }).then((result) => {
+                    if (result.isConfirmed || result.isDenied) {
+                        const format = result.isConfirmed ? 'PDF' : 'Excel';
+                        Swal.fire({
+                            title: 'Export Started',
+                            text: 'Generating ' + format + ' file...',
+                            timer: 2000,
+                            timerProgressBar: true,
+                            didOpen: () => {
+                                Swal.showLoading();
+                            }
+                        }).then(() => {
+                            Swal.fire({
+                                title: 'Export Complete',
+                                text: 'Calendar data has been exported to ' + format,
+                                icon: 'success'
+                            });
+                        });
+                    }
+                });
+            });
+            
+            // Print button
+            document.getElementById('printBtn').addEventListener('click', function() {
+                Swal.fire({
+                    title: 'Print Calendar',
+                    text: 'Preparing calendar for printing...',
+                    timer: 1500,
+                    timerProgressBar: true,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                }).then(() => {
+                    window.print();
+                });
+            });
+        });
+    </script>
+</body>
+</html>

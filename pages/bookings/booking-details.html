@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Details - ACCCA Financial Management System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/dashboard.css">
+    <style>
+        .timeline {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 2rem;
+        }
+        .timeline:before {
+            content: '';
+            position: absolute;
+            left: 0.85rem;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background-color: #e9ecef;
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+        .timeline-badge {
+            position: absolute;
+            left: -3rem;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            border: 2px solid #e9ecef;
+            z-index: 1;
+        }
+        .timeline-content {
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            background-color: #f8f9fa;
+        }
+        .booking-detail-header {
+            background-color: rgba(93, 58, 0, 0.05);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            position: relative;
+        }
+        .booking-status-badge {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Layout -->
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3 class="mb-0">ACCCA</h3>
+                <p class="text-muted mb-0 small">Financial Management System</p>
+            </div>
+
+            <div class="profile-section">
+                <div class="profile-info">
+                    <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&auto=format&fit=crop&w=120&h=120&q=80" alt="User Profile" class="profile-img">
+                    <div>
+                        <h6 class="mb-0" id="userFullName">Administrator</h6>
+                        <span class="text-muted small" id="userRole">Admin</span>
+                    </div>
+                </div>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li>
+                    <a href="../dashboard.html">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="#transactionsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-exchange-alt"></i> Transactions
+                    </a>
+                    <ul class="collapse list-unstyled" id="transactionsSubmenu">
+                        <li>
+                            <a href="../transactions/all-transactions.html">All Transactions</a>
+                        </li>
+                        <li>
+                            <a href="../transactions/add-transaction.html">Add Transaction</a>
+                        </li>
+                        <li>
+                            <a href="../transactions/sales.html">Sales</a>
+                        </li>
+                        <li>
+                            <a href="../transactions/expenses.html">Expenses</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="active">
+                    <a href="#bookingsSubmenu" data-bs-toggle="collapse" aria-expanded="true" class="dropdown-toggle">
+                        <i class="fas fa-calendar-check"></i> Bookings
+                    </a>
+                    <ul class="collapse show list-unstyled" id="bookingsSubmenu">
+                        <li>
+                            <a href="all-bookings.html">All Bookings</a>
+                        </li>
+                        <li>
+                            <a href="add-booking.html">Add Booking</a>
+                        </li>
+                        <li>
+                            <a href="calendar.html">Calendar</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#customersSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-users"></i> Customers
+                    </a>
+                    <ul class="collapse list-unstyled" id="customersSubmenu">
+                        <li>
+                            <a href="../customers/all-customers.html">All Customers</a>
+                        </li>
+                        <li>
+                            <a href="../customers/add-customer.html">Add Customer</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#budgetsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-chart-pie"></i> Budgets
+                    </a>
+                    <ul class="collapse list-unstyled" id="budgetsSubmenu">
+                        <li>
+                            <a href="../budgets/all-budgets.html">All Budgets</a>
+                        </li>
+                        <li>
+                            <a href="../budgets/add-budget.html">Create Budget</a>
+                        </li>
+                        <li>
+                            <a href="../budgets/analysis.html">Budget Analysis</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#reportsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-chart-line"></i> Reports
+                    </a>
+                    <ul class="collapse list-unstyled" id="reportsSubmenu">
+                        <li>
+                            <a href="../reports/income-statement.html">Income Statement</a>
+                        </li>
+                        <li>
+                            <a href="../reports/cash-flow.html">Cash Flow</a>
+                        </li>
+                        <li>
+                            <a href="../reports/revenue-sharing.html">Revenue Sharing</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="../settings/settings.html">
+                        <i class="fas fa-cog"></i> Settings
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sync-status">
+                <div class="sync-info">
+                    <span class="badge badge-synced" id="syncStatus">All data synced</span>
+                    <button class="btn btn-sm btn-outline-light" id="syncBtn">
+                        <i class="fas fa-sync-alt"></i> Sync Now
+                    </button>
+                </div>
+                <div class="connection-status">
+                    <i class="fas fa-wifi text-success"></i>
+                    <span id="connectionStatus">Online</span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Page Content -->
+        <div id="content">
+            <!-- Top Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+                <div class="container-fluid">
+                    <button type="button" id="sidebarCollapse" class="btn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    
+                    <div class="ms-auto d-flex align-items-center">
+                        <div class="dropdown notifications me-3">
+                            <button class="btn position-relative" type="button" id="notificationsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-bell"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    3
+                                    <span class="visually-hidden">unread notifications</span>
+                                </span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationsDropdown">
+                                <li><h6 class="dropdown-header">Notifications</h6></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">
+                                    <div class="notification-item">
+                                        <div class="icon bg-primary text-white">
+                                            <i class="fas fa-calendar-alt"></i>
+                                        </div>
+                                        <div class="content">
+                                            <p class="mb-0">New booking received</p>
+                                            <span class="text-muted small">5 minutes ago</span>
+                                        </div>
+                                    </div>
+                                </a></li>
+                                <li><a class="dropdown-item" href="#">
+                                    <div class="notification-item">
+                                        <div class="icon bg-success text-white">
+                                            <i class="fas fa-user-check"></i>
+                                        </div>
+                                        <div class="content">
+                                            <p class="mb-0">Customer verified booking</p>
+                                            <span class="text-muted small">2 hours ago</span>
+                                        </div>
+                                    </div>
+                                </a></li>
+                                <li><a class="dropdown-item" href="#">
+                                    <div class="notification-item">
+                                        <div class="icon bg-warning text-white">
+                                            <i class="fas fa-sync-alt"></i>
+                                        </div>
+                                        <div class="content">
+                                            <p class="mb-0">Data sync completed</p>
+                                            <span class="text-muted small">1 day ago</span>
+                                        </div>
+                                    </div>
+                                </a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-center small" href="#">View all notifications</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle profile-dropdown" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&auto=format&fit=crop&w=80&h=80&q=80" alt="User" class="rounded-circle me-1" width="32" height="32">
+                                <span class="d-none d-md-inline">Administrator</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="../settings/profile.html">
+                                    <i class="fas fa-user me-2"></i> Profile
+                                </a></li>
+                                <li><a class="dropdown-item" href="../settings/settings.html">
+                                    <i class="fas fa-cog me-2"></i> Settings
+                                </a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#" id="logoutBtn">
+                                    <i class="fas fa-sign-out-alt me-2"></i> Logout
+                                </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Main Content -->
+            <div class="container-fluid p-4">
+                <!-- Page Header -->
+                <div class="row mb-4">
+                    <div class="col-md-8">
+                        <h1 class="page-title h3">Booking Details</h1>
+                        <p class="text-muted">View and manage booking #BK-0001</p>
+                    </div>
+                    <div class="col-md-4 d-flex justify-content-md-end">
+                        <a href="all-bookings.html" class="btn btn-outline-secondary me-2">
+                            <i class="fas fa-arrow-left me-1"></i> Back to All Bookings
+                        </a>
+                        <a href="add-booking.html?id=BK-0001" class="btn btn-primary">
+                            <i class="fas fa-edit me-1"></i> Edit
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Booking Header -->
+                <div class="booking-detail-header mb-4">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <h4>Cultural Tour - 4 Participants</h4>
+                            <p class="mb-0"><strong>Customer:</strong> John Smith</p>
+                            <p class="mb-2"><strong>Date:</strong> April 28, 2025 | <strong>Time:</strong> 10:00 AM - 2:00 PM</p>
+                            <p class="mb-0"><span class="badge bg-success me-2">Confirmed</span><span class="badge bg-secondary">Paid</span></p>
+                        </div>
+                        <div class="col-md-5 text-md-end">
+                            <div class="booking-id mb-2">
+                                <span class="fw-bold">Booking ID:</span> BK-0001
+                            </div>
+                            <div class="price mb-2">
+                                <span class="fw-bold">Total Amount:</span> UGX 450,000
+                            </div>
+                            <div class="d-flex justify-content-md-end mt-3">
+                                <button class="btn btn-danger btn-sm me-2">
+                                    <i class="fas fa-times me-1"></i> Cancel Booking
+                                </button>
+                                <button class="btn btn-success btn-sm">
+                                    <i class="fas fa-check me-1"></i> Mark as Completed
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Details and Activity Section -->
+                <div class="row mb-4">
+                    <!-- Left Column - Booking Details -->
+                    <div class="col-lg-8">
+                        <div class="card mb-4">
+                            <div class="card-header bg-white">
+                                <h5 class="card-title mb-0">Booking Information</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <h6 class="fw-bold mb-3">Customer Information</h6>
+                                        <p class="mb-1"><strong>Name:</strong> John Smith</p>
+                                        <p class="mb-1"><strong>Contact:</strong> +256 701 234567</p>
+                                        <p class="mb-1"><strong>Email:</strong> johnsmith@example.com</p>
+                                        <p class="mb-0"><strong>Country:</strong> United Kingdom</p>
+                                        <div class="mt-2">
+                                            <a href="../customers/customer-details.html?id=CUST-0001" class="btn btn-sm btn-outline-primary">
+                                                <i class="fas fa-user me-1"></i> View Customer Profile
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6 class="fw-bold mb-3">Activity Details</h6>
+                                        <p class="mb-1"><strong>Activity:</strong> Cultural Tour</p>
+                                        <p class="mb-1"><strong>Duration:</strong> 4 hours</p>
+                                        <p class="mb-1"><strong>Participants:</strong> 4 persons</p>
+                                        <p class="mb-1"><strong>Guide Assigned:</strong> Sarah Namugwanya</p>
+                                        <p class="mb-0"><strong>Meeting Point:</strong> ACCCA Main Reception</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <h6 class="fw-bold mb-3">Special Requests & Notes</h6>
+                                    <div class="p-3 bg-light rounded">
+                                        <p class="mb-2"><strong>Special Requests:</strong> Vegetarian food options required, one participant has mobility issues.</p>
+                                        <p class="mb-0"><strong>Internal Notes:</strong> Customer is interested in the history of Ankole cattle. Prepare additional information materials.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h6 class="fw-bold mb-3">Payment Information</h6>
+                                        <p class="mb-1"><strong>Amount:</strong> UGX 450,000</p>
+                                        <p class="mb-1"><strong>Payment Method:</strong> Credit Card</p>
+                                        <p class="mb-1"><strong>Payment Status:</strong> Paid</p>
+                                        <p class="mb-0"><strong>Transaction ID:</strong> TXN-2025042801</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6 class="fw-bold mb-3">Booking Status</h6>
+                                        <p class="mb-1"><strong>Created:</strong> April 15, 2025, 2:30 PM</p>
+                                        <p class="mb-1"><strong>Last Updated:</strong> April 16, 2025, 9:15 AM</p>
+                                        <p class="mb-1"><strong>Current Status:</strong> <span class="badge bg-success">Confirmed</span></p>
+                                        <p class="mb-0"><strong>Confirmation Sent:</strong> Yes, via Email</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                                <h5 class="card-title mb-0">Booking Timeline</h5>
+                                <button class="btn btn-sm btn-outline-secondary" id="addNoteBtn">
+                                    <i class="fas fa-plus me-1"></i> Add Note
+                                </button>
+                            </div>
+                            <div class="card-body">
+                                <div class="timeline">
+                                    <div class="timeline-item">
+                                        <div class="timeline-badge bg-primary text-white">
+                                            <i class="fas fa-check"></i>
+                                        </div>
+                                        <div class="timeline-content">
+                                            <h6 class="mb-1">Confirmation Email Sent</h6>
+                                            <p class="mb-0">Booking confirmation sent to customer's email</p>
+                                            <p class="text-muted small mb-0">April 16, 2025, 9:15 AM - System</p>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-badge bg-success text-white">
+                                            <i class="fas fa-credit-card"></i>
+                                        </div>
+                                        <div class="timeline-content">
+                                            <h6 class="mb-1">Payment Received</h6>
+                                            <p class="mb-0">Credit card payment of UGX 450,000 processed successfully</p>
+                                            <p class="text-muted small mb-0">April 15, 2025, 3:45 PM - System</p>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-badge bg-secondary text-white">
+                                            <i class="fas fa-user"></i>
+                                        </div>
+                                        <div class="timeline-content">
+                                            <h6 class="mb-1">Guide Assigned</h6>
+                                            <p class="mb-0">Sarah Namugwanya has been assigned as the tour guide</p>
+                                            <p class="text-muted small mb-0">April 15, 2025, 3:30 PM - Administrator</p>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-badge bg-info text-white">
+                                            <i class="fas fa-calendar-plus"></i>
+                                        </div>
+                                        <div class="timeline-content">
+                                            <h6 class="mb-1">Booking Created</h6>
+                                            <p class="mb-0">New cultural tour booking created for John Smith</p>
+                                            <p class="text-muted small mb-0">April 15, 2025, 2:30 PM - Administrator</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Right Column - Related Information -->
+                    <div class="col-lg-4">
+                        <div class="card mb-4">
+                            <div class="card-header bg-white">
+                                <h5 class="card-title mb-0">Quick Actions</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="list-group">
+                                    <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <i class="fas fa-envelope me-2"></i> Send Confirmation Email
+                                        </div>
+                                        <span class="badge bg-secondary rounded-pill">Sent</span>
+                                    </a>
+                                    <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <i class="fas fa-receipt me-2"></i> Generate Invoice
+                                        </div>
+                                        <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                    <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <i class="fas fa-print me-2"></i> Print Itinerary
+                                        </div>
+                                        <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                    <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <i class="fas fa-sms me-2"></i> Send SMS Reminder
+                                        </div>
+                                        <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                    <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <i class="fas fa-calendar-alt me-2"></i> Reschedule Booking
+                                        </div>
+                                        <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card mb-4">
+                            <div class="card-header bg-white">
+                                <h5 class="card-title mb-0">Customer History</h5>
+                            </div>
+                            <div class="card-body">
+                                <p><strong>Previous Visits:</strong> 2</p>
+                                <div class="list-group mb-3">
+                                    <a href="#" class="list-group-item list-group-item-action">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h6 class="mb-1">Traditional Dance Show</h6>
+                                            <small>Jan 15, 2025</small>
+                                        </div>
+                                        <p class="mb-1 small">2 participants, UGX 150,000</p>
+                                        <small class="text-success"><i class="fas fa-check-circle me-1"></i> Completed</small>
+                                    </a>
+                                    <a href="#" class="list-group-item list-group-item-action">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h6 class="mb-1">Artifact Workshop</h6>
+                                            <small>Nov 8, 2024</small>
+                                        </div>
+                                        <p class="mb-1 small">3 participants, UGX 225,000</p>
+                                        <small class="text-success"><i class="fas fa-check-circle me-1"></i> Completed</small>
+                                    </a>
+                                </div>
+                                <p class="mb-1"><strong>Total Spent:</strong> UGX 825,000</p>
+                                <p class="mb-0"><strong>Customer Type:</strong> <span class="badge bg-info">Repeat Visitor</span></p>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header bg-white">
+                                <h5 class="card-title mb-0">Related Documents</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="list-group">
+                                    <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <i class="fas fa-file-pdf me-2 text-danger"></i> Booking Confirmation.pdf
+                                        </div>
+                                        <i class="fas fa-download"></i>
+                                    </a>
+                                    <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <i class="fas fa-file-invoice-dollar me-2 text-success"></i> Invoice-BK0001.pdf
+                                        </div>
+                                        <i class="fas fa-download"></i>
+                                    </a>
+                                    <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <i class="fas fa-file-alt me-2 text-primary"></i> Cultural Tour Itinerary.pdf
+                                        </div>
+                                        <i class="fas fa-download"></i>
+                                    </a>
+                                </div>
+                                <div class="d-grid mt-3">
+                                    <button class="btn btn-outline-primary btn-sm">
+                                        <i class="fas fa-upload me-1"></i> Upload New Document
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Note Modal -->
+    <div class="modal fade" id="addNoteModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Timeline Note</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="timelineNoteForm">
+                        <div class="mb-3">
+                            <label for="noteTitle" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="noteTitle" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="noteContent" class="form-label">Note Content</label>
+                            <textarea class="form-control" id="noteContent" rows="3" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="noteType" class="form-label">Note Type</label>
+                            <select class="form-select" id="noteType">
+                                <option value="info">Information</option>
+                                <option value="warning">Warning</option>
+                                <option value="success">Success</option>
+                                <option value="danger">Important</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="saveNoteBtn">Add Note</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Custom JS -->
+    <script src="../../js/utils.js"></script>
+    <script src="../../js/db.js"></script>
+    <script src="../../js/booking-details.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+            // Handle Add Note button
+            $('#addNoteBtn').click(function() {
+                var addNoteModal = new bootstrap.Modal(document.getElementById('addNoteModal'));
+                addNoteModal.show();
+            });
+            
+            // Handle Save Note
+            $('#saveNoteBtn').click(function() {
+                var title = $('#noteTitle').val();
+                var content = $('#noteContent').val();
+                var type = $('#noteType').val();
+                
+                if (!title || !content) {
+                    Swal.fire({
+                        title: 'Missing Information',
+                        text: 'Please fill in all required fields',
+                        icon: 'error'
+                    });
+                    return;
+                }
+                
+                // Add new timeline item (in a real app, this would save to the database)
+                var iconClass;
+                var bgClass;
+                
+                switch(type) {
+                    case 'info':
+                        iconClass = 'fas fa-info';
+                        bgClass = 'bg-info';
+                        break;
+                    case 'warning':
+                        iconClass = 'fas fa-exclamation';
+                        bgClass = 'bg-warning';
+                        break;
+                    case 'success':
+                        iconClass = 'fas fa-check';
+                        bgClass = 'bg-success';
+                        break;
+                    case 'danger':
+                        iconClass = 'fas fa-exclamation-triangle';
+                        bgClass = 'bg-danger';
+                        break;
+                    default:
+                        iconClass = 'fas fa-comment';
+                        bgClass = 'bg-secondary';
+                }
+                
+                var now = new Date();
+                var dateTimeStr = now.toLocaleDateString() + ', ' + now.toLocaleTimeString();
+                
+                var newTimelineItem = `
+                    <div class="timeline-item">
+                        <div class="timeline-badge ${bgClass} text-white">
+                            <i class="${iconClass}"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <h6 class="mb-1">${title}</h6>
+                            <p class="mb-0">${content}</p>
+                            <p class="text-muted small mb-0">${dateTimeStr} - Administrator</p>
+                        </div>
+                    </div>
+                `;
+                
+                // Add to the beginning of the timeline
+                $('.timeline').prepend(newTimelineItem);
+                
+                // Close modal and reset form
+                var addNoteModal = bootstrap.Modal.getInstance(document.getElementById('addNoteModal'));
+                addNoteModal.hide();
+                $('#timelineNoteForm')[0].reset();
+                
+                // Show success message
+                Swal.fire({
+                    title: 'Note Added',
+                    text: 'Your note has been added to the booking timeline',
+                    icon: 'success',
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+            });
+        });
+    </script>
+</body>
+</html>

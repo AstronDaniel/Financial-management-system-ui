@@ -3,130 +3,886 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Customer</title>
+    <title>Add Customer - ACCCA Financial Management System</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Flatpickr -->
-    <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <!-- Custom CSS -->
-    <link href="../../css/styles.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/dashboard.css">
+    <style>
+        .form-container {
+            position: relative;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+        }
+        
+        .form-nav-pills {
+            border-radius: 10px;
+            padding: 0.5rem;
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+        
+        .form-nav-link {
+            border-radius: 8px !important;
+            padding: 1rem 1.5rem !important;
+            font-weight: 500;
+            text-align: center;
+            flex: 1;
+            color: #5d3a00;
+            margin: 0.25rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-nav-link.active {
+            background-color: #5d3a00 !important;
+            color: white !important;
+            box-shadow: 0 4px 8px rgba(93, 58, 0, 0.2);
+        }
+        
+        .form-nav-link:not(.active):hover {
+            background-color: #f1f1f1;
+        }
+        
+        .form-nav-link i {
+            margin-right: 8px;
+            font-size: 1.1rem;
+        }
+        
+        .form-section {
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 10px;
+            background-color: #fcfcfc;
+            border-left: 4px solid #5d3a00;
+        }
+        
+        .form-section h5 {
+            color: #5d3a00;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .form-label {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #5d3a00;
+        }
+        
+        .form-control, .form-select {
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: #daa520;
+            box-shadow: 0 0 0 0.25rem rgba(218, 165, 32, 0.2);
+        }
+        
+        .input-group-text {
+            border-radius: 8px 0 0 8px;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+        }
+        
+        .preference-category {
+            background-color: rgba(93, 58, 0, 0.05);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .preference-category h6 {
+            color: #5d3a00;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .form-check-label {
+            cursor: pointer;
+            padding-left: 0.5rem;
+        }
+        
+        .form-check-input:checked {
+            background-color: #5d3a00;
+            border-color: #5d3a00;
+        }
+        
+        .form-buttons {
+            position: sticky;
+            bottom: 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 1.5rem 0;
+            background-color: white;
+            border-top: 1px solid #eee;
+            margin-top: 2rem;
+        }
+        
+        .tab-pane {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        
+        .progress-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .progress-line {
+            position: absolute;
+            top: 1.5rem;
+            left: 7%;
+            width: 86%;
+            height: 4px;
+            background-color: #e9ecef;
+            z-index: 1;
+        }
+        
+        .progress-line-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background-color: #5d3a00;
+            transition: width 0.3s ease;
+        }
+        
+        .progress-step {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            width: 100px;
+        }
+        
+        .progress-indicator .step-number {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            background-color: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.75rem;
+            font-weight: 600;
+            color: #6c757d;
+            transition: all 0.3s ease;
+        }
+        
+        .progress-step.active .step-number {
+            background-color: #5d3a00;
+            color: white;
+            box-shadow: 0 4px 8px rgba(93, 58, 0, 0.2);
+        }
+        
+        .progress-step.completed .step-number {
+            background-color: #daa520;
+            color: white;
+        }
+        
+        .progress-step-label {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #6c757d;
+        }
+        
+        .progress-step.active .progress-step-label {
+            color: #5d3a00;
+            font-weight: 600;
+        }
+        
+        .customer-avatar-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 1.5rem;
+        }
+        
+        .customer-avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #fff;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .avatar-upload {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 40px;
+            height: 40px;
+            background-color: #5d3a00;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .avatar-upload:hover {
+            transform: scale(1.1);
+        }
+        
+        .customer-preview {
+            background-color: #fcfcfc;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .tag-input-container {
+            position: relative;
+        }
+        
+        .tag-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            z-index: 10;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 0 0 8px 8px;
+            max-height: 200px;
+            overflow-y: auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+        
+        .tag-suggestion-item {
+            padding: 8px 16px;
+            cursor: pointer;
+        }
+        
+        .tag-suggestion-item:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        
+        .tag {
+            background-color: rgba(93, 58, 0, 0.1);
+            color: #5d3a00;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .tag .remove-tag {
+            margin-left: 8px;
+            cursor: pointer;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
 <body>
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-12">
-                <h1 class="mb-4">Add Customer</h1>
-                <div class="card">
-                    <div class="card-body">
-                        <form id="customerForm" class="needs-validation" novalidate>
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="firstName" class="form-label">First Name</label>
-                                    <input type="text" class="form-control" id="firstName" placeholder="Enter first name" required>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="lastName" class="form-label">Last Name</label>
-                                    <input type="text" class="form-control" id="lastName" placeholder="Enter last name" required>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="email" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="email" placeholder="Enter email address" required>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="phone" class="form-label">Phone Number</label>
-                                    <input type="tel" class="form-control" id="phone" placeholder="Enter phone number" required>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="dateOfBirth" class="form-label">Date of Birth</label>
-                                    <input type="text" class="form-control" id="dateOfBirth" placeholder="Select date of birth">
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="address" class="form-label">Address</label>
-                                    <input type="text" class="form-control" id="address" placeholder="Enter address">
-                                </div>
-                                <div class="col-12 mb-3">
-                                    <label for="specialRequests" class="form-label">Special Requests/Preferences</label>
-                                    <textarea class="form-control" id="specialRequests" rows="3" placeholder="Any special requests or preferences"></textarea>
+    <!-- Main Layout -->
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebar" class="sidebar">
+            <!-- ... existing code ... -->
+        </nav>
+
+        <!-- Page Content -->
+        <div id="content">
+            <!-- Top Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+                <!-- ... existing code ... -->
+            </nav>
+
+            <!-- Main Content -->
+            <div class="container-fluid p-4">
+                <!-- Page Header -->
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h1 class="page-title h3">Add Customer</h1>
+                        <p class="text-muted">Create a new customer profile for ACCCA</p>
+                    </div>
+                    <div class="col-md-6 d-flex justify-content-md-end">
+                        <a href="all-customers.html" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left me-2"></i> Back to All Customers
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Progress Indicator -->
+                <div class="progress-indicator">
+                    <div class="progress-line">
+                        <div class="progress-line-fill" id="progressLine" style="width: 0%;"></div>
+                    </div>
+                    <div class="progress-step active" data-step="1">
+                        <div class="step-number">1</div>
+                        <div class="progress-step-label">Basic Info</div>
+                    </div>
+                    <div class="progress-step" data-step="2">
+                        <div class="step-number">2</div>
+                        <div class="progress-step-label">Contact Details</div>
+                    </div>
+                    <div class="progress-step" data-step="3">
+                        <div class="step-number">3</div>
+                        <div class="progress-step-label">Preferences</div>
+                    </div>
+                    <div class="progress-step" data-step="4">
+                        <div class="step-number">4</div>
+                        <div class="progress-step-label">Additional Info</div>
+                    </div>
+                </div>
+                
+                <!-- Add Customer Card -->
+                <div class="form-container mb-4">
+                    <!-- Form Tabs -->
+                    <ul class="nav nav-pills form-nav-pills mb-4" id="customerTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link form-nav-link active" id="basicInfo-tab" data-bs-toggle="tab" data-bs-target="#basicInfo" type="button" role="tab">
+                                <i class="fas fa-user"></i> Basic Information
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link form-nav-link" id="contactInfo-tab" data-bs-toggle="tab" data-bs-target="#contactInfo" type="button" role="tab">
+                                <i class="fas fa-address-card"></i> Contact Details
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link form-nav-link" id="preferences-tab" data-bs-toggle="tab" data-bs-target="#preferences" type="button" role="tab">
+                                <i class="fas fa-heart"></i> Preferences
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link form-nav-link" id="additionalInfo-tab" data-bs-toggle="tab" data-bs-target="#additionalInfo" type="button" role="tab">
+                                <i class="fas fa-info-circle"></i> Additional Info
+                            </button>
+                        </li>
+                    </ul>
+                    
+                    <!-- Form Content -->
+                    <form id="customerForm" class="needs-validation" novalidate>
+                        <div class="tab-content">
+                            <!-- Basic Information Tab -->
+                            <div class="tab-pane fade show active" id="basicInfo" role="tabpanel">
+                                <div class="form-section">
+                                    <h5><i class="fas fa-id-card me-2"></i>Customer Type & Status</h5>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="customerType" class="form-label">Customer Type<span class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-users"></i></span>
+                                                <select class="form-select" id="customerType" required>
+                                                    <option value="individual" selected>Individual</option>
+                                                    <option value="business">Business/Organization</option>
+                                                    <option value="tour-group">Tour Group</option>
+                                                </select>
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Please select a customer type.
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="status" class="form-label">Status</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-toggle-on"></i></span>
+                                                <select class="form-select" id="status">
+                                                    <option value="active" selected>Active</option>
+                                                    <option value="inactive">Inactive</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 
-                                <div class="col-12 mb-3">
-                                    <label class="form-label">Communication Preferences</label>
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input" type="checkbox" id="emailOptIn" checked>
-                                        <label class="form-check-label" for="emailOptIn">
-                                            Email communications (promotions, newsletters)
-                                        </label>
+                                <!-- Individual Customer Fields -->
+                                <div class="form-section individual-field">
+                                    <h5><i class="fas fa-user me-2"></i>Personal Information</h5>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="firstName" class="form-label">First Name<span class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                                <input type="text" class="form-control" id="firstName" required>
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Please enter first name.
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="lastName" class="form-label">Last Name<span class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                                <input type="text" class="form-control" id="lastName" required>
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Please enter last name.
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="smsOptIn" checked>
-                                        <label class="form-check-label" for="smsOptIn">
-                                            SMS notifications (booking reminders, updates)
-                                        </label>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="email" class="form-label">Email Address<span class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                                <input type="email" class="form-control" id="email" required>
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Please enter a valid email address.
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="phone" class="form-label">Phone Number<span class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                                <input type="tel" class="form-control" id="phone" required>
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Please enter a phone number.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="alternatePhone" class="form-label">Alternate Phone</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-phone-alt"></i></span>
+                                                <input type="tel" class="form-control" id="alternatePhone">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="dateOfBirth" class="form-label">Date of Birth</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-birthday-cake"></i></span>
+                                                <input type="text" class="form-control" id="dateOfBirth">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Business/Organization Fields -->
+                                <div class="form-section business-field d-none">
+                                    <h5><i class="fas fa-building me-2"></i>Organization Information</h5>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-3">
+                                            <label for="organizationName" class="form-label">Organization Name<span class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-building"></i></span>
+                                                <input type="text" class="form-control" id="organizationName">
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Please enter organization name.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="contactPerson" class="form-label">Contact Person</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-user-tie"></i></span>
+                                                <input type="text" class="form-control" id="contactPerson">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="position" class="form-label">Position/Title</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-id-badge"></i></span>
+                                                <input type="text" class="form-control" id="position">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="orgEmail" class="form-label">Organization Email<span class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                                <input type="email" class="form-control" id="orgEmail" required>
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Please enter a valid email address.
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="orgPhone" class="form-label">Organization Phone<span class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                                <input type="tel" class="form-control" id="orgPhone" required>
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Please enter a phone number.
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             
-                            <!-- Form Navigation Buttons -->
-                            <div class="d-flex justify-content-between mt-4">
-                                <div>
-                                    <button type="button" class="btn btn-outline-secondary" id="prevBtn" disabled>
-                                        <i class="fas fa-arrow-left me-1"></i> Previous
-                                    </button>
-                                    <button type="button" class="btn btn-outline-primary" id="nextBtn">
-                                        Next <i class="fas fa-arrow-right ms-1"></i>
-                                    </button>
+                            <!-- Contact Details Tab -->
+                            <div class="tab-pane fade" id="contactInfo" role="tabpanel">
+                                <div class="form-section">
+                                    <h5><i class="fas fa-map-marked-alt me-2"></i>Address Information</h5>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="country" class="form-label">Country<span class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-globe"></i></span>
+                                                <select class="form-select" id="country" required>
+                                                    <option value="" selected disabled>Select country</option>
+                                                    <option value="Uganda">Uganda</option>
+                                                    <option value="Kenya">Kenya</option>
+                                                    <option value="Tanzania">Tanzania</option>
+                                                    <option value="USA">United States</option>
+                                                    <option value="UK">United Kingdom</option>
+                                                    <option value="Germany">Germany</option>
+                                                    <option value="France">France</option>
+                                                    <option value="Other">Other</option>
+                                                </select>
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Please select a country.
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="city" class="form-label">City/Town</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-city"></i></span>
+                                                <input type="text" class="form-control" id="city">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="state" class="form-label">State/Province</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-map"></i></span>
+                                                <input type="text" class="form-control" id="state">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="postalCode" class="form-label">Postal/Zip Code</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-mail-bulk"></i></span>
+                                                <input type="text" class="form-control" id="postalCode">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="address" class="form-label">Address</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fas fa-home"></i></span>
+                                            <textarea class="form-control" id="address" rows="3"></textarea>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div>
-                                    <button type="button" class="btn btn-outline-secondary me-2" id="cancelBtn">Cancel</button>
-                                    <button type="submit" class="btn btn-primary" id="saveCustomerBtn">
-                                        <i class="fas fa-save me-1"></i> Save Customer
-                                    </button>
+                                
+                                <div class="form-section">
+                                    <h5><i class="fas fa-link me-2"></i>Additional Contact Information</h5>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="website" class="form-label">Website</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-globe"></i></span>
+                                                <input type="url" class="form-control" id="website" placeholder="e.g., https://example.com">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="referralSource" class="form-label">Referral Source</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-user-friends"></i></span>
+                                                <select class="form-select" id="referralSource">
+                                                    <option value="" selected disabled>How did you hear about us?</option>
+                                                    <option value="word-of-mouth">Word of Mouth</option>
+                                                    <option value="social-media">Social Media</option>
+                                                    <option value="search-engine">Search Engine</option>
+                                                    <option value="travel-agency">Travel Agency</option>
+                                                    <option value="tourism-board">Tourism Board</option>
+                                                    <option value="repeat-customer">Repeat Customer</option>
+                                                    <option value="other">Other</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="idType" class="form-label">ID Type</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+                                                <select class="form-select" id="idType">
+                                                    <option value="" selected disabled>Select ID type</option>
+                                                    <option value="passport">Passport</option>
+                                                    <option value="national-id">National ID</option>
+                                                    <option value="drivers-license">Driver's License</option>
+                                                    <option value="other">Other</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="idNumber" class="form-label">ID Number</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-fingerprint"></i></span>
+                                                <input type="text" class="form-control" id="idNumber">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </form>
-                    </div>
-                </div>
-                
-                <!-- Customer Preview -->
-                <div class="card" id="customerPreview" style="display: none;">
-                    <div class="card-header bg-white">
-                        <h5 class="card-title mb-0">Customer Preview</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-4 text-center mb-3">
-                                <div class="preview-image-container mb-2">
-                                    <img src="https://via.placeholder.com/200" alt="Customer Preview" class="rounded-circle img-thumbnail" id="previewImage" width="150" height="150">
+                            
+                            <!-- Preferences Tab -->
+                            <div class="tab-pane fade" id="preferences" role="tabpanel">
+                                <div class="form-section">
+                                    <h5><i class="fas fa-bell me-2"></i>Communication Preferences</h5>
+                                    <div class="preference-category">
+                                        <div class="form-check form-switch mb-3">
+                                            <input class="form-check-input" type="checkbox" id="emailOptIn" checked>
+                                            <label class="form-check-label" for="emailOptIn">
+                                                <i class="fas fa-envelope me-2"></i> Email Communications
+                                                <small class="d-block text-muted mt-1">Receive booking confirmations, updates, and important notifications via email</small>
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-switch mb-3">
+                                            <input class="form-check-input" type="checkbox" id="smsOptIn" checked>
+                                            <label class="form-check-label" for="smsOptIn">
+                                                <i class="fas fa-sms me-2"></i> SMS Notifications
+                                                <small class="d-block text-muted mt-1">Receive booking reminders and urgent updates via SMS</small>
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="marketingOptIn">
+                                            <label class="form-check-label" for="marketingOptIn">
+                                                <i class="fas fa-ad me-2"></i> Marketing Communications
+                                                <small class="d-block text-muted mt-1">Receive promotional offers, newsletters, and updates about new experiences</small>
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
-                                <h5 id="previewName">Customer Name</h5>
-                                <p class="badge bg-success" id="previewStatus">Active</p>
-                                <p class="text-muted" id="previewType">Individual</p>
+                                
+                                <div class="form-section">
+                                    <h5><i class="fas fa-heart me-2"></i>Activity Preferences</h5>
+                                    <div class="preference-category">
+                                        <h6>Which activities is this customer interested in?</h6>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-check mb-3">
+                                                    <input class="form-check-input" type="checkbox" id="prefCulturalTour">
+                                                    <label class="form-check-label" for="prefCulturalTour">
+                                                        <i class="fas fa-map-marked-alt me-2 text-primary"></i> Cultural Tours
+                                                    </label>
+                                                </div>
+                                                <div class="form-check mb-3">
+                                                    <input class="form-check-input" type="checkbox" id="prefCowExperience">
+                                                    <label class="form-check-label" for="prefCowExperience">
+                                                        <i class="fas fa-cow me-2 text-success"></i> Cow Experience
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-check mb-3">
+                                                    <input class="form-check-input" type="checkbox" id="prefTraditionalDance">
+                                                    <label class="form-check-label" for="prefTraditionalDance">
+                                                        <i class="fas fa-music me-2 text-danger"></i> Traditional Dance
+                                                    </label>
+                                                </div>
+                                                <div class="form-check mb-3">
+                                                    <input class="form-check-input" type="checkbox" id="prefArtifactWorkshop">
+                                                    <label class="form-check-label" for="prefArtifactWorkshop">
+                                                        <i class="fas fa-paint-brush me-2 text-warning"></i> Artifact Workshop
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-section">
+                                    <h5><i class="fas fa-user-cog me-2"></i>Personal Preferences</h5>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="preferredLanguage" class="form-label">Preferred Language</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-language"></i></span>
+                                                <select class="form-select" id="preferredLanguage">
+                                                    <option value="english" selected>English</option>
+                                                    <option value="french">French</option>
+                                                    <option value="german">German</option>
+                                                    <option value="swahili">Swahili</option>
+                                                    <option value="runyankole">Runyankole</option>
+                                                    <option value="other">Other</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="dietaryRestrictions" class="form-label">Dietary Restrictions</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-utensils"></i></span>
+                                                <input type="text" class="form-control" id="dietaryRestrictions" placeholder="e.g., Vegetarian, Allergies">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="accessibilityNeeds" class="form-label">Accessibility Needs</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fas fa-wheelchair"></i></span>
+                                            <input type="text" class="form-control" id="accessibilityNeeds" placeholder="Any accessibility requirements">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="specialRequests" class="form-label">Special Requests/Interests</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fas fa-star"></i></span>
+                                            <textarea class="form-control" id="specialRequests" rows="3" placeholder="Any special interests or requests"></textarea>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label class="form-label">Interests & Tags</label>
+                                        <div class="tag-input-container">
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-tags"></i></span>
+                                                <input type="text" class="form-control" id="tagInput" placeholder="Add interests (press Enter after each tag)">
+                                            </div>
+                                            <div class="tag-suggestions" id="tagSuggestions">
+                                                <div class="tag-suggestion-item">History</div>
+                                                <div class="tag-suggestion-item">Culture</div>
+                                                <div class="tag-suggestion-item">Photography</div>
+                                                <div class="tag-suggestion-item">Local Cuisine</div>
+                                                <div class="tag-suggestion-item">Wildlife</div>
+                                                <div class="tag-suggestion-item">Cattle Breeding</div>
+                                                <div class="tag-suggestion-item">Agriculture</div>
+                                                <div class="tag-suggestion-item">Crafts</div>
+                                            </div>
+                                        </div>
+                                        <div class="tags-container" id="tagsContainer">
+                                            <!-- Tags will be added here dynamically -->
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-8">
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <h6 class="fw-bold">Contact Information</h6>
-                                        <p class="mb-1" id="previewEmail">email@example.com</p>
-                                        <p class="mb-1" id="previewPhone">+256 000 000000</p>
-                                        <p class="mb-0" id="previewAddress">City, Country</p>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <h6 class="fw-bold">Preferences</h6>
-                                        <p class="mb-1" id="previewPreferences">No preferences set</p>
-                                        <p class="mb-0" id="previewDietary">No dietary restrictions</p>
+                            
+                            <!-- Additional Info Tab -->
+                            <div class="tab-pane fade" id="additionalInfo" role="tabpanel">
+                                <div class="form-section">
+                                    <h5><i class="fas fa-crown me-2"></i>Customer Classification</h5>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6 mb-3">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="vip">
+                                                <label class="form-check-label" for="vip">
+                                                    <strong><i class="fas fa-crown me-2 text-warning"></i> Mark as VIP Customer</strong>
+                                                    <small class="d-block text-muted mt-1">VIP customers receive special attention and premium service</small>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="repeatVisitor">
+                                                <label class="form-check-label" for="repeatVisitor">
+                                                    <strong><i class="fas fa-redo me-2 text-success"></i> Repeat Visitor</strong>
+                                                    <small class="d-block text-muted mt-1">Customer has visited ACCCA before</small>
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="row mt-2">
-                                    <div class="col-12">
-                                        <h6 class="fw-bold">Notes</h6>
-                                        <p class="mb-0" id="previewNotes">No notes provided</p>
+                                
+                                <div class="form-section">
+                                    <h5><i class="fas fa-sticky-note me-2"></i>Notes & Additional Information</h5>
+                                    <div class="mb-4">
+                                        <label for="notes" class="form-label">Notes</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fas fa-sticky-note"></i></span>
+                                            <textarea class="form-control" id="notes" rows="5" placeholder="Add any additional notes about this customer"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-section">
+                                    <h5><i class="fas fa-camera me-2"></i>Customer Photo</h5>
+                                    <div class="text-center mb-4">
+                                        <div class="customer-avatar-container">
+                                            <img src="https://via.placeholder.com/150" alt="Customer Photo Preview" id="previewImage" class="customer-avatar">
+                                            <label for="customerPhoto" class="avatar-upload">
+                                                <i class="fas fa-camera"></i>
+                                                <input type="file" id="customerPhoto" accept="image/*" style="display: none;">
+                                            </label>
+                                        </div>
+                                        <p class="text-muted small">Recommended: Square image, max 2MB</p>
+                                        <button type="button" class="btn btn-outline-secondary btn-sm" id="removePhotoBtn">
+                                            <i class="fas fa-trash me-1"></i> Remove Photo
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="customer-preview mt-4" id="customerPreview">
+                                    <h5 class="mb-3">Preview Customer Profile</h5>
+                                    <img src="https://via.placeholder.com/80" alt="Customer Preview" class="rounded-circle mb-3" width="80" height="80">
+                                    <h5 id="previewName">John Smith</h5>
+                                    <p class="text-muted mb-3" id="previewType">Individual</p>
+                                    <div class="mb-3">
+                                        <span class="badge bg-success" id="previewStatus">Active</span>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 text-md-end">
+                                            <p class="mb-1">Email:</p>
+                                            <p class="mb-1">Phone:</p>
+                                            <p class="mb-0">Location:</p>
+                                        </div>
+                                        <div class="col-md-6 text-md-start">
+                                            <p class="mb-1" id="previewEmail">john@example.com</p>
+                                            <p class="mb-1" id="previewPhone">+1234567890</p>
+                                            <p class="mb-0" id="previewLocation">London, UK</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        
+                        <!-- Form Buttons -->
+                        <div class="form-buttons">
+                            <div>
+                                <button type="button" class="btn btn-outline-secondary me-2" id="prevBtn" disabled>
+                                    <i class="fas fa-arrow-left me-1"></i> Previous
+                                </button>
+                                <button type="button" class="btn btn-outline-primary" id="nextBtn">
+                                    Next <i class="fas fa-arrow-right ms-1"></i>
+                                </button>
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-outline-secondary me-2" id="cancelBtn">Cancel</button>
+                                <button type="submit" class="btn btn-primary" id="saveCustomerBtn">
+                                    <i class="fas fa-save me-1"></i> Save Customer
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -162,31 +918,50 @@
                     $('.business-field').addClass('d-none');
                     $('#organizationName').prop('required', false);
                     $('#firstName, #lastName').prop('required', true);
-                } else if (type === 'business' || type === 'tour-group') {
+                } else {
                     $('.individual-field').addClass('d-none');
                     $('.business-field').removeClass('d-none');
                     $('#organizationName').prop('required', true);
                     $('#firstName, #lastName').prop('required', false);
                 }
             });
-
-            // Handle profile image preview
-            $('#customerImage').on('change', function(e) {
+            
+            // Handle customer photo preview
+            $('#customerPhoto').on('change', function(e) {
                 if (e.target.files.length > 0) {
                     let file = e.target.files[0];
                     let reader = new FileReader();
                     
                     reader.onload = function(e) {
                         $('#previewImage').attr('src', e.target.result);
-                    }
+                    };
                     
                     reader.readAsDataURL(file);
                 }
             });
-
-            // Handle form navigation
+            
+            // Handle remove photo button
+            $('#removePhotoBtn').on('click', function() {
+                $('#customerPhoto').val('');
+                $('#previewImage').attr('src', 'https://via.placeholder.com/150');
+            });
+            
+            // Tab navigation
+            const tabs = ['basicInfo-tab', 'contactInfo-tab', 'preferences-tab', 'additionalInfo-tab'];
             let currentTab = 0;
-            const tabs = ['basic-tab', 'contact-tab', 'additional-tab', 'preferences-tab'];
+            
+            function updateProgressIndicator(step) {
+                // Update progress steps
+                $('.progress-step').removeClass('active completed');
+                for (let i = 0; i < step; i++) {
+                    $(`.progress-step[data-step="${i+1}"]`).addClass('completed');
+                }
+                $(`.progress-step[data-step="${step+1}"]`).addClass('active');
+                
+                // Update progress line
+                let progressPercent = (step / (tabs.length - 1)) * 100;
+                $('#progressLine').css('width', `${progressPercent}%`);
+            }
             
             $('#nextBtn').on('click', function() {
                 if (currentTab < tabs.length - 1) {
@@ -197,6 +972,8 @@
                     if (currentTab === tabs.length - 1) {
                         $(this).prop('disabled', true);
                     }
+                    
+                    updateProgressIndicator(currentTab);
                 }
             });
             
@@ -209,6 +986,8 @@
                     if (currentTab === 0) {
                         $(this).prop('disabled', true);
                     }
+                    
+                    updateProgressIndicator(currentTab);
                 }
             });
             
@@ -217,7 +996,87 @@
                 currentTab = tabs.indexOf($(this).attr('id'));
                 $('#prevBtn').prop('disabled', currentTab === 0);
                 $('#nextBtn').prop('disabled', currentTab === tabs.length - 1);
+                updateProgressIndicator(currentTab);
             });
+            
+            // Handle tags input
+            $('#tagInput').on('focus', function() {
+                $('#tagSuggestions').show();
+            });
+            
+            $('#tagInput').on('blur', function() {
+                // Delayed hide to allow clicking on suggestions
+                setTimeout(function() {
+                    $('#tagSuggestions').hide();
+                }, 200);
+            });
+            
+            $('.tag-suggestion-item').on('click', function() {
+                const tagText = $(this).text();
+                addTag(tagText);
+                $('#tagInput').val('');
+            });
+            
+            $('#tagInput').on('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const tagText = $(this).val().trim();
+                    if (tagText) {
+                        addTag(tagText);
+                        $(this).val('');
+                    }
+                }
+            });
+            
+            function addTag(text) {
+                // Check if tag already exists
+                let exists = false;
+                $('.tag').each(function() {
+                    if ($(this).data('tag') === text) {
+                        exists = true;
+                        return false;
+                    }
+                });
+                
+                if (!exists) {
+                    const tag = $(`<div class="tag" data-tag="${text}">${text} <i class="fas fa-times remove-tag"></i></div>`);
+                    $('#tagsContainer').append(tag);
+                    
+                    // Handle tag removal
+                    tag.find('.remove-tag').on('click', function() {
+                        $(this).parent().remove();
+                    });
+                }
+            }
+            
+            // Update preview when information changes
+            $("#firstName, #lastName, #email, #phone, #country, #city").on('input', function() {
+                updatePreview();
+            });
+            
+            function updatePreview() {
+                const firstName = $('#firstName').val() || 'John';
+                const lastName = $('#lastName').val() || 'Smith';
+                $('#previewName').text(`${firstName} ${lastName}`);
+                
+                $('#previewEmail').text($('#email').val() || 'john@example.com');
+                $('#previewPhone').text($('#phone').val() || '+1234567890');
+                
+                const country = $('#country').val() || 'UK';
+                const city = $('#city').val() || 'London';
+                $('#previewLocation').text(`${city}, ${country}`);
+                
+                $('#previewStatus').text($('#status').val() === 'active' ? 'Active' : 'Inactive');
+                
+                // If business type, use organization name
+                if ($('#customerType').val() === 'business') {
+                    const orgName = $('#organizationName').val() || 'Company Name';
+                    $('#previewName').text(orgName);
+                    $('#previewType').text('Business/Organization');
+                } else {
+                    $('#previewType').text('Individual');
+                }
+            }
 
             // Form submission
             $('#customerForm').on('submit', function(e) {
@@ -236,6 +1095,7 @@
                             currentTab = i;
                             $('#prevBtn').prop('disabled', currentTab === 0);
                             $('#nextBtn').prop('disabled', currentTab === tabs.length - 1);
+                            updateProgressIndicator(currentTab);
                             break;
                         }
                     }
@@ -271,6 +1131,12 @@
                     customerData.fullName = $('#organizationName').val();
                 }
                 
+                // Collect tags
+                customerData.tags = [];
+                $('.tag').each(function() {
+                    customerData.tags.push($(this).data('tag'));
+                });
+                
                 // Add additional fields
                 customerData.alternatePhone = $('#alternatePhone').val();
                 customerData.country = $('#country').val();
@@ -285,12 +1151,14 @@
                 customerData.idNumber = $('#idNumber').val();
                 customerData.notes = $('#notes').val();
                 customerData.isVip = $('#vip').is(':checked');
+                customerData.isRepeatVisitor = $('#repeatVisitor').is(':checked');
                 customerData.preferredLanguage = $('#preferredLanguage').val();
                 customerData.dietaryRestrictions = $('#dietaryRestrictions').val();
                 customerData.accessibilityNeeds = $('#accessibilityNeeds').val();
                 customerData.specialRequests = $('#specialRequests').val();
                 customerData.emailOptIn = $('#emailOptIn').is(':checked');
                 customerData.smsOptIn = $('#smsOptIn').is(':checked');
+                customerData.marketingOptIn = $('#marketingOptIn').is(':checked');
                 
                 // Preferred activities
                 customerData.preferredActivities = [];
@@ -301,35 +1169,13 @@
                 
                 // In a real app, this would save to IndexedDB and sync to server
                 // For this demo, we'll show a success message
-
-                // Update preview fields
-                $('#previewName').text(customerData.fullName);
-                $('#previewType').text(customerData.type.charAt(0).toUpperCase() + customerData.type.slice(1));
-                $('#previewStatus').text(customerData.status.charAt(0).toUpperCase() + customerData.status.slice(1));
-                $('#previewEmail').text(customerData.email);
-                $('#previewPhone').text(customerData.phone);
-                
-                let addressStr = customerData.address;
-                if (customerData.city) addressStr += (addressStr ? ', ' : '') + customerData.city;
-                if (customerData.state) addressStr += (addressStr ? ', ' : '') + customerData.state;
-                if (customerData.country) addressStr += (addressStr ? ', ' : '') + customerData.country;
-                $('#previewAddress').text(addressStr || 'No address provided');
-                
-                let preferencesStr = customerData.preferredActivities.join(', ');
-                $('#previewPreferences').text(preferencesStr || 'No preferences set');
-                $('#previewDietary').text(customerData.dietaryRestrictions || 'No dietary restrictions');
-                $('#previewNotes').text(customerData.notes || 'No notes provided');
-                
-                // Show preview
-                $('#customerForm').hide();
-                $('#customerPreview').show();
-                
-                // Show success message
                 Swal.fire({
                     icon: 'success',
                     title: 'Customer Added',
                     text: 'Customer information has been saved successfully!',
-                    confirmButtonText: 'View Customer'
+                    confirmButtonText: 'View Customer',
+                    showCancelButton: true,
+                    cancelButtonText: 'Add Another'
                 }).then((result) => {
                     if (result.isConfirmed) {
                         // Redirect to customer details page
@@ -338,11 +1184,13 @@
                         // Reset form
                         $('#customerForm')[0].reset();
                         $(this).removeClass('was-validated');
-                        $('#previewImage').attr('src', 'https://via.placeholder.com/200');
+                        $('#previewImage').attr('src', 'https://via.placeholder.com/150');
+                        $('#tagsContainer').empty();
                         currentTab = 0;
                         $(`#${tabs[currentTab]}`).tab('show');
                         $('#prevBtn').prop('disabled', true);
                         $('#nextBtn').prop('disabled', false);
+                        updateProgressIndicator(currentTab);
                     }
                 });
             });
@@ -362,6 +1210,10 @@
                     }
                 });
             });
+            
+            // Initial setup
+            updateProgressIndicator(0);
+            updatePreview();
         });
     </script>
 </body>

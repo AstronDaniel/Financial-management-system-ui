@@ -8,6 +8,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS Animation Library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/landing.css">
@@ -18,12 +20,26 @@
         <header class="landing-header py-3">
             <div class="container">
                 <div class="d-flex justify-content-between align-items-center">
-                    <div class="logo-container">
-                        <h1 class="mb-0">ACCCA</h1>
-                        <p class="text-muted mb-0 small">Financial Management System</p>
+                    <div class="logo-container d-flex align-items-center">
+                        <div class="logo-icon me-2">
+                            <i class="fas fa-cow" style="color: #5d3a00; font-size: 1.8rem;"></i>
+                        </div>
+                        <div>
+                            <h1 class="mb-0">ACCCA</h1>
+                            <p class="text-muted mb-0 small">Financial Management System</p>
+                        </div>
                     </div>
+                    <nav class="d-none d-md-flex">
+                        <ul class="nav">
+                            <li class="nav-item"><a href="#system-flow" class="nav-link">Features</a></li>
+                            <li class="nav-item"><a href="#detailed-flow" class="nav-link">System Flow</a></li>
+                            <li class="nav-item"><a href="#testimonials" class="nav-link">Testimonials</a></li>
+                        </ul>
+                    </nav>
                     <div>
-                        <a href="pages/login.html" class="btn btn-primary">Log In</a>
+                        <a href="pages/login.html" class="btn btn-primary">
+                            <i class="fas fa-sign-in-alt me-2"></i>Log In
+                        </a>
                     </div>
                 </div>
             </div>
@@ -35,17 +51,177 @@
             <section class="hero-section py-5">
                 <div class="container">
                     <div class="row align-items-center">
-                        <div class="col-lg-6">
+                        <div class="col-lg-6" data-aos="fade-right" data-aos-duration="1000">
                             <h1 class="display-4 fw-bold mb-4">Comprehensive Financial Management</h1>
                             <p class="lead mb-4">Simplify budgeting, expense tracking, and financial reporting for your organization with our intuitive system.</p>
                             <div class="d-flex gap-3">
-                                <a href="pages/login.html" class="btn btn-lg btn-primary">Get Started</a>
-                                <a href="#system-flow" class="btn btn-lg btn-outline-secondary">Explore Features</a>
+                                <a href="pages/login.html" class="btn btn-lg btn-primary">
+                                    <i class="fas fa-rocket me-2"></i>Get Started
+                                </a>
+                                <a href="#system-flow" class="btn btn-lg btn-outline-secondary">
+                                    <i class="fas fa-map me-2"></i>Explore Features
+                                </a>
+                            </div>
+                            
+                            <!-- Key Features Pills -->
+                            <div class="key-features mt-4">
+                                <span class="badge rounded-pill bg-light text-dark p-2 me-2 mb-2">
+                                    <i class="fas fa-wifi-slash me-1"></i> Works Offline
+                                </span>
+                                <span class="badge rounded-pill bg-light text-dark p-2 me-2 mb-2">
+                                    <i class="fas fa-chart-line me-1"></i> Financial Analytics
+                                </span>
+                                <span class="badge rounded-pill bg-light text-dark p-2 me-2 mb-2">
+                                    <i class="fas fa-calendar-check me-1"></i> Booking Management
+                                </span>
+                                <span class="badge rounded-pill bg-light text-dark p-2 me-2 mb-2">
+                                    <i class="fas fa-file-invoice-dollar me-1"></i> Budget Planning
+                                </span>
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="dashboard-preview mt-4 mt-lg-0">
-                                <img src="assets/images/dashboard-preview.png" alt="Dashboard Preview" class="img-fluid rounded shadow">
+                        <div class="col-lg-6" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+                            <div class="dashboard-preview mt-4 mt-lg-0 position-relative">
+                                <img src="assets/images/dashboard-preview.png" alt="Dashboard Preview" class="img-fluid rounded shadow-lg">
+                                
+                                <!-- Floating Features -->
+                                <div class="floating-feature top-0 start-0 translate-middle-y bg-white p-2 rounded-pill shadow-sm">
+                                    <i class="fas fa-sync text-success"></i> Real-time Sync
+                                </div>
+                                <div class="floating-feature top-50 end-0 translate-middle-y bg-white p-2 rounded-pill shadow-sm">
+                                    <i class="fas fa-lock text-primary"></i> Secure Access
+                                </div>
+                                <div class="floating-feature bottom-0 start-50 translate-middle-x bg-white p-2 rounded-pill shadow-sm">
+                                    <i class="fas fa-mobile-alt text-warning"></i> Mobile Ready
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Interactive System Flow Visual -->
+            <section id="detailed-flow" class="interactive-flow-section py-5 bg-light">
+                <div class="container">
+                    <div class="text-center mb-5" data-aos="fade-up">
+                        <h2 class="section-title">Interactive System Flow</h2>
+                        <p class="section-subtitle">Follow the journey of financial data through our comprehensive system</p>
+                    </div>
+                    
+                    <div class="flow-visual-container">
+                        <div class="flow-diagram" data-aos="zoom-in" data-aos-duration="1200">
+                            <svg viewBox="0 0 1000 350" class="flow-svg">
+                                <!-- Background -->
+                                <rect x="0" y="0" width="1000" height="350" rx="10" fill="#f8f9fa" />
+                                
+                                <!-- Connection Lines -->
+                                <path d="M180,175 C220,175 220,100 260,100" stroke="#5d3a00" stroke-width="3" fill="none" stroke-dasharray="5,5" />
+                                <path d="M180,175 C220,175 220,175 260,175" stroke="#5d3a00" stroke-width="3" fill="none" />
+                                <path d="M180,175 C220,175 220,250 260,250" stroke="#5d3a00" stroke-width="3" fill="none" stroke-dasharray="5,5" />
+                                <path d="M380,100 C420,100 420,175 460,175" stroke="#5d3a00" stroke-width="3" fill="none" stroke-dasharray="5,5" />
+                                <path d="M380,175 C420,175 420,175 460,175" stroke="#5d3a00" stroke-width="3" fill="none" />
+                                <path d="M380,250 C420,250 420,175 460,175" stroke="#5d3a00" stroke-width="3" fill="none" stroke-dasharray="5,5" />
+                                <path d="M580,175 C620,175 620,100 660,100" stroke="#5d3a00" stroke-width="3" fill="none" stroke-dasharray="5,5" />
+                                <path d="M580,175 C620,175 620,175 660,175" stroke="#5d3a00" stroke-width="3" fill="none" />
+                                <path d="M580,175 C620,175 620,250 660,250" stroke="#5d3a00" stroke-width="3" fill="none" stroke-dasharray="5,5" />
+                                <path d="M780,100 C820,100 820,175 860,175" stroke="#5d3a00" stroke-width="3" fill="none" stroke-dasharray="5,5" />
+                                <path d="M780,175 C820,175 820,175 860,175" stroke="#5d3a00" stroke-width="3" fill="none" />
+                                <path d="M780,250 C820,250 820,175 860,175" stroke="#5d3a00" stroke-width="3" fill="none" stroke-dasharray="5,5" />
+                                
+                                <!-- Nodes -->
+                                <!-- Login Node -->
+                                <circle cx="180" cy="175" r="50" fill="#ffffff" stroke="#daa520" stroke-width="3" />
+                                <foreignObject x="145" y="140" width="70" height="70">
+                                    <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
+                                        <i class="fas fa-sign-in-alt" style="font-size:24px; color:#5d3a00;"></i>
+                                        <span style="font-size:12px; font-weight:bold; margin-top:5px;">Login</span>
+                                    </div>
+                                </foreignObject>
+                                
+                                <!-- Input Nodes -->
+                                <rect x="260" y="50" width="120" height="100" rx="10" fill="#ffffff" stroke="#daa520" stroke-width="3" />
+                                <foreignObject x="260" y="50" width="120" height="100">
+                                    <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:10px;">
+                                        <i class="fas fa-hand-holding-usd" style="font-size:24px; color:#5d3a00;"></i>
+                                        <span style="font-size:12px; font-weight:bold; margin-top:5px;">Income Entry</span>
+                                    </div>
+                                </foreignObject>
+                                
+                                <rect x="260" y="160" width="120" height="30" rx="5" fill="#ffffff" stroke="#daa520" stroke-width="3" />
+                                <foreignObject x="260" y="160" width="120" height="30">
+                                    <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:bold;">
+                                        Dashboard
+                                    </div>
+                                </foreignObject>
+                                
+                                <rect x="260" y="200" width="120" height="100" rx="10" fill="#ffffff" stroke="#daa520" stroke-width="3" />
+                                <foreignObject x="260" y="200" width="120" height="100">
+                                    <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:10px;">
+                                        <i class="fas fa-credit-card" style="font-size:24px; color:#5d3a00;"></i>
+                                        <span style="font-size:12px; font-weight:bold; margin-top:5px;">Expense Entry</span>
+                                    </div>
+                                </foreignObject>
+                                
+                                <!-- Processing Node -->
+                                <rect x="460" y="125" width="120" height="100" rx="10" fill="#ffffff" stroke="#228b22" stroke-width="3" />
+                                <foreignObject x="460" y="125" width="120" height="100">
+                                    <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:10px;">
+                                        <i class="fas fa-cogs" style="font-size:24px; color:#228b22;"></i>
+                                        <span style="font-size:12px; font-weight:bold; margin-top:5px;">Data Processing</span>
+                                        <span style="font-size:10px; margin-top:5px;">Validation & Storage</span>
+                                    </div>
+                                </foreignObject>
+                                
+                                <!-- Output Nodes -->
+                                <rect x="660" y="50" width="120" height="100" rx="10" fill="#ffffff" stroke="#5d3a00" stroke-width="3" />
+                                <foreignObject x="660" y="50" width="120" height="100">
+                                    <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:10px;">
+                                        <i class="fas fa-chart-pie" style="font-size:24px; color:#5d3a00;"></i>
+                                        <span style="font-size:12px; font-weight:bold; margin-top:5px;">Budget Analysis</span>
+                                    </div>
+                                </foreignObject>
+                                
+                                <rect x="660" y="160" width="120" height="30" rx="5" fill="#ffffff" stroke="#5d3a00" stroke-width="3" />
+                                <foreignObject x="660" y="160" width="120" height="30">
+                                    <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:bold;">
+                                        Reports
+                                    </div>
+                                </foreignObject>
+                                
+                                <rect x="660" y="200" width="120" height="100" rx="10" fill="#ffffff" stroke="#5d3a00" stroke-width="3" />
+                                <foreignObject x="660" y="200" width="120" height="100">
+                                    <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:10px;">
+                                        <i class="fas fa-calendar-alt" style="font-size:24px; color:#5d3a00;"></i>
+                                        <span style="font-size:12px; font-weight:bold; margin-top:5px;">Booking Calendar</span>
+                                    </div>
+                                </foreignObject>
+                                
+                                <!-- Final Result Node -->
+                                <circle cx="920" cy="175" r="50" fill="#ffffff" stroke="#228b22" stroke-width="3" />
+                                <foreignObject x="885" y="140" width="70" height="70">
+                                    <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
+                                        <i class="fas fa-check-circle" style="font-size:24px; color:#228b22;"></i>
+                                        <span style="font-size:12px; font-weight:bold; margin-top:5px;">Results</span>
+                                    </div>
+                                </foreignObject>
+                            </svg>
+                        </div>
+                        
+                        <div class="flow-legend mt-4 d-flex justify-content-center flex-wrap gap-3">
+                            <div class="legend-item d-flex align-items-center">
+                                <div class="color-box" style="background-color: #5d3a00;"></div>
+                                <span>Data Flow</span>
+                            </div>
+                            <div class="legend-item d-flex align-items-center">
+                                <div class="color-box" style="background-color: #daa520;"></div>
+                                <span>Input Modules</span>
+                            </div>
+                            <div class="legend-item d-flex align-items-center">
+                                <div class="color-box" style="background-color: #228b22;"></div>
+                                <span>Processing & Output</span>
+                            </div>
+                            <div class="legend-item d-flex align-items-center">
+                                <div class="color-box" style="background-color: #fff; border: 1px solid #ccc;"></div>
+                                <span>Interface Elements</span>
                             </div>
                         </div>
                     </div>
@@ -53,10 +229,10 @@
             </section>
 
             <!-- System Flow Section -->
-            <section id="system-flow" class="system-flow-section py-5 bg-light">
+            <section id="system-flow" class="system-flow-section py-5">
                 <div class="container">
-                    <div class="text-center mb-5">
-                        <h2 class="section-title">System Flow & Features</h2>
+                    <div class="text-center mb-5" data-aos="fade-up">
+                        <h2 class="section-title">Detailed System Flow & Features</h2>
                         <p class="section-subtitle">Explore how our system streamlines your financial management process</p>
                     </div>
 
@@ -66,89 +242,210 @@
                             <div class="col-lg-10 mx-auto">
                                 <div class="flow-timeline">
                                     <!-- Step 1 -->
-                                    <div class="flow-step">
+                                    <div class="flow-step" data-aos="fade-right" data-aos-duration="800">
                                         <div class="step-number">1</div>
                                         <div class="step-content card">
                                             <div class="card-body">
-                                                <h4 class="step-title">User Authentication</h4>
+                                                <h4 class="step-title">
+                                                    <i class="fas fa-user-shield me-2"></i>
+                                                    User Authentication
+                                                </h4>
                                                 <p class="step-description">Secure login system with role-based access control for different user types.</p>
                                                 <div class="wireframe-container">
                                                     <div class="wireframe login-wireframe">
+                                                        <div class="d-flex align-items-center justify-content-center mb-3">
+                                                            <div class="badge bg-primary p-2 rounded-pill">
+                                                                Secure Authentication
+                                                            </div>
+                                                        </div>
                                                         <div class="wf-header"></div>
                                                         <div class="wf-form">
-                                                            <div class="wf-input"></div>
-                                                            <div class="wf-input"></div>
+                                                            <div class="wf-input position-relative">
+                                                                <div class="position-absolute top-0 start-0 ps-1" style="font-size: 10px; color: #aaa;">
+                                                                    <i class="fas fa-user"></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="wf-input position-relative">
+                                                                <div class="position-absolute top-0 start-0 ps-1" style="font-size: 10px; color: #aaa;">
+                                                                    <i class="fas fa-lock"></i>
+                                                                </div>
+                                                            </div>
                                                             <div class="wf-button"></div>
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="mt-3">
+                                                    <span class="badge bg-light text-dark me-2">
+                                                        <i class="fas fa-shield-alt"></i> Role-based Access
+                                                    </span>
+                                                    <span class="badge bg-light text-dark">
+                                                        <i class="fas fa-history"></i> Audit Trails
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
                                     <!-- Step 2 -->
-                                    <div class="flow-step">
+                                    <div class="flow-step" data-aos="fade-right" data-aos-duration="800" data-aos-delay="200">
                                         <div class="step-number">2</div>
                                         <div class="step-content card">
                                             <div class="card-body">
-                                                <h4 class="step-title">Dashboard Overview</h4>
+                                                <h4 class="step-title">
+                                                    <i class="fas fa-tachometer-alt me-2"></i>
+                                                    Dashboard Overview
+                                                </h4>
                                                 <p class="step-description">Comprehensive dashboard with key metrics, charts, and financial summaries.</p>
                                                 <div class="wireframe-container">
                                                     <div class="wireframe dashboard-wireframe">
-                                                        <div class="wf-sidebar"></div>
+                                                        <div class="wf-sidebar position-relative">
+                                                            <div class="position-absolute top-0 start-0 p-1" style="font-size: 8px; color: #5d3a00;">
+                                                                <i class="fas fa-bars"></i>
+                                                            </div>
+                                                            <div class="position-absolute top-0 start-50 translate-middle-x p-1" style="font-size: 8px; color: #5d3a00;">
+                                                                Menu
+                                                            </div>
+                                                        </div>
                                                         <div class="wf-main">
                                                             <div class="wf-cards">
-                                                                <div class="wf-card"></div>
-                                                                <div class="wf-card"></div>
-                                                                <div class="wf-card"></div>
+                                                                <div class="wf-card position-relative">
+                                                                    <div class="position-absolute top-50 start-50 translate-middle" style="font-size: 8px; color: #5d3a00;">
+                                                                        <i class="fas fa-dollar-sign"></i> Income
+                                                                    </div>
+                                                                </div>
+                                                                <div class="wf-card position-relative">
+                                                                    <div class="position-absolute top-50 start-50 translate-middle" style="font-size: 8px; color: #5d3a00;">
+                                                                        <i class="fas fa-credit-card"></i> Expenses
+                                                                    </div>
+                                                                </div>
+                                                                <div class="wf-card position-relative">
+                                                                    <div class="position-absolute top-50 start-50 translate-middle" style="font-size: 8px; color: #5d3a00;">
+                                                                        <i class="fas fa-chart-line"></i> Balance
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                            <div class="wf-chart"></div>
-                                                            <div class="wf-table"></div>
+                                                            <div class="wf-chart position-relative">
+                                                                <div class="position-absolute top-50 start-50 translate-middle" style="font-size: 8px; color: #5d3a00;">
+                                                                    <i class="fas fa-chart-bar"></i> Financial Trend
+                                                                </div>
+                                                            </div>
+                                                            <div class="wf-table position-relative">
+                                                                <div class="position-absolute top-50 start-50 translate-middle" style="font-size: 8px; color: #5d3a00;">
+                                                                    <i class="fas fa-list"></i> Recent Transactions
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="mt-3">
+                                                    <span class="badge bg-light text-dark me-2">
+                                                        <i class="fas fa-chart-bar"></i> Visual Analytics
+                                                    </span>
+                                                    <span class="badge bg-light text-dark">
+                                                        <i class="fas fa-sync"></i> Real-time Updates
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
                                     <!-- Step 3 -->
-                                    <div class="flow-step">
+                                    <div class="flow-step" data-aos="fade-right" data-aos-duration="800" data-aos-delay="400">
                                         <div class="step-number">3</div>
                                         <div class="step-content card">
                                             <div class="card-body">
-                                                <h4 class="step-title">Budget Management</h4>
+                                                <h4 class="step-title">
+                                                    <i class="fas fa-money-bill-wave me-2"></i>
+                                                    Budget Management
+                                                </h4>
                                                 <p class="step-description">Create, manage, and analyze budgets with powerful visualization tools.</p>
                                                 <div class="wireframe-container">
                                                     <div class="wireframe budget-wireframe">
-                                                        <div class="wf-sidebar"></div>
+                                                        <div class="wf-sidebar position-relative">
+                                                            <div class="position-absolute top-0 start-0 p-1" style="font-size: 8px; color: #5d3a00;">
+                                                                <i class="fas fa-bars"></i>
+                                                            </div>
+                                                        </div>
                                                         <div class="wf-main">
-                                                            <div class="wf-header"></div>
-                                                            <div class="wf-budget-bars"></div>
-                                                            <div class="wf-budget-table"></div>
+                                                            <div class="wf-header position-relative">
+                                                                <div class="position-absolute top-50 start-50 translate-middle" style="font-size: 8px; color: #5d3a00;">
+                                                                    Budget Overview
+                                                                </div>
+                                                            </div>
+                                                            <div class="wf-budget-bars position-relative">
+                                                                <div class="position-absolute top-0 start-0 p-1" style="font-size: 8px; color: #5d3a00;">
+                                                                    <i class="fas fa-chart-bar"></i> Budget vs Actual
+                                                                </div>
+                                                            </div>
+                                                            <div class="wf-budget-table position-relative">
+                                                                <div class="position-absolute top-0 start-0 p-1" style="font-size: 8px; color: #5d3a00;">
+                                                                    <i class="fas fa-table"></i> Details
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="mt-3">
+                                                    <span class="badge bg-light text-dark me-2">
+                                                        <i class="fas fa-tasks"></i> Budget Planning
+                                                    </span>
+                                                    <span class="badge bg-light text-dark">
+                                                        <i class="fas fa-balance-scale"></i> Variance Analysis
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
                                     <!-- Step 4 -->
-                                    <div class="flow-step">
+                                    <div class="flow-step" data-aos="fade-right" data-aos-duration="800" data-aos-delay="600">
                                         <div class="step-number">4</div>
                                         <div class="step-content card">
                                             <div class="card-body">
-                                                <h4 class="step-title">Transaction Recording</h4>
+                                                <h4 class="step-title">
+                                                    <i class="fas fa-exchange-alt me-2"></i>
+                                                    Transaction Recording
+                                                </h4>
                                                 <p class="step-description">Easy-to-use interface for recording financial transactions and expenses.</p>
                                                 <div class="wireframe-container">
                                                     <div class="wireframe transaction-wireframe">
-                                                        <div class="wf-sidebar"></div>
+                                                        <div class="wf-sidebar position-relative">
+                                                            <div class="position-absolute top-0 start-0 p-1" style="font-size: 8px; color: #5d3a00;">
+                                                                <i class="fas fa-bars"></i>
+                                                            </div>
+                                                        </div>
                                                         <div class="wf-main">
                                                             <div class="wf-form-layout">
-                                                                <div class="wf-form-group"></div>
-                                                                <div class="wf-form-group"></div>
-                                                                <div class="wf-form-group"></div>
+                                                                <div class="wf-form-group position-relative">
+                                                                    <div class="position-absolute top-50 start-0 translate-middle-y ps-1" style="font-size: 8px; color: #5d3a00;">
+                                                                        Amount
+                                                                    </div>
+                                                                </div>
+                                                                <div class="wf-form-group position-relative">
+                                                                    <div class="position-absolute top-50 start-0 translate-middle-y ps-1" style="font-size: 8px; color: #5d3a00;">
+                                                                        Category
+                                                                    </div>
+                                                                </div>
+                                                                <div class="wf-form-group position-relative">
+                                                                    <div class="position-absolute top-50 start-0 translate-middle-y ps-1" style="font-size: 8px; color: #5d3a00;">
+                                                                        Description
+                                                                    </div>
+                                                                </div>
                                                                 <div class="wf-button-group"></div>
                                                             </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="mt-3 position-relative">
+                                                    <span class="badge bg-light text-dark me-2">
+                                                        <i class="fas fa-wifi-slash"></i> Works Offline
+                                                    </span>
+                                                    <span class="badge bg-light text-dark">
+                                                        <i class="fas fa-tags"></i> Auto-categorization
+                                                    </span>
+                                                    <div class="offline-indicator position-absolute top-0 end-0">
+                                                        <div class="badge bg-success p-2">
+                                                            <i class="fas fa-check-circle me-1"></i>Synced
                                                         </div>
                                                     </div>
                                                 </div>
@@ -157,24 +454,87 @@
                                     </div>
 
                                     <!-- Step 5 -->
-                                    <div class="flow-step">
+                                    <div class="flow-step" data-aos="fade-right" data-aos-duration="800" data-aos-delay="800">
                                         <div class="step-number">5</div>
                                         <div class="step-content card">
                                             <div class="card-body">
-                                                <h4 class="step-title">Financial Reports</h4>
-                                                <p class="step-description">Generate comprehensive financial reports with custom parameters.</p>
+                                                <h4 class="step-title">
+                                                    <i class="fas fa-file-invoice me-2"></i>
+                                                    Financial Reports
+                                                </h4>
+                                                <p class="step-description">Generate comprehensive financial reports and visualizations for better decision making.</p>
                                                 <div class="wireframe-container">
-                                                    <div class="wireframe reports-wireframe">
-                                                        <div class="wf-sidebar"></div>
-                                                        <div class="wf-main">
-                                                            <div class="wf-filters"></div>
-                                                            <div class="wf-report-content">
-                                                                <div class="wf-chart-large"></div>
-                                                                <div class="wf-table-data"></div>
+                                                    <div class="wireframe report-wireframe">
+                                                        <div class="wf-filters position-relative">
+                                                            <div class="position-absolute top-50 start-0 p-1" style="font-size: 8px; color: #5d3a00;">
+                                                                <i class="fas fa-filter"></i> Filters
+                                                            </div>
+                                                        </div>
+                                                        <div class="wf-report-content">
+                                                            <div class="wf-chart-large position-relative">
+                                                                <div class="position-absolute top-50 start-50 translate-middle" style="font-size: 8px; color: #5d3a00;">
+                                                                    <i class="fas fa-chart-pie"></i> Cash Flow Chart
+                                                                </div>
+                                                            </div>
+                                                            <div class="wf-data-table position-relative">
+                                                                <div class="position-absolute top-50 start-50 translate-middle" style="font-size: 8px; color: #5d3a00;">
+                                                                    <i class="fas fa-table"></i> Financial Data
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="mt-3">
+                                                    <span class="badge bg-light text-dark me-2">
+                                                        <i class="fas fa-file-export"></i> Export Options
+                                                    </span>
+                                                    <span class="badge bg-light text-dark">
+                                                        <i class="fas fa-print"></i> Print Ready
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Step 6 -->
+                                    <div class="flow-step" data-aos="fade-right" data-aos-duration="800" data-aos-delay="1000">
+                                        <div class="step-number">6</div>
+                                        <div class="step-content card">
+                                            <div class="card-body">
+                                                <h4 class="step-title">
+                                                    <i class="fas fa-calendar-alt me-2"></i>
+                                                    Booking Management
+                                                </h4>
+                                                <p class="step-description">Efficiently manage bookings, track availability, and schedule activities.</p>
+                                                <div class="wireframe-container">
+                                                    <div class="wireframe booking-wireframe">
+                                                        <div class="wf-sidebar position-relative">
+                                                            <div class="position-absolute top-0 start-0 p-1" style="font-size: 8px; color: #5d3a00;">
+                                                                <i class="fas fa-bars"></i>
+                                                            </div>
+                                                        </div>
+                                                        <div class="wf-main">
+                                                            <div class="wf-calendar position-relative">
+                                                                <div class="position-absolute top-0 start-0 p-1" style="font-size: 8px; color: #5d3a00;">
+                                                                    <i class="fas fa-calendar-alt"></i> Booking Calendar
+                                                                </div>
+                                                            </div>
+                                                            <div class="wf-booking-details position-relative">
+                                                                <div class="position-absolute top-50 start-50 translate-middle" style="font-size: 8px; color: #5d3a00;">
+                                                                    <i class="fas fa-info-circle"></i> Booking Details
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="mt-3">
+                                                    <span class="badge bg-light text-dark me-2">
+                                                        <i class="fas fa-users"></i> Customer Management
+                                                    </span>
+                                                    <span class="badge bg-light text-dark">
+                                                        <i class="fas fa-bell"></i> Reminders & Notifications
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -185,132 +545,104 @@
                 </div>
             </section>
 
-            <!-- Features Carousel -->
-            <section class="features-section py-5">
+            <!-- Testimonials Section -->
+            <section id="testimonials" class="testimonials-section py-5 bg-light">
                 <div class="container">
-                    <div class="text-center mb-5">
-                        <h2 class="section-title">Key Features</h2>
-                        <p class="section-subtitle">Discover the powerful capabilities of our financial management system</p>
+                    <div class="text-center mb-5" data-aos="fade-up">
+                        <h2 class="section-title">What Our Users Say</h2>
+                        <p class="section-subtitle">Hear from financial managers who use our system daily</p>
                     </div>
-
-                    <div id="featuresCarousel" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <div class="feature-card">
-                                    <div class="row align-items-center">
-                                        <div class="col-md-6">
-                                            <div class="feature-image">
-                                                <div class="feature-wireframe budget-analysis-wireframe">
-                                                    <div class="wf-header"></div>
-                                                    <div class="wf-chart-container"></div>
-                                                    <div class="wf-data-table"></div>
+                    
+                    <div class="row">
+                        <div class="col-lg-10 mx-auto">
+                            <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-indicators">
+                                    <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="0" class="active"></button>
+                                    <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="1"></button>
+                                    <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="2"></button>
+                                </div>
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <div class="testimonial-item p-4 bg-white rounded shadow-sm">
+                                            <div class="d-flex align-items-center mb-3">
+                                                <img src="assets/images/user1.jpg" alt="Testimonial User" class="rounded-circle me-3" width="60" height="60">
+                                                <div>
+                                                    <h5 class="mb-0">Sarah Nabatanzi</h5>
+                                                    <p class="text-muted mb-0">Financial Manager, Tourism Board</p>
                                                 </div>
                                             </div>
+                                            <p class="testimonial-text">
+                                                <i class="fas fa-quote-left text-muted me-2"></i>
+                                                The offline functionality has been a game-changer for our rural operations. We can now record transactions in the field and sync when we return to the office.
+                                                <i class="fas fa-quote-right text-muted ms-2"></i>
+                                            </p>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="feature-content p-4">
-                                                <div class="feature-icon mb-3">
-                                                    <i class="fas fa-chart-pie"></i>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <div class="testimonial-item p-4 bg-white rounded shadow-sm">
+                                            <div class="d-flex align-items-center mb-3">
+                                                <img src="assets/images/user2.jpg" alt="Testimonial User" class="rounded-circle me-3" width="60" height="60">
+                                                <div>
+                                                    <h5 class="mb-0">John Mulindwa</h5>
+                                                    <p class="text-muted mb-0">Accountant, ACCCA</p>
                                                 </div>
-                                                <h3>Budget Analysis</h3>
-                                                <p>Analyze budget performance with interactive charts and visualizations. Track spending patterns and identify areas for optimization.</p>
-                                                <ul class="feature-list">
-                                                    <li>Real-time budget tracking</li>
-                                                    <li>Variance analysis</li>
-                                                    <li>Department-wise breakdown</li>
-                                                    <li>Forecasting tools</li>
-                                                </ul>
                                             </div>
+                                            <p class="testimonial-text">
+                                                <i class="fas fa-quote-left text-muted me-2"></i>
+                                                The reporting tools have saved me hours of work each month. I can now generate comprehensive financial reports with just a few clicks.
+                                                <i class="fas fa-quote-right text-muted ms-2"></i>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <div class="testimonial-item p-4 bg-white rounded shadow-sm">
+                                            <div class="d-flex align-items-center mb-3">
+                                                <img src="assets/images/user3.jpg" alt="Testimonial User" class="rounded-circle me-3" width="60" height="60">
+                                                <div>
+                                                    <h5 class="mb-0">Emily Namubiru</h5>
+                                                    <p class="text-muted mb-0">Operations Director, Cultural Center</p>
+                                                </div>
+                                            </div>
+                                            <p class="testimonial-text">
+                                                <i class="fas fa-quote-left text-muted me-2"></i>
+                                                The booking management system has streamlined our operations and reduced double bookings by 95%. Customer satisfaction has improved dramatically.
+                                                <i class="fas fa-quote-right text-muted ms-2"></i>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
                             </div>
-                            <div class="carousel-item">
-                                <div class="feature-card">
-                                    <div class="row align-items-center">
-                                        <div class="col-md-6">
-                                            <div class="feature-image">
-                                                <div class="feature-wireframe cash-flow-wireframe">
-                                                    <div class="wf-header"></div>
-                                                    <div class="wf-chart-flow"></div>
-                                                    <div class="wf-summary-boxes"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="feature-content p-4">
-                                                <div class="feature-icon mb-3">
-                                                    <i class="fas fa-money-bill-wave"></i>
-                                                </div>
-                                                <h3>Cash Flow Management</h3>
-                                                <p>Monitor and manage cash flow with detailed reports and projections. Ensure financial stability with accurate forecasting.</p>
-                                                <ul class="feature-list">
-                                                    <li>Cash flow statements</li>
-                                                    <li>Inflow/outflow analysis</li>
-                                                    <li>Projection tools</li>
-                                                    <li>Financial health indicators</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="feature-card">
-                                    <div class="row align-items-center">
-                                        <div class="col-md-6">
-                                            <div class="feature-image">
-                                                <div class="feature-wireframe booking-wireframe">
-                                                    <div class="wf-header"></div>
-                                                    <div class="wf-calendar"></div>
-                                                    <div class="wf-booking-details"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="feature-content p-4">
-                                                <div class="feature-icon mb-3">
-                                                    <i class="fas fa-calendar-alt"></i>
-                                                </div>
-                                                <h3>Booking & Reservation</h3>
-                                                <p>Manage bookings and reservations with an intuitive calendar interface. Track customer interactions and revenue streams.</p>
-                                                <ul class="feature-list">
-                                                    <li>Interactive calendar view</li>
-                                                    <li>Customer management</li>
-                                                    <li>Revenue tracking</li>
-                                                    <li>Booking analytics</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#featuresCarousel" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#featuresCarousel" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
-                        <div class="carousel-indicators">
-                            <button type="button" data-bs-target="#featuresCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                            <button type="button" data-bs-target="#featuresCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                            <button type="button" data-bs-target="#featuresCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Call to Action -->
+            <!-- CTA Section -->
             <section class="cta-section py-5">
                 <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-8 text-center">
-                            <h2 class="mb-4">Ready to streamline your financial management?</h2>
-                            <p class="lead mb-4">Get started with our comprehensive system designed specifically for ACCCA's needs.</p>
-                            <a href="pages/login.html" class="btn btn-lg btn-primary">Access the System</a>
+                    <div class="row align-items-center">
+                        <div class="col-lg-8 mx-auto text-center" data-aos="fade-up">
+                            <h2 class="mb-4">Ready to Streamline Your Financial Management?</h2>
+                            <p class="lead mb-4">Start using our comprehensive solution designed specifically for cultural and tourism organizations.</p>
+                            <div class="d-flex justify-content-center gap-3">
+                                <a href="pages/login.html" class="btn btn-lg btn-primary">
+                                    <i class="fas fa-rocket me-2"></i>Get Started Now
+                                </a>
+                                <a href="#" class="btn btn-lg btn-outline-secondary">
+                                    <i class="fas fa-calendar me-2"></i>Schedule Demo
+                                </a>
+                            </div>
+                            <div class="mt-4">
+                                <p class="small text-muted">No credit card required. Free 30-day trial available.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -320,41 +652,85 @@
         <!-- Footer -->
         <footer class="landing-footer py-4 bg-dark text-white">
             <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h5>ACCCA Financial Management System</h5>
-                        <p>A comprehensive solution for financial management, budgeting, and reporting.</p>
+                <div class="row gy-4">
+                    <div class="col-md-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="logo-icon me-2">
+                                <i class="fas fa-cow" style="color: #daa520; font-size: 1.5rem;"></i>
+                            </div>
+                            <h5 class="mb-0">ACCCA</h5>
+                        </div>
+                        <p class="small">ACCCA Financial Management System provides comprehensive financial tools for cultural and tourism organizations.</p>
+                        <div class="social-links mt-3">
+                            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
                     </div>
-                    <div class="col-md-3">
-                        <h5>Quick Links</h5>
-                        <ul class="list-unstyled">
-                            <li><a href="pages/login.html" class="text-white">Login</a></li>
-                            <li><a href="#system-flow" class="text-white">System Flow</a></li>
-                            <li><a href="#" class="text-white">Help & Support</a></li>
+                    <div class="col-md-2">
+                        <h6 class="footer-heading">Features</h6>
+                        <ul class="list-unstyled footer-links">
+                            <li><a href="#system-flow">Dashboard</a></li>
+                            <li><a href="#system-flow">Transactions</a></li>
+                            <li><a href="#system-flow">Bookings</a></li>
+                            <li><a href="#system-flow">Reports</a></li>
+                            <li><a href="#system-flow">Budgeting</a></li>
                         </ul>
                     </div>
-                    <div class="col-md-3">
-                        <h5>Contact</h5>
-                        <ul class="list-unstyled">
-                            <li><i class="fas fa-envelope me-2"></i> info@accca.org</li>
-                            <li><i class="fas fa-phone me-2"></i> +256 700 000000</li>
-                            <li><i class="fas fa-map-marker-alt me-2"></i> Kampala, Uganda</li>
+                    <div class="col-md-2">
+                        <h6 class="footer-heading">Company</h6>
+                        <ul class="list-unstyled footer-links">
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Our Team</a></li>
+                            <li><a href="#">Careers</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-2">
+                        <h6 class="footer-heading">Resources</h6>
+                        <ul class="list-unstyled footer-links">
+                            <li><a href="#">Documentation</a></li>
+                            <li><a href="#">FAQ</a></li>
+                            <li><a href="#">Community</a></li>
+                            <li><a href="#">Support</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-2">
+                        <h6 class="footer-heading">Legal</h6>
+                        <ul class="list-unstyled footer-links">
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Terms of Service</a></li>
+                            <li><a href="#">Compliance</a></li>
                         </ul>
                     </div>
                 </div>
-                <hr class="my-4">
+                <hr class="mt-4 mb-3 border-secondary">
                 <div class="row">
-                    <div class="col-md-12 text-center">
-                        <p class="mb-0">&copy; 2024 ACCCA Financial Management System. All rights reserved.</p>
+                    <div class="col-md-6">
+                        <p class="small mb-0">&copy; 2023 ACCCA Financial Management System. All rights reserved.</p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <p class="small mb-0">Designed with <i class="fas fa-heart text-danger"></i> for cultural organizations</p>
                     </div>
                 </div>
             </div>
         </footer>
     </div>
 
-    <!-- Bootstrap JS -->
+    <!-- Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS Animation Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <!-- Custom JS -->
+    <script src="js/utils.js"></script>
     <script src="js/landing.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+    </script>
 </body>
 </html>

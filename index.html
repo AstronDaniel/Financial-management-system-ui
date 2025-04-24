@@ -3,112 +3,358 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ACCCA Financial Management System - Login</title>
+    <title>ACCCA Financial Management System</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/landing.css">
 </head>
-<body class="bg-light">
-    <div class="container">
-        <div class="row justify-content-center align-items-center min-vh-100">
-            <div class="col-md-9 col-lg-7 col-xl-6">
-                <div class="card login-card shadow-lg border-0">
-                    <div class="row g-0">
-                        <div class="col-md-5 d-none d-md-block">
-                            <div class="login-image" style="background-image: url('https://images.unsplash.com/photo-1584675547488-f7498aba2c74?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
-                                <div class="overlay"></div>
+<body>
+    <div class="landing-wrapper">
+        <!-- Header -->
+        <header class="landing-header py-3">
+            <div class="container">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="logo-container">
+                        <h1 class="mb-0">ACCCA</h1>
+                        <p class="text-muted mb-0 small">Financial Management System</p>
+                    </div>
+                    <div>
+                        <a href="pages/login.html" class="btn btn-primary">Log In</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main>
+            <!-- Hero Section -->
+            <section class="hero-section py-5">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6">
+                            <h1 class="display-4 fw-bold mb-4">Comprehensive Financial Management</h1>
+                            <p class="lead mb-4">Simplify budgeting, expense tracking, and financial reporting for your organization with our intuitive system.</p>
+                            <div class="d-flex gap-3">
+                                <a href="pages/login.html" class="btn btn-lg btn-primary">Get Started</a>
+                                <a href="#system-flow" class="btn btn-lg btn-outline-secondary">Explore Features</a>
                             </div>
                         </div>
-                        <div class="col-md-7">
-                            <div class="card-body p-4 p-md-5">
-                                <div class="text-center mb-4">
-                                    <h2 class="brand-text mb-0">ACCCA</h2>
-                                    <p class="text-muted">Financial Management System</p>
-                                </div>
-                                
-                                <form id="loginForm">
-                                    <div class="mb-3">
-                                        <label for="username" class="form-label">Username</label>
-                                        <div class="input-group">
-                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                            <input type="text" class="form-control" id="username" placeholder="Enter your username" required>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="mb-3">
-                                        <label for="password" class="form-label">Password</label>
-                                        <div class="input-group">
-                                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                                            <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
-                                            <button type="button" class="input-group-text toggle-password" tabindex="-1">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="mb-3 form-check">
-                                        <input type="checkbox" class="form-check-input" id="rememberMe">
-                                        <label class="form-check-label" for="rememberMe">Remember me</label>
-                                        <a href="#" class="float-end forgot-link" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal">Forgot Password?</a>
-                                    </div>
-                                    
-                                    <div class="d-grid gap-2 mb-4">
-                                        <button type="submit" class="btn btn-primary btn-lg login-btn">
-                                            <span class="spinner-border spinner-border-sm d-none me-2" role="status" aria-hidden="true"></span>
-                                            Login
-                                        </button>
-                                    </div>
-                                    
-                                    <div class="text-center">
-                                        <p class="network-status">
-                                            <i class="fas fa-wifi text-success"></i> 
-                                            <span id="connectionStatus">Online</span>
-                                        </p>
-                                    </div>
-                                </form>
+                        <div class="col-lg-6">
+                            <div class="dashboard-preview mt-4 mt-lg-0">
+                                <img src="assets/images/dashboard-preview.png" alt="Dashboard Preview" class="img-fluid rounded shadow">
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
+            </section>
 
-    <!-- Forgot Password Modal -->
-    <div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Reset Password</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="forgotPasswordForm">
-                        <div class="mb-3">
-                            <label for="emailReset" class="form-label">Email Address</label>
-                            <input type="email" class="form-control" id="emailReset" placeholder="Enter your email">
+            <!-- System Flow Section -->
+            <section id="system-flow" class="system-flow-section py-5 bg-light">
+                <div class="container">
+                    <div class="text-center mb-5">
+                        <h2 class="section-title">System Flow & Features</h2>
+                        <p class="section-subtitle">Explore how our system streamlines your financial management process</p>
+                    </div>
+
+                    <!-- Flow Steps -->
+                    <div class="flow-steps">
+                        <div class="row">
+                            <div class="col-lg-10 mx-auto">
+                                <div class="flow-timeline">
+                                    <!-- Step 1 -->
+                                    <div class="flow-step">
+                                        <div class="step-number">1</div>
+                                        <div class="step-content card">
+                                            <div class="card-body">
+                                                <h4 class="step-title">User Authentication</h4>
+                                                <p class="step-description">Secure login system with role-based access control for different user types.</p>
+                                                <div class="wireframe-container">
+                                                    <div class="wireframe login-wireframe">
+                                                        <div class="wf-header"></div>
+                                                        <div class="wf-form">
+                                                            <div class="wf-input"></div>
+                                                            <div class="wf-input"></div>
+                                                            <div class="wf-button"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Step 2 -->
+                                    <div class="flow-step">
+                                        <div class="step-number">2</div>
+                                        <div class="step-content card">
+                                            <div class="card-body">
+                                                <h4 class="step-title">Dashboard Overview</h4>
+                                                <p class="step-description">Comprehensive dashboard with key metrics, charts, and financial summaries.</p>
+                                                <div class="wireframe-container">
+                                                    <div class="wireframe dashboard-wireframe">
+                                                        <div class="wf-sidebar"></div>
+                                                        <div class="wf-main">
+                                                            <div class="wf-cards">
+                                                                <div class="wf-card"></div>
+                                                                <div class="wf-card"></div>
+                                                                <div class="wf-card"></div>
+                                                            </div>
+                                                            <div class="wf-chart"></div>
+                                                            <div class="wf-table"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Step 3 -->
+                                    <div class="flow-step">
+                                        <div class="step-number">3</div>
+                                        <div class="step-content card">
+                                            <div class="card-body">
+                                                <h4 class="step-title">Budget Management</h4>
+                                                <p class="step-description">Create, manage, and analyze budgets with powerful visualization tools.</p>
+                                                <div class="wireframe-container">
+                                                    <div class="wireframe budget-wireframe">
+                                                        <div class="wf-sidebar"></div>
+                                                        <div class="wf-main">
+                                                            <div class="wf-header"></div>
+                                                            <div class="wf-budget-bars"></div>
+                                                            <div class="wf-budget-table"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Step 4 -->
+                                    <div class="flow-step">
+                                        <div class="step-number">4</div>
+                                        <div class="step-content card">
+                                            <div class="card-body">
+                                                <h4 class="step-title">Transaction Recording</h4>
+                                                <p class="step-description">Easy-to-use interface for recording financial transactions and expenses.</p>
+                                                <div class="wireframe-container">
+                                                    <div class="wireframe transaction-wireframe">
+                                                        <div class="wf-sidebar"></div>
+                                                        <div class="wf-main">
+                                                            <div class="wf-form-layout">
+                                                                <div class="wf-form-group"></div>
+                                                                <div class="wf-form-group"></div>
+                                                                <div class="wf-form-group"></div>
+                                                                <div class="wf-button-group"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Step 5 -->
+                                    <div class="flow-step">
+                                        <div class="step-number">5</div>
+                                        <div class="step-content card">
+                                            <div class="card-body">
+                                                <h4 class="step-title">Financial Reports</h4>
+                                                <p class="step-description">Generate comprehensive financial reports with custom parameters.</p>
+                                                <div class="wireframe-container">
+                                                    <div class="wireframe reports-wireframe">
+                                                        <div class="wf-sidebar"></div>
+                                                        <div class="wf-main">
+                                                            <div class="wf-filters"></div>
+                                                            <div class="wf-report-content">
+                                                                <div class="wf-chart-large"></div>
+                                                                <div class="wf-table-data"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" id="resetPasswordBtn">Reset Password</button>
+            </section>
+
+            <!-- Features Carousel -->
+            <section class="features-section py-5">
+                <div class="container">
+                    <div class="text-center mb-5">
+                        <h2 class="section-title">Key Features</h2>
+                        <p class="section-subtitle">Discover the powerful capabilities of our financial management system</p>
+                    </div>
+
+                    <div id="featuresCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="feature-card">
+                                    <div class="row align-items-center">
+                                        <div class="col-md-6">
+                                            <div class="feature-image">
+                                                <div class="feature-wireframe budget-analysis-wireframe">
+                                                    <div class="wf-header"></div>
+                                                    <div class="wf-chart-container"></div>
+                                                    <div class="wf-data-table"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="feature-content p-4">
+                                                <div class="feature-icon mb-3">
+                                                    <i class="fas fa-chart-pie"></i>
+                                                </div>
+                                                <h3>Budget Analysis</h3>
+                                                <p>Analyze budget performance with interactive charts and visualizations. Track spending patterns and identify areas for optimization.</p>
+                                                <ul class="feature-list">
+                                                    <li>Real-time budget tracking</li>
+                                                    <li>Variance analysis</li>
+                                                    <li>Department-wise breakdown</li>
+                                                    <li>Forecasting tools</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="feature-card">
+                                    <div class="row align-items-center">
+                                        <div class="col-md-6">
+                                            <div class="feature-image">
+                                                <div class="feature-wireframe cash-flow-wireframe">
+                                                    <div class="wf-header"></div>
+                                                    <div class="wf-chart-flow"></div>
+                                                    <div class="wf-summary-boxes"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="feature-content p-4">
+                                                <div class="feature-icon mb-3">
+                                                    <i class="fas fa-money-bill-wave"></i>
+                                                </div>
+                                                <h3>Cash Flow Management</h3>
+                                                <p>Monitor and manage cash flow with detailed reports and projections. Ensure financial stability with accurate forecasting.</p>
+                                                <ul class="feature-list">
+                                                    <li>Cash flow statements</li>
+                                                    <li>Inflow/outflow analysis</li>
+                                                    <li>Projection tools</li>
+                                                    <li>Financial health indicators</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="feature-card">
+                                    <div class="row align-items-center">
+                                        <div class="col-md-6">
+                                            <div class="feature-image">
+                                                <div class="feature-wireframe booking-wireframe">
+                                                    <div class="wf-header"></div>
+                                                    <div class="wf-calendar"></div>
+                                                    <div class="wf-booking-details"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="feature-content p-4">
+                                                <div class="feature-icon mb-3">
+                                                    <i class="fas fa-calendar-alt"></i>
+                                                </div>
+                                                <h3>Booking & Reservation</h3>
+                                                <p>Manage bookings and reservations with an intuitive calendar interface. Track customer interactions and revenue streams.</p>
+                                                <ul class="feature-list">
+                                                    <li>Interactive calendar view</li>
+                                                    <li>Customer management</li>
+                                                    <li>Revenue tracking</li>
+                                                    <li>Booking analytics</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#featuresCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#featuresCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                        <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#featuresCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                            <button type="button" data-bs-target="#featuresCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                            <button type="button" data-bs-target="#featuresCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Call to Action -->
+            <section class="cta-section py-5">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8 text-center">
+                            <h2 class="mb-4">Ready to streamline your financial management?</h2>
+                            <p class="lead mb-4">Get started with our comprehensive system designed specifically for ACCCA's needs.</p>
+                            <a href="pages/login.html" class="btn btn-lg btn-primary">Access the System</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="landing-footer py-4 bg-dark text-white">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>ACCCA Financial Management System</h5>
+                        <p>A comprehensive solution for financial management, budgeting, and reporting.</p>
+                    </div>
+                    <div class="col-md-3">
+                        <h5>Quick Links</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="pages/login.html" class="text-white">Login</a></li>
+                            <li><a href="#system-flow" class="text-white">System Flow</a></li>
+                            <li><a href="#" class="text-white">Help & Support</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3">
+                        <h5>Contact</h5>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-envelope me-2"></i> info@accca.org</li>
+                            <li><i class="fas fa-phone me-2"></i> +256 700 000000</li>
+                            <li><i class="fas fa-map-marker-alt me-2"></i> Kampala, Uganda</li>
+                        </ul>
+                    </div>
+                </div>
+                <hr class="my-4">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <p class="mb-0">&copy; 2024 ACCCA Financial Management System. All rights reserved.</p>
+                    </div>
                 </div>
             </div>
-        </div>
+        </footer>
     </div>
 
-    <!-- Bootstrap Bundle with Popper -->
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- SweetAlert2 for beautiful alerts -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Custom JS -->
-    <script src="js/utils.js"></script>
-    <script src="js/db.js"></script>
-    <script src="js/login.js"></script>
+    <script src="js/landing.js"></script>
 </body>
 </html>
